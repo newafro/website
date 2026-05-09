@@ -1,0 +1,303 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+
+// Captured event hero stills (470×320 body images), bound by capture order to
+// match the event titles below.
+const heritageImg     = u('/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png');
+const nazoImg         = u('/uploads/events/05-e7ed0d_351931db808f4108a357420140c5cdd2-mv2.jpg');
+const privateImg      = u('/uploads/events/07-d5693e_ec58158892924021bec94be2da3c8c35-mv2.png');
+const soloImg         = u('/uploads/events/09-e7ed0d_2a44c99360344858bfbf8a8e4641af5c-mv2.png');
+const restitutionImg  = u('/uploads/events/11-e7ed0d_cfc4cf679c3643bc890b4967b9eef404-mv2.jpg');
+const benjaminImg     = u('/uploads/events/13-e7ed0d_922e97d2113041769a36759ed3002d33-mv2.jpg');
+const abidjanImg      = u('/uploads/events/15-e7ed0d_21b9f7fc588c463fa16d49d413a2e9ea-mv2.jpg');
+const terangaImg      = u('/uploads/events/17-e7ed0d_7e5cd25d3b794cc8948781c58b33306f-mv2.jpg');
+const rencontreImg    = u('/uploads/events/19-e7ed0d_8ca1c3a84c3d437abbe6b525fa5b6309-mv2.png');
+const newAfroBenImg   = u('/uploads/events/21-e7ed0d_f6aebeb4490e44219baa87e955ca6db3-mv2.jpg');
+const launchImg       = u('/uploads/events/23-7273cd_e9812a56f60a4e6ab6fddbdda4270b3e-mv2.jpg');
+
+const events = [
+  {
+    title: 'Héritage...Mémoires en mouvements?',
+    date: 'Fri 05 Dec',
+    location: 'Cotonou',
+    status: 'Closed',
+    href: u('/event-details-registration/heritage-memoires-en-mouvements'),
+    image: heritageImg,
+  },
+  {
+    title: 'NAZO PO TOZALI... on the way to find myself.',
+    date: 'Fri 05 Sept',
+    location: 'Mainz',
+    status: 'Learn more',
+    href: u('/event-details-registration/nazo-po-tozali-on-the-way-to-find-myself'),
+    image: nazoImg,
+  },
+  {
+    title: 'Private Showroom #AFricancreativestotheworld',
+    date: 'Fri 13 Dec',
+    location: 'Mainz',
+    status: 'Closed',
+    href: u('/event-details-registration/private-showroom-africancreativestotheworld'),
+    image: privateImg,
+  },
+  {
+    title: "I love my solitude... But I'm meant to be a lover.",
+    date: 'Thu 20 Jun',
+    location: 'Mainz',
+    status: 'Closed',
+    href: u('/event-details-registration/i-love-my-solitude-but-im-meant-to-be-a-lover'),
+    image: soloImg,
+  },
+  {
+    title: 'RESTITUTION... et après? Restitution...und dann?',
+    date: 'Thu 23 May',
+    location: 'Mainz',
+    status: 'Closed',
+    href: u('/event-details-registration/restitution-et-apres-restitution-und-dann'),
+    image: restitutionImg,
+  },
+  {
+    title: 'BENJAMIN ABANA + NEW AFRO + NEAR WEEK',
+    date: 'Fri 18 Aug',
+    location: 'København',
+    status: 'Closed',
+    href: u('/event-details-registration/benjamin-abana-new-afro-near-week'),
+    image: benjaminImg,
+  },
+  {
+    title: 'Begegnung / Rencontre Pop-Up Abidjan',
+    date: 'Tue 21 Mar',
+    location: 'Abidjan',
+    status: 'Learn more',
+    href: u('/event-details-registration/begegnung-rencontre-pop-up-abidjan'),
+    image: abidjanImg,
+  },
+  {
+    title: 'LA TERANGA EN COULEUR',
+    date: 'Thu 16 Mar',
+    location: 'Mainz',
+    status: 'Learn more',
+    href: u('/event-details-registration/la-teranga-en-couleur'),
+    image: terangaImg,
+  },
+  {
+    title: '"Rencontre" / Begegnung',
+    date: 'Fri 30 Sept',
+    location: 'Schießgartenstraße 10',
+    status: 'Closed',
+    href: u('/event-details-registration/rencontre-begegnung'),
+    image: rencontreImg,
+  },
+  {
+    title: 'NEW AFRO x BENJAMIN ABANA',
+    date: 'Thu 19 May',
+    location: 'LA SALA',
+    status: 'Closed',
+    href: u('/event-details-registration/new-afro-x-benjamin-abana'),
+    image: newAfroBenImg,
+  },
+  {
+    title: 'New Afro Launch',
+    date: 'Sat 22 Feb',
+    location: 'Atelier: Christiane Schauder',
+    status: 'Closed',
+    href: u('/event-details-registration/new-afro-launch'),
+    image: launchImg,
+  },
+];
+---
+
+<BaseLayout
+  title="Events — New Afro"
+  description="Exhibitions, pop-ups, and live programming around African creativity — Mainz, Cotonou, Abidjan, København, Paris."
+>
+  <article class="events-page">
+    <header class="page-header page-header--video">
+      <video
+        class="page-header__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={u('/uploads/video/events-hero-poster.png')}
+        aria-hidden="true"
+      >
+        <source src={u('/uploads/video/events-hero.mp4')} type="video/mp4" />
+      </video>
+      <div class="page-header__scrim" aria-hidden="true"></div>
+      <div class="container-narrow page-header__inner">
+        <img
+          class="page-eyebrow-mark page-eyebrow-mark--invert"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        <h1 id="events-headline" class="display-page display-page--invert">EVENTS</h1>
+        <p class="lede lede--invert">
+          Exhibitions, openings, and live programming around African creativity
+          — past and upcoming, across Mainz, Cotonou, Abidjan, København,
+          and Paris.
+        </p>
+      </div>
+    </header>
+
+    <section class="events-list-section">
+      <div class="container events-list">
+        {events.map(e => (
+          <article class="event-card">
+            <div class="event-card__media">
+              <img src={e.image} alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="event-card__body">
+              <h2 class="event-card__title">{e.title}</h2>
+              <p class="event-card__meta">{e.date} | {e.location}</p>
+              {e.status === 'Learn more' ? (
+                <a class="na-btn event-btn event-btn--active" href={e.href}>Learn more</a>
+              ) : (
+                <button class="na-btn event-btn event-btn--closed" disabled aria-disabled="true">Closed</button>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .events-page {
+    background: var(--na-paper);
+    color: var(--na-ink);
+  }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    text-align: center;
+  }
+
+  .page-header h1.display-page {
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(var(--na-fs-lead), 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .events-list-section {
+    padding-block: clamp(var(--na-s-9), 4vw, var(--na-s-12)) clamp(var(--na-s-14), 8vw, var(--na-s-16));
+    background: var(--na-paper);
+  }
+
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--na-s-12);
+  }
+
+  /* Image-left, text-right consistent — ~50/50 */
+  .event-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--na-sand);
+    overflow: hidden;
+    align-items: stretch;
+  }
+
+  .event-card__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--na-clay);
+  }
+
+  .event-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--na-dur-slow) var(--na-ease),
+                filter var(--na-dur-slow) var(--na-ease);
+  }
+
+  .event-card:hover .event-card__media img {
+    transform: scale(1.04);
+    filter: saturate(1.05);
+  }
+
+  .event-card__body {
+    padding: var(--na-s-12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--na-s-7);
+  }
+
+  .event-card__title {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1.1;
+    color: var(--na-ink);
+    margin: 0;
+  }
+
+  .event-card__meta {
+    font-family: var(--na-font-headline);
+    font-size: var(--na-fs-small);
+    color: var(--na-bronze-deep, var(--na-bronze));
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+  }
+
+  .event-btn {
+    align-self: flex-start;
+    border-radius: 0;
+    padding: 12px 28px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .event-btn--active {
+    background: var(--na-bronze);
+    color: #ffffff;
+  }
+  .event-btn--active:hover {
+    background: var(--na-bronze-deep, var(--na-bronze));
+    color: #ffffff;
+  }
+
+  .event-btn--closed {
+    background: var(--na-muted);
+    color: #ffffff;
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .event-btn--closed:hover {
+    background: var(--na-muted);
+    color: #ffffff;
+  }
+
+  @media (max-width: 720px) {
+    .event-card {
+      grid-template-columns: 1fr;
+    }
+    .event-card__media {
+      aspect-ratio: 16 / 10;
+    }
+    .event-card__body {
+      padding: var(--na-s-9);
+    }
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { u } from '../lib/url';
+---
+
+<PageLayout
+  title="Privacy Policy"
+  eyebrow="Information"
+  description="How New Afro handles personal data, cookies, and inquiries received through this site."
+>
+  <p><em>Placeholder — full migrated privacy policy syncs in the next checkpoint.</em></p>
+
+  <h2>What we collect</h2>
+  <p>
+    New Afro respects your privacy. We collect only the information necessary
+    to operate the site and respond to inquiries you send us — typically your
+    name, email address, and the message you choose to share. We do not sell
+    or trade personal data.
+  </p>
+
+  <h2>Newsletter</h2>
+  <p>
+    If you subscribe to our newsletter, your email is stored in our mailing
+    provider's database and used solely to send you New Afro programming
+    updates. You can unsubscribe at any time using the link in any newsletter
+    we send.
+  </p>
+
+  <h2>Analytics &amp; cookies</h2>
+  <p>
+    The site uses minimal cookies for essential functionality. We may use
+    aggregate, anonymous analytics to understand which pages are read most;
+    we do not track individual visitors across the web.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>
+    Under the GDPR you have the right to access, correct, or delete personal
+    data we hold about you. To make a request, write to
+    <a href="mailto:cheria@newafro.net">cheria@newafro.net</a>.
+  </p>
+
+  <p>
+    See also our
+    <a href={u('/imprint')}>Imprint</a> and
+    <a href={u('/terms-and-conditions')}>Terms and Conditions</a>.
+  </p>
+</PageLayout>

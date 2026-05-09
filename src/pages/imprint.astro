@@ -1,0 +1,60 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { u } from '../lib/url';
+---
+
+<PageLayout
+  title="Imprint"
+  eyebrow="Information"
+  description="Legal information for New Afro — contact, responsibility for content, and applicable law."
+>
+  <p><em>Full Imprint per German Telemediengesetz — copy syncs in the next checkpoint.</em></p>
+
+  <h2>Contact</h2>
+  <p>
+    New Afro<br />
+    Schießgartenstraße 10<br />
+    55116 Mainz<br />
+    Germany
+  </p>
+  <p>
+    Email:
+    <a href="mailto:cheria@newafro.net">cheria@newafro.net</a>
+  </p>
+
+  <h2>Responsible for content</h2>
+  <p>
+    Chéria Essieke Bayer, Founder &amp; Director.<br />
+    All editorial content is published under her editorial responsibility per
+    § 18 Abs. 2 MStV.
+  </p>
+
+  <h2>Liability for content</h2>
+  <p>
+    The contents of this site are produced with care. We assume no liability
+    for the accuracy, completeness, or topicality of the content provided.
+    Liability claims regarding damage caused by the use of any information
+    provided, including any kind of information which is incomplete or
+    incorrect, will therefore be rejected.
+  </p>
+
+  <h2>Liability for links</h2>
+  <p>
+    Our offer contains links to external websites of third parties on whose
+    content we have no influence. Therefore we cannot accept any liability for
+    these external contents.
+  </p>
+
+  <h2>Copyright</h2>
+  <p>
+    All artworks, images, and editorial content remain the property of their
+    respective creators. Reproduction or use of any content without written
+    permission is prohibited.
+  </p>
+
+  <p>
+    See also our
+    <a href={u('/privacy-policy')}>Privacy Policy</a> and
+    <a href={u('/terms-and-conditions')}>Terms and Conditions</a>.
+  </p>
+</PageLayout>

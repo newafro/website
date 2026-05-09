@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+
+// Hero now uses the captured 1080p MP4 from the live site. The poster keeps the
+// page rendered before the video decodes, and acts as a still fallback when
+// JS / video / autoplay is blocked. The braided-hair photo and Ken Burns CSS
+// stay as a no-video fallback for prefers-reduced-motion users.
+const heroVideo  = u('/uploads/video/home-hero.mp4');
+const heroPoster = u('/uploads/video/home-hero-poster.png');
+const heroFallbackImg = u('/uploads/home/01-d5693e_d5b6e3b365ec452f9f9b7066fbc14491f000.jpg');
+const brandMark  = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png');
+---
+
+<BaseLayout
+  title="New Afro — Where art connects cultures."
+  description="A cultural platform and creative agency connecting African and European creative ecosystems."
+>
+  <section class="home-hero" aria-labelledby="home-headline">
+    <div class="home-hero__motion" aria-hidden="true">
+      <video
+        class="home-hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={heroPoster}
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+      <div class="home-hero__bg" style={`background-image: url(${heroFallbackImg});`}></div>
+    </div>
+    <div class="home-hero__inner">
+      <h1 id="home-headline" class="hero-display home-hero__headline">New Afro</h1>
+      <p class="home-hero__sub">Where art connects cultures.</p>
+      <img
+        class="home-hero__mark"
+        src={brandMark}
+        alt="New Afro brand mark"
+        width="56"
+        height="45"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .home-hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: var(--na-cream-warm);
+    isolation: isolate;
+  }
+
+  .home-hero__motion {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    background: var(--na-ink);
+  }
+
+  .home-hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Fallback image — sits beneath the video, used by prefers-reduced-motion
+     and when the video element fails to render. */
+  .home-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform-origin: center center;
+    animation: home-hero-kenburns 24s ease-in-out infinite alternate;
+    z-index: -1;
+  }
+
+  @keyframes home-hero-kenburns {
+    from { transform: scale(1); }
+    to   { transform: scale(1.06); }
+  }
+
+  .home-hero__motion::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.0) 40%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    z-index: 1;
+  }
+
+  .home-hero__inner {
+    text-align: center;
+    padding: 0 var(--na-s-8) clamp(var(--na-s-12), 8vh, var(--na-s-20));
+    width: 100%;
+    max-width: var(--na-container);
+  }
+
+  .home-hero__headline {
+    color: var(--na-cream-warm);
+    margin: 0 0 var(--na-s-6);
+  }
+
+  .home-hero__sub {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(20px, 5vw, 24px);
+    line-height: 1.4;
+    color: var(--na-cream-warm);
+    margin: 0 0 var(--na-s-9);
+    max-width: none;
+  }
+
+  .home-hero__mark {
+    display: inline-block;
+    width: 56px;
+    height: 45px;
+    object-fit: contain;
+    margin: 0 auto;
+    filter: brightness(0) invert(1);
+  }
+
+  @media (max-width: 900px) {
+    .home-hero {
+      min-height: calc(100vh - 120px);
+      align-items: center;
+    }
+
+    .home-hero__bg {
+      background-position: center 30%;
+      animation-duration: 30s;
+    }
+
+    .home-hero__inner {
+      padding: 0 var(--na-s-8) clamp(48px, 12vh, 96px);
+    }
+
+    .home-hero__mark {
+      width: 60px;
+      height: 48px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero__video { display: none; }
+    .home-hero__bg {
+      animation: none;
+      transform: none;
+      z-index: -1;
+    }
+  }
+</style>

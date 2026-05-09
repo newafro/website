@@ -1,0 +1,389 @@
+@import './tokens.css';
+
+/* Reset / fundamentals
+   ---------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--na-font-body);
+  font-size: var(--na-fs-body);
+  line-height: var(--na-lh-body);
+  color: var(--na-ink);
+  background: var(--na-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Kill default browser bullets / list inset everywhere we author UI */
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Typography
+   ---------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--na-s-6);
+  color: inherit;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3 {
+  font-family: var(--na-font-display);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.05;
+}
+
+h4, h5, h6 {
+  font-family: var(--na-font-headline);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+/* H1 — about/community/events/etc. ramps to 110px at desktop ≥1440px */
+h1 { font-size: clamp(2.6rem, 7.6vw, 110px); line-height: 1.1; }
+/* Homepage hero — ramps to 150px on desktop, ~80–100px on mobile */
+.hero-display {
+  font-family: var(--na-font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(80px, 18vw, 150px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.8rem); }   /* ~29–45px */
+h3 { font-size: clamp(1.3rem, 2vw, 1.65rem); }    /* ~21–26px */
+h4 { font-size: var(--na-fs-heading-m); }
+h5 { font-size: var(--na-fs-lead); }
+h6 { font-size: var(--na-fs-body); }
+
+p {
+  margin: 0 0 var(--na-s-7);
+  max-width: 70ch;
+}
+
+a {
+  color: var(--na-bronze-deep);
+  text-decoration: none;
+  transition: color var(--na-dur-fast) var(--na-ease);
+}
+
+a:hover { color: var(--na-bronze); }
+a:focus-visible {
+  outline: 0;
+  box-shadow: var(--na-focus-ring);
+  border-radius: var(--na-radius-xs);
+}
+
+strong { font-weight: 600; }
+
+blockquote {
+  margin: var(--na-s-12) 0;
+  padding: 0 var(--na-s-9);
+  border-left: 2px solid var(--na-bronze);
+  font-family: var(--na-font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.25;
+  color: var(--na-earth-deep);
+}
+
+/* Eyebrow / meta / nav typographic role
+   ---------------------------------------------------------------- */
+.eyebrow,
+.meta,
+.kicker {
+  font-family: var(--na-font-headline);
+  text-transform: uppercase;
+  letter-spacing: var(--na-tracking-caps);
+  font-size: var(--na-fs-small);
+  font-weight: 500;
+  color: var(--na-graphite);
+}
+
+/* Layout primitives
+   ---------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--na-container);
+  margin-inline: auto;
+  padding-inline: var(--na-s-8);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--na-container-text);
+  margin-inline: auto;
+  padding-inline: var(--na-s-8);
+}
+
+@media (max-width: 640px) {
+  .container,
+  .container-narrow {
+    padding-inline: var(--na-s-7);
+  }
+}
+
+main {
+  display: block;
+}
+
+/* Section vertical rhythm */
+.section {
+  padding-block: clamp(var(--na-s-14), 8vw, var(--na-s-20));
+}
+
+.section--tight {
+  padding-block: clamp(var(--na-s-12), 6vw, var(--na-s-14));
+}
+
+/* Buttons
+   ---------------------------------------------------------------- */
+.btn,
+.na-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--na-s-3);
+  padding: var(--na-s-5) var(--na-s-9);
+  background: var(--na-bronze);
+  color: var(--na-paper);
+  font-family: var(--na-font-headline);
+  font-size: var(--na-fs-body);
+  font-weight: 500;
+  letter-spacing: var(--na-tracking-caps);
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--na-radius-sm);
+  cursor: pointer;
+  transition: background var(--na-dur-base) var(--na-ease),
+              color var(--na-dur-base) var(--na-ease),
+              transform var(--na-dur-fast) var(--na-ease);
+}
+
+.btn:hover,
+.na-btn:hover {
+  background: var(--na-bronze-hi);
+  color: var(--na-ink);
+  text-decoration: none;
+}
+
+.btn:focus-visible,
+.na-btn:focus-visible {
+  outline: 0;
+  box-shadow: var(--na-focus-ring);
+}
+
+.btn:active,
+.na-btn:active { transform: translateY(1px); }
+
+.btn-ghost,
+.na-btn--ghost {
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+}
+
+.btn-ghost:hover,
+.na-btn--ghost:hover {
+  background: var(--na-ink);
+  color: var(--na-paper);
+}
+
+[data-tone="ink"] .btn-ghost,
+[data-tone="ink"] .na-btn--ghost { color: var(--na-paper); }
+
+[data-tone="ink"] .btn-ghost:hover,
+[data-tone="ink"] .na-btn--ghost:hover {
+  background: var(--na-paper);
+  color: var(--na-ink);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--na-s-3);
+  color: var(--na-bronze-deep);
+  font-family: var(--na-font-headline);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--na-tracking-caps);
+  font-size: var(--na-fs-small);
+}
+
+.link-arrow:hover { color: var(--na-bronze); }
+
+/* Editorial display title — the brand signature
+   ---------------------------------------------------------------- */
+.display {
+  font-family: var(--na-font-display);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+}
+
+.display-xxl { font-size: clamp(3.5rem, 10vw, 6.875rem); }  /* ≈110px */
+.display-xl  { font-size: clamp(2.5rem, 6vw, 3.125rem); }   /* ≈50px */
+.display-l   { font-size: clamp(2.25rem, 5vw, 2.8125rem); } /* ≈45px */
+
+/* Two distinct H1 systems on newafro.net:
+   - .display-italic — italic display serif. Used only for the homepage brand
+     wordmark "New Afro" and editorial article titles (blog posts).
+   - .display-page   — bold uppercase sans (Jost / Futura). Used for every
+     non-home page H1 ("THE AGENCY", "THE ARCHIVE", "COMMUNITY", "EVENTS",
+     "PROJECTS", etc.). Always paired with the centred Bildmarke above. */
+.display-italic {
+  font-family: var(--na-font-display);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.display-page {
+  font-family: var(--na-font-page-display);
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--na-page-display-tracking);
+  line-height: 1.05;
+  font-size: var(--na-fs-page-display);
+  color: var(--na-ink);
+  margin: 0;
+}
+
+/* Centred Bildmarke that sits above .display-page on every non-home page. */
+.page-eyebrow-mark {
+  display: block;
+  margin: 0 auto var(--na-s-9);
+  width: clamp(40px, 5vw, 60px);
+  height: auto;
+  object-fit: contain;
+}
+
+/* Video-backed page header (community / archive / events).
+   Layered: looped MP4 → dark scrim → centered Bildmarke + bold-sans H1 in white. */
+.page-header--video {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(420px, 60vh, 640px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16));
+}
+
+.page-header__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.page-header__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.page-header__inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* White-on-video variants for hero content over the video background. */
+.page-eyebrow-mark--invert {
+  filter: brightness(0) invert(1);
+}
+
+.display-page--invert,
+.lede--invert {
+  color: var(--na-paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-header__video {
+    display: none;
+  }
+}
+
+/* Utilities
+   ---------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--na-ink);
+  color: var(--na-paper);
+  padding: var(--na-s-4) var(--na-s-6);
+  z-index: 100;
+  font-family: var(--na-font-headline);
+  text-transform: uppercase;
+  letter-spacing: var(--na-tracking-caps);
+}
+
+.skip-link:focus {
+  left: var(--na-s-4);
+  top: var(--na-s-4);
+}
+
+/* Tone-aware overrides on body links
+   ---------------------------------------------------------------- */
+[data-tone="ink"] a { color: var(--na-bronze-hi); }
+[data-tone="ink"] a:hover { color: var(--na-paper); }

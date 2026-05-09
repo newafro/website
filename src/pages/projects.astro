@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+
+// Captured /projects page is structured as two project blocks with a 2-portrait
+// strip each, plus a small footer pair. Bind by capture order.
+const projects = [
+  {
+    title: 'Restitution… et après?',
+    italic: true,
+    eyebrow: 'an itinerary project',
+    metaTop: 'Mid of June 1st cycle of the project',
+    metaBottom: 'and four respective projects presented: 27.10/05.06.2024',
+    body: [
+      "African cultural heritage needs to be restored — Yet there, made wound by African culture and political action, when the responsibilities are not general dressed up.",
+      "Yet beyond its apparent rigidity, restitution stands a complex, multifaceted process that raises critical questions: What should be restored, and to whom? Under what conditions? Can restitution alone truly compensate for the long-term consequences of cultural loss, the destruction of artistic identity, the marginalisation of cultural memory, and the historical erasure?",
+      "Informed by ongoing research, including a Masters thesis focusing on Benin as a case study following the inestimable return of looted artworks (2026), the New Afro Foundation, Pop Up project N.A.M.E., and The Curators Mix, this open a dialogue between materially and immaterially aspects of restitution. By breaking critical reflection and exchange, it aims to expand its main topic from how restitution as an need to address an ongoing process shaping cultural futures, with particular emphasis on questions of heritage, sovereignty, internations, and cumulative cultural development.",
+    ],
+    images: [
+      { src: u('/uploads/projects/01-Chidi.jpeg'), alt: 'Chidi Nwabani', captionTop: '', captionBottom: 'Chidi Nwabani — Nigeria, body of work in restitution' },
+      { src: u('/uploads/projects/02-Portrait-Nuits-Baln-C3-A9aires--Octobre-2023-_edited.jpg'), alt: 'Nuits Balnéaires', captionTop: '', captionBottom: 'Nuits Balnéaires — Senegal' },
+      { src: u('/uploads/projects/03-DSC00595_edited-20-1-.webp'), alt: 'Chelsea Odufu', captionTop: '', captionBottom: 'Chelsea Odufu — Nigeria/USA' },
+      { src: u('/uploads/projects/04-IBAAKU-9_edited.jpg'), alt: 'IBAAKU', captionTop: '', captionBottom: 'IBAAKU — Senegal' },
+    ],
+    cta: 'View Catalogue',
+  },
+  {
+    title: 'Héritage…',
+    sub: 'Mémoires en mouvement?',
+    eyebrow: '15 November 2025 - 18 January 2026',
+    body: [
+      "Everything is movement. Nameless itself is movement, like our voice of our existence. So, before Mireille's reigns its rhythmic, the history of cultures becomes a witness movement. After all, change is the constant in our being.",
+      "An ill-tempering vision, what occurs of \"In Construction project the Casile-Bnemi-Asmuts and Coler-Cerbeck program with Karim Bibanu Zem, deafs, heritage, mountains, and architectural movement, and the choreographic shape that arises from the Eastern Marshing and the Center is the way that aim—Insidiana between media archives, the new culture, with these aims and consultative in their own.",
+    ],
+    images: [
+      { src: u('/uploads/projects/05-7273cd_3c5c0dc0b45b4dff988168492474d604-mv2.jpg'), alt: 'Project artist 1', captionTop: '', captionBottom: '' },
+      { src: u('/uploads/projects/06-Bildschirmfoto-202025-10-16-20um-2000_19_edite.jpg'), alt: 'Project artist 2', captionTop: '', captionBottom: '' },
+    ],
+    cta: 'View Catalogue',
+  },
+];
+---
+
+<BaseLayout
+  title="Projects — New Afro"
+  description="Long-form curatorial projects from New Afro: Restitution… et après?, Héritage… Mémoires en mouvement?, and our ongoing programmes."
+>
+  <article class="projects-page">
+    <header class="page-header">
+      <div class="container-narrow">
+        <img
+          class="page-eyebrow-mark"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        <h1 class="display-page">PROJECTS</h1>
+        <p class="lede">
+          Long-form curatorial projects from New Afro — restitution, heritage,
+          and the conversations that move with them.
+        </p>
+      </div>
+    </header>
+
+    {projects.map((p, idx) => (
+      <section class={`project-block project-block--${idx === 0 ? 'dark' : 'cream'}`}>
+        <div class="container">
+          <header class="project-header">
+            {p.italic ? (
+              <h2 class="project-title">{p.title}</h2>
+            ) : (
+              <h2 class="project-title">
+                {p.title}
+                {p.sub && <span class="project-sub"><br />{p.sub}</span>}
+              </h2>
+            )}
+            {p.eyebrow && <p class="project-eyebrow">{p.eyebrow}</p>}
+            {p.metaTop && <p class="project-meta">{p.metaTop}</p>}
+            {p.metaBottom && <p class="project-meta">{p.metaBottom}</p>}
+          </header>
+
+          <div class="project-body">
+            {p.body.map(para => <p>{para}</p>)}
+          </div>
+
+          <ul class="project-images">
+            {p.images.map(img => (
+              <li>
+                <figure>
+                  <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
+                  {img.captionBottom && <figcaption>{img.captionBottom}</figcaption>}
+                </figure>
+              </li>
+            ))}
+          </ul>
+
+          <p class="project-cta">
+            <button class="na-btn na-btn--ghost" type="button" disabled>{p.cta}</button>
+          </p>
+        </div>
+      </section>
+    ))}
+  </article>
+</BaseLayout>
+
+<style>
+  .projects-page { background: var(--na-paper); color: var(--na-ink); }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    text-align: center;
+  }
+
+  .page-header h1.display-page {
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .page-header .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(var(--na-fs-lede, 18px), 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .project-block {
+    padding-block: clamp(var(--na-s-14), 8vw, var(--na-s-20));
+  }
+
+  .project-block--dark {
+    background: #4A2E0F; /* warm bronze ink */
+    color: var(--na-cream-warm);
+  }
+
+  .project-block--cream {
+    background: var(--na-cream);
+    color: var(--na-ink);
+  }
+
+  .project-header {
+    text-align: center;
+    margin-bottom: var(--na-s-12);
+  }
+
+  .project-title {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(36px, 6.5vw, 78px);
+    line-height: 1.05;
+    margin: 0 0 var(--na-s-7);
+    color: inherit;
+  }
+
+  .project-sub {
+    display: inline-block;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.85em;
+  }
+
+  .project-eyebrow {
+    font-family: var(--na-font-headline);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    color: inherit;
+    opacity: 0.85;
+    margin: 0 0 var(--na-s-3);
+  }
+
+  .project-meta {
+    font-family: var(--na-font-body);
+    font-size: 14px;
+    color: inherit;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  .project-body {
+    max-width: 56ch;
+    margin: 0 auto var(--na-s-12);
+  }
+
+  .project-body p {
+    font-family: var(--na-font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: inherit;
+    margin: 0 0 var(--na-s-7);
+    max-width: none;
+  }
+
+  .project-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--na-s-7);
+    margin: 0 auto var(--na-s-12);
+    max-width: 920px;
+  }
+
+  .project-images li { list-style: none; }
+  .project-images figure { margin: 0; }
+  .project-images img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+
+  .project-images figcaption {
+    font-family: var(--na-font-headline);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    color: inherit;
+    opacity: 0.8;
+    margin-top: var(--na-s-4);
+    text-align: center;
+  }
+
+  .project-cta {
+    text-align: center;
+    margin: 0;
+  }
+
+  .project-cta .na-btn {
+    border-radius: 0;
+    background: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+
+  .project-block--dark .project-cta .na-btn {
+    color: var(--na-cream-warm);
+    border-color: var(--na-cream-warm);
+  }
+</style>

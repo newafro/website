@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Content Manager — NewAfro</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      :root {
+        --na-paper:  #FBF7ED;
+        --na-cream:  #DED9C7;
+        --na-ink:    #321C01;
+        --na-bronze: #774A11;
+        --na-bronze-deep: #5A370B;
+        --na-graphite: #4A3520;
+      }
+      html, body { background: var(--na-paper); color: var(--na-ink); margin: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      }
+      .editor-fallback {
+        max-width: 640px;
+        margin: 64px auto 0;
+        padding: 32px clamp(20px, 4vw, 40px);
+        border: 1px solid rgba(50,28,1,0.18);
+        background: #fff;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      .editor-fallback .eyebrow {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 12px;
+        color: var(--na-bronze-deep);
+        margin: 0 0 12px;
+      }
+      .editor-fallback h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(32px, 5vw, 44px);
+        line-height: 1.1;
+        margin: 0 0 16px;
+        color: var(--na-ink);
+      }
+      .editor-fallback p {
+        margin: 0 0 12px;
+        color: var(--na-graphite);
+      }
+      .editor-fallback code {
+        background: var(--na-paper);
+        padding: 2px 6px;
+        border: 1px solid rgba(50,28,1,0.12);
+        font-size: 13px;
+      }
+      .editor-fallback ol { padding-left: 22px; margin: 0 0 12px; }
+      .editor-fallback li { margin-bottom: 6px; }
+      .editor-fallback a {
+        color: var(--na-bronze-deep);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+      }
+      .editor-fallback .note {
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(50,28,1,0.12);
+        font-size: 13px;
+        color: var(--na-graphite);
+      }
+      /* Decap mounts into <body>; once it loads it covers the screen on top
+         of our fallback. The fallback stays visible until Decap renders,
+         and on auth-failure the fallback remains the friendly explanation. */
+      #nc-root { position: relative; z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <section class="editor-fallback" id="editor-fallback">
+      <p class="eyebrow">NewAfro Editor</p>
+      <h1>Editor mode</h1>
+      <p>
+        This is the content manager for newafro.net. Once GitHub OAuth is
+        connected, editors can sign in here and edit blog posts and pages
+        through a WYSIWYG — no git knowledge required.
+      </p>
+      <p><strong>Setup (one-time, ~10 min):</strong></p>
+      <ol>
+        <li>
+          On GitHub: <em>Settings → Developer settings → OAuth Apps → New OAuth
+          App</em>. Callback URL <code>https://newafro.net/admin/</code>.
+        </li>
+        <li>
+          Deploy a tiny OAuth proxy (Cloudflare Worker recipe in
+          <code>04-deploy-admin/setup-decap-oauth.md</code>) and paste its URL
+          into <code>public/admin/config.yml</code>.
+        </li>
+        <li>
+          Add editors as repo collaborators (write access on
+          <code>Kisgus/newafro</code>).
+        </li>
+      </ol>
+      <p>
+        Full step-by-step in
+        <a href="https://github.com/Kisgus/newafro-migration/blob/main/04-deploy-admin/setup-decap-oauth.md">setup-decap-oauth.md</a>.
+      </p>
+      <p class="note">
+        Until OAuth is configured, clicking "Login with GitHub" below will fail
+        — that's expected. Everything else on the site (
+        <a href="/">homepage</a>, journal, events, community) is fully working.
+      </p>
+    </section>
+
+    <!--
+      Decap CMS bootstrap. Loaded from CDN — no build step required.
+      Config lives in /admin/config.yml.
+      Auth: GitHub OAuth via Decap's hosted backend (configure in config.yml).
+    -->
+    <script src="https://unpkg.com/decap-cms@^3.4.0/dist/decap-cms.js"></script>
+  </body>
+</html>

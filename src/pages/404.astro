@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+---
+
+<BaseLayout title="Page not found — New Afro" noIndex={true}>
+  <section class="container-narrow notfound">
+    <p class="eyebrow">404</p>
+    <h1>This page wandered off.</h1>
+    <p class="lede">
+      The page you were looking for doesn't exist or has moved.
+    </p>
+    <a class="na-btn" href={u('/')}>Take me home</a>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ BASE: import.meta.env.BASE_URL }}>
+  (function () {
+    var base = (BASE || '/').replace(/\/$/, '');
+    var path = location.pathname.replace(base, '') || '/';
+    var map = {
+      '/general-1': '/about',
+      '/general-8': '/artist-inquiries',
+      '/single-project': '/projects',
+      '/behind-the-scenes': '/showroom',
+      '/terms': '/imprint'
+    };
+    if (map[path] || map[path.replace(/\/$/, '')]) {
+      var target = map[path] || map[path.replace(/\/$/, '')];
+      location.replace(base + target);
+      return;
+    }
+    var post = path.match(/^\/post\/(.+?)\/?$/);
+    if (post) {
+      location.replace(base + '/blog/' + post[1] + '/');
+      return;
+    }
+    var ed = path.match(/^\/event-details\/(.+?)\/?$/);
+    if (ed) {
+      location.replace(base + '/event-details-registration/' + ed[1] + '/');
+      return;
+    }
+    if (base && location.pathname.indexOf(base) !== 0 && location.pathname !== '/') {
+      location.replace(base + location.pathname);
+    }
+  })();
+</script>
+
+<style>
+  .notfound {
+    padding-block: clamp(var(--na-s-16), 12vw, var(--na-s-20));
+    text-align: center;
+  }
+  .notfound .eyebrow {
+    color: var(--na-bronze-deep);
+    margin: 0 0 var(--na-s-7);
+  }
+  .notfound h1 {
+    margin: 0 0 var(--na-s-9);
+  }
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: var(--na-fs-lead);
+    color: var(--na-graphite);
+    max-width: 50ch;
+    margin: 0 auto var(--na-s-12);
+  }
+</style>

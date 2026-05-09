@@ -1,0 +1,214 @@
+---
+import { u } from '../lib/url';
+
+const ourWork = [
+  { href: u('/archive'), label: 'THE ARCHIVE' },
+  { href: u('/projects'), label: 'PROJECTS' },
+  { href: u('/about'), label: 'THE AGENCY' },
+];
+
+const workWithUs = [
+  { href: u('/career'), label: 'Career' },
+  { href: u('/contact'), label: 'Contact' },
+  { href: u('/artist-inquiries'), label: 'Artist Inquiries' },
+  { href: u('/team'), label: 'About us' },
+];
+
+const information = [
+  { href: u('/imprint'), label: 'Imprint' },
+  { href: u('/privacy-policy'), label: 'Privacy Policy' },
+  { href: u('/terms-and-conditions'), label: 'Terms and Conditions (T&C)' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <nav class="footer-col" aria-label="Our Work">
+      <h3>Our Work</h3>
+      <ul>
+        {ourWork.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="footer-col" aria-label="Work with us">
+      <h3>Work with us</h3>
+      <ul>
+        {workWithUs.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="footer-col" aria-label="Information">
+      <h3>Information</h3>
+      <ul>
+        {information.map(item => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="footer-col subscribe-col">
+      <form class="subscribe" data-newsletter-form novalidate>
+        <label class="visually-hidden" for="footer-email">Email address</label>
+        <input
+          id="footer-email"
+          name="email"
+          type="email"
+          required
+          placeholder="Join our newsletter"
+          autocomplete="email"
+        />
+        <button class="subscribe-btn" type="submit">Subscribe Now</button>
+        <p class="subscribe-msg" data-newsletter-msg hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="container fineprint">
+    <p>&copy; All Rights Reserved New Afro 2026</p>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const msg = "Newsletter coming back online soon — drop us a note via /contact for now.";
+      document.querySelectorAll('form[data-newsletter-form]').forEach(function (form) {
+        if (form.dataset.bound === '1') return;
+        form.dataset.bound = '1';
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const out = form.querySelector('[data-newsletter-msg]');
+          if (out) {
+            out.textContent = msg;
+            out.hidden = false;
+          }
+        });
+      });
+    })();
+  </script>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--na-s-20);
+    padding-block: var(--na-s-14) var(--na-s-9);
+    background: var(--na-sand);
+    color: var(--na-ink);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    gap: var(--na-s-12);
+    margin-bottom: var(--na-s-12);
+  }
+
+  .footer-col h3 {
+    font-family: var(--na-font-headline);
+    font-style: normal;
+    font-weight: 600;
+    font-size: var(--na-fs-body);
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-7);
+  }
+
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--na-s-5);
+  }
+
+  .footer-col a {
+    color: var(--na-ink);
+    font-family: var(--na-font-ui);
+    font-size: var(--na-fs-body);
+    text-decoration: none;
+    transition: color var(--na-dur-fast) var(--na-ease);
+  }
+
+  .footer-col a:hover { color: var(--na-bronze); }
+
+  .subscribe {
+    display: flex;
+    flex-direction: column;
+    gap: var(--na-s-4);
+  }
+
+  .subscribe input[type='email'] {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(50, 28, 1, 0.4);
+    color: var(--na-ink);
+    padding: var(--na-s-5) var(--na-s-6);
+    font-family: var(--na-font-ui);
+    font-size: var(--na-fs-body);
+    border-radius: 0;
+    outline: 0;
+    transition: border-color var(--na-dur-fast) var(--na-ease);
+  }
+
+  .subscribe input::placeholder { color: rgba(50, 28, 1, 0.6); }
+
+  .subscribe input:focus { border-color: var(--na-bronze); }
+
+  .subscribe-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
+    height: 42px;
+    max-width: 100%;
+    background: var(--na-bronze);
+    color: #ffffff;
+    font-family: "futura-lt-w01-book", var(--na-font-headline), sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background var(--na-dur-base) var(--na-ease);
+  }
+
+  .subscribe-btn:hover { background: var(--na-bronze-deep); }
+
+  @media (max-width: 420px) {
+    .subscribe-btn { width: 100%; }
+  }
+
+  .subscribe-msg {
+    margin: var(--na-s-3) 0 0;
+    color: var(--na-bronze-deep);
+    font-family: var(--na-font-ui);
+    font-size: var(--na-fs-small);
+    line-height: 1.5;
+  }
+
+  .fineprint {
+    padding-top: var(--na-s-9);
+    border-top: 1px solid rgba(50, 28, 1, 0.15);
+    color: var(--na-ink);
+    font-family: var(--na-font-ui);
+    font-size: var(--na-fs-small);
+    text-align: center;
+  }
+
+  .fineprint p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--na-s-12) var(--na-s-9);
+    }
+    .subscribe-col {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: var(--na-s-9);
+    }
+    .subscribe-col {
+      grid-column: auto;
+    }
+  }
+</style>

@@ -1,0 +1,163 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { u } from '../lib/url';
+
+interface Props {
+  title: string;
+  description?: string;
+  hero_image?: string;
+  eyebrow?: string;
+  /** Visual surface tone behind the page. */
+  tone?: 'cream' | 'paper';
+}
+
+const { title, description, hero_image, eyebrow, tone = 'cream' } = Astro.props;
+---
+
+<BaseLayout title={`${title} — New Afro`} description={description} image={hero_image}>
+  <article class={`page page--tone-${tone}`}>
+    <header class="page-header">
+      <div class="container-narrow">
+        <img
+          class="page-eyebrow-mark"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        {eyebrow && <p class="eyebrow page-eyebrow">{eyebrow}</p>}
+        <h1 class="display-page">{title}</h1>
+        {description && <p class="lede">{description}</p>}
+      </div>
+    </header>
+
+    {hero_image && (
+      <div class="container">
+        <img class="page-hero" src={hero_image} alt="" loading="eager" decoding="async" />
+      </div>
+    )}
+
+    <div class="container-narrow page-body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    color: var(--na-ink);
+  }
+
+  .page--tone-cream { background: var(--na-cream); }
+  .page--tone-paper { background: var(--na-paper); }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-12);
+    text-align: center;
+  }
+
+  .page-header .container-narrow {
+    text-align: center;
+  }
+
+  .page-eyebrow {
+    color: var(--na-bronze-deep, var(--na-bronze));
+    margin: 0 0 var(--na-s-7);
+  }
+
+  /* H1 styling lives on the .display-page utility now (bold uppercase sans).
+     Keep a small wrapper rule to ensure margin + centring stay consistent. */
+  .page-header h1.display-page {
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(var(--na-fs-lead), 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .page-hero {
+    width: 100%;
+    max-height: 540px;
+    object-fit: cover;
+    margin-bottom: var(--na-s-12);
+  }
+
+  .page-body {
+    padding-block: var(--na-s-7) var(--na-s-16);
+    max-width: 60ch;
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--na-ink);
+  }
+
+  .page-body :global(h2) {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    margin-top: var(--na-s-14);
+    margin-bottom: var(--na-s-7);
+    color: var(--na-ink);
+  }
+
+  .page-body :global(h3) {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.2;
+    margin-top: var(--na-s-12);
+    margin-bottom: var(--na-s-6);
+    color: var(--na-ink);
+  }
+
+  .page-body :global(p) {
+    margin: 0 0 var(--na-s-7);
+    max-width: none;
+  }
+
+  .page-body :global(a) {
+    color: var(--na-bronze-deep, var(--na-bronze));
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  .page-body :global(a:hover) {
+    color: var(--na-bronze);
+  }
+
+  .page-body :global(img) {
+    margin-block: var(--na-s-12);
+  }
+
+  .page-body :global(ul),
+  .page-body :global(ol) {
+    margin: 0 0 var(--na-s-9) var(--na-s-9);
+    padding: 0;
+  }
+
+  .page-body :global(ul) { list-style: disc; }
+  .page-body :global(ol) { list-style: decimal; }
+  .page-body :global(li) { margin-bottom: var(--na-s-5); }
+
+  .page-body :global(.na-btn) {
+    display: inline-flex;
+    margin-top: var(--na-s-7);
+    color: var(--na-paper);
+    text-decoration: none;
+  }
+
+  .page-body :global(.na-btn:hover) { color: var(--na-paper); }
+</style>

@@ -1,0 +1,199 @@
+/*
+ * NewAfro design tokens.
+ *
+ * Defines the brand --na-* names AND legacy --color-* / --space-* aliases that
+ * existing components consume.
+ */
+
+/* === Self-hosted fonts ===
+   All four faces are variable woff2
+   in /public/fonts/, latin subset only. Cormorant Garamond Italic stands in for
+   PP Editorial Old Ultralight Italic until the commercial licence is acquired. */
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/jost.woff2') format('woff2-variations'),
+       url('/fonts/jost.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url('/fonts/dm-sans.woff2') format('woff2-variations'),
+       url('/fonts/dm-sans.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('/fonts/manrope.woff2') format('woff2-variations'),
+       url('/fonts/manrope.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-italic.woff2') format('woff2-variations'),
+       url('/fonts/cormorant-italic.woff2') format('woff2');
+}
+/* === END ASSET INTEGRATOR BLOCK === */
+
+:root {
+  /* ── Brand tokens (canonical, from newafro.net Playwright capture) ── */
+  /* Ink: capture's computed.json shows rgb(0,0,0) on most pages; the earlier
+     #321C01 was inferred from the bronze CTAs. Brown stays for accents only. */
+  --na-ink:           #000000;     /* rgb(0, 0, 0) — primary text + headings */
+  --na-paper:         #ffffff;
+  --na-cream:         #FBF7ED;     /* rgb(251, 247, 237) — page bg on /about  */
+  --na-cream-warm:    #FFF9EB;     /* rgb(255, 249, 235) — nav/hero cream     */
+  --na-sand:          #DED9C7;     /* rgb(222, 217, 199) — footer + event bg  */
+
+  --na-bronze:        #774A11;     /* rgb(119, 74, 17) — CTA buttons          */
+  --na-bronze-deep:   #573811;     /* rgb(87, 56, 17)  — deep accent          */
+  --na-bronze-hi:     #bb8923;     /* lighter bronze (legacy hover token)     */
+
+  --na-earth-deep:    #573811;     /* alias of bronze-deep for legacy use     */
+  --na-earth-rich:    #774A11;
+  --na-earth-warm:    #926f21;
+
+  --na-sand-light:    #FBF7ED;     /* alias → cream                           */
+  --na-sand-mid:      #DED9C7;     /* alias → sand                            */
+  --na-clay:          #dfc8bb;
+
+  --na-graphite:      #404040;
+  --na-muted:         #6b5a3a;     /* warmer muted on cream surfaces          */
+  --na-fog:           #bfbfbf;
+
+  /* Type families. PP Editorial Old is paid; Cormorant Garamond is the OFL stand-in.
+     futura-lt-w01-book is the licensed Adobe Fonts face used on newafro.net for
+     page H1s ("THE AGENCY", "THE ARCHIVE", etc.). Jost is the OFL stand-in. */
+  --na-font-display:       "PP Editorial Old", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --na-font-page-display:  "Jost", "Futura", "Futura PT", "Helvetica Neue", sans-serif;
+  --na-font-headline:      "Jost", "Futura PT", Futura, "Trebuchet MS", sans-serif;
+  --na-font-ui:            "DM Sans", "Inter", "DIN Next", system-ui, sans-serif;
+  --na-font-body:          "Manrope", "Avenir Next", system-ui, sans-serif;
+
+  /* Page H1 typography (bold uppercase sans, used on every non-home page) */
+  --na-fs-page-display:       clamp(54px, 8vw, 110px);
+  --na-page-display-tracking: 0.02em;
+
+  /* Type scale (px, kept literal — they're the brand)
+     Source: newafro.net computed-style samples at 1440px */
+  --na-fs-hero:        150px;     /* homepage H1 only                        */
+  --na-fs-display-xxl: 110px;     /* H1 on about / community / events        */
+  --na-fs-display-xl:  50px;
+  --na-fs-display-l:   45px;
+  --na-fs-display-m:   40px;
+  --na-fs-heading-l:   35px;
+  --na-fs-heading-m:   20px;
+  --na-fs-lead:        24px;      /* hero subhead — line-height 33.6px       */
+  --na-fs-body:        16px;      /* body — line-height 22.4px               */
+  --na-fs-menu:        16px;
+  --na-fs-small:       14px;
+  --na-fs-micro:       12px;
+
+  --na-lh-base:        1.4em;
+  --na-lh-body:        1.6;
+  --na-tracking-caps:  0.05em;
+
+  /* Spacing (4px base) */
+  --na-s-1:  2px;
+  --na-s-2:  4px;
+  --na-s-3:  8px;
+  --na-s-4:  12px;
+  --na-s-5:  14px;
+  --na-s-6:  16px;
+  --na-s-7:  20px;
+  --na-s-8:  24px;
+  --na-s-9:  32px;
+  --na-s-10: 40px;
+  --na-s-12: 48px;
+  --na-s-14: 64px;
+  --na-s-16: 80px;
+  --na-s-20: 120px;
+
+  --na-container:      1240px;
+  --na-container-text: 720px;
+
+  --na-radius-0:      0;
+  --na-radius-xs:     2px;
+  --na-radius-sm:     5px;
+  --na-radius-pill:   300px;
+  --na-radius-circle: 50%;
+
+  --na-shadow-none:    none;
+  --na-shadow-soft:    0 4px 16px rgba(0, 0, 0, 0.07);
+  --na-shadow-card:    0 8px 24px rgba(0, 0, 0, 0.10);
+  --na-shadow-overlay: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  --na-focus-ring:     0 0 0 1px #ffffff, 0 0 0 3px var(--na-bronze);
+
+  --na-ease:           cubic-bezier(0.2, 0.7, 0.2, 1);
+  --na-dur-fast:       120ms;
+  --na-dur-base:       200ms;
+  --na-dur-slow:       400ms;
+
+  /* ── Legacy aliases (so already-shipped components keep working) ── */
+  --color-bg:               var(--na-paper);
+  --color-fg:               var(--na-ink);
+  --color-muted:            var(--na-muted);
+  --color-accent:           var(--na-bronze);
+  --color-accent-hi:        var(--na-bronze-hi);
+  --color-accent-contrast:  var(--na-paper);
+  --color-border:           var(--na-fog);
+  --color-surface:          var(--na-sand-light);
+  --color-surface-2:        var(--na-sand-mid);
+
+  --font-sans:    var(--na-font-ui);
+  --font-display: var(--na-font-display);
+  --font-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+
+  --fs-100: var(--na-fs-micro);
+  --fs-200: var(--na-fs-small);
+  --fs-300: var(--na-fs-body);
+  --fs-400: var(--na-fs-lead);
+  --fs-500: var(--na-fs-heading-m);
+  --fs-600: var(--na-fs-heading-l);
+  --fs-700: var(--na-fs-display-m);
+  --fs-800: var(--na-fs-display-l);
+  --fs-900: var(--na-fs-display-xl);
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.6;
+
+  --space-1: var(--na-s-2);
+  --space-2: var(--na-s-3);
+  --space-3: var(--na-s-4);
+  --space-4: var(--na-s-6);
+  --space-5: var(--na-s-8);
+  --space-6: var(--na-s-9);
+  --space-7: var(--na-s-12);
+  --space-8: var(--na-s-14);
+  --space-9: var(--na-s-16);
+
+  --container-max:    var(--na-container);
+  --container-narrow: var(--na-container-text);
+
+  --radius-sm:   var(--na-radius-xs);
+  --radius-md:   var(--na-radius-sm);
+  --radius-lg:   var(--na-radius-sm);
+  --radius-pill: var(--na-radius-pill);
+
+  --ease-out:  var(--na-ease);
+  --dur-fast:  var(--na-dur-fast);
+  --dur-base:  var(--na-dur-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --na-dur-fast: 0ms; --na-dur-base: 0ms; --na-dur-slow: 0ms; }
+}
+
+[data-tone="paper"]  { background: var(--na-paper);      color: var(--na-ink); }
+[data-tone="cream"]  { background: var(--na-sand-light); color: var(--na-ink); }
+[data-tone="ink"]    { background: var(--na-ink);        color: var(--na-paper); }
+[data-tone="bronze"] { background: var(--na-bronze);     color: var(--na-paper); }

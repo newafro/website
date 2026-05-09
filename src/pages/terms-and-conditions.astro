@@ -1,0 +1,53 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { u } from '../lib/url';
+---
+
+<PageLayout
+  title="Terms and Conditions"
+  eyebrow="Information"
+  description="Terms governing use of newafro.net, our editorial content, and any services we provide."
+>
+  <p><em>Placeholder — full migrated terms syncs in the next checkpoint.</em></p>
+
+  <h2>Use of the site</h2>
+  <p>
+    By accessing newafro.net you agree to these terms. Content is provided for
+    editorial and informational purposes. You may share links to articles and
+    project pages freely; please credit New Afro and the original creators.
+  </p>
+
+  <h2>Intellectual property</h2>
+  <p>
+    All artworks, photographs, films, and editorial content remain the
+    property of their respective creators. Reproduction or commercial use of
+    any content without written permission is prohibited.
+  </p>
+
+  <h2>Submissions and inquiries</h2>
+  <p>
+    Any material you send us — portfolio links, written notes, project
+    proposals — is submitted in confidence. We do not share submissions with
+    third parties without your consent. We try to read everything that comes
+    in, even when we cannot reply quickly.
+  </p>
+
+  <h2>Liability</h2>
+  <p>
+    New Afro provides this site on an as-is basis. We make no warranty as to
+    the accuracy or completeness of information published here, and accept no
+    liability for any loss arising from reliance on it.
+  </p>
+
+  <h2>Applicable law</h2>
+  <p>
+    These terms are governed by the law of the Federal Republic of Germany.
+    Place of jurisdiction is Mainz.
+  </p>
+
+  <p>
+    See also our
+    <a href={u('/imprint')}>Imprint</a> and
+    <a href={u('/privacy-policy')}>Privacy Policy</a>.
+  </p>
+</PageLayout>

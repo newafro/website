@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { u } from '../../lib/url';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title="Journal — New Afro"
+  description="Stories, interviews, and reflections from the New Afro community — the long view, written when something is worth saying."
+>
+  <article class="journal-page">
+    <header class="page-header">
+      <div class="container-narrow">
+        <img
+          class="page-eyebrow-mark"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        <h1 class="display-page">JOURNAL</h1>
+        <p class="lede">
+          Interviews, project notes, and reflections from the New Afro
+          community — the long view, written when something is worth saying.
+        </p>
+      </div>
+    </header>
+
+    <section class="container journal">
+      {posts.length === 0 ? (
+        <p class="journal-empty">No entries yet — the journal is being migrated.</p>
+      ) : (
+        <div class="journal-grid">
+          {posts.map(post => (
+            <BlogCard
+              href={u(`/blog/${post.slug}/`)}
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              image={post.data.hero_image}
+              imageAlt={post.data.hero_alt}
+              category={post.data.category}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .journal-page {
+    background: var(--na-paper);
+    color: var(--na-ink);
+  }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    text-align: center;
+  }
+
+  .page-header h1.display-page {
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(var(--na-fs-lead), 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .journal {
+    padding-block: var(--na-s-9) clamp(var(--na-s-14), 8vw, var(--na-s-16));
+  }
+
+  .journal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--na-s-14) var(--na-s-9);
+  }
+
+  .journal-empty {
+    color: var(--na-muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 1000px) {
+    .journal-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .journal-grid { grid-template-columns: 1fr; gap: var(--na-s-12); }
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { u } from '../lib/url';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title="The Archive — New Afro"
+  description="A rotating archive of artists, projects, and journal entries from the New Afro programme."
+>
+  <article class="archive-page">
+    <header class="page-header">
+      <div class="container-narrow">
+        <img
+          class="page-eyebrow-mark"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        <h1 class="display-page">SHOWROOM</h1>
+        <p class="lede">
+          A rotating archive of artists, projects, and journal entries from
+          the New Afro programme — featured at our pop-ups, exhibitions,
+          and institutional collaborations.
+        </p>
+      </div>
+    </header>
+
+    <section class="container archive">
+      {posts.length === 0 ? (
+        <p class="archive-empty">
+          The journal is being migrated from the legacy site over the coming
+          weeks. In the meantime, browse the
+          <a href={u('/community')}>community</a> we work with.
+        </p>
+      ) : (
+        <div class="archive-grid">
+          {posts.map(post => (
+            <BlogCard
+              href={u(`/blog/${post.slug}/`)}
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              image={post.data.hero_image}
+              imageAlt={post.data.hero_alt}
+              category={post.data.category}
+            />
+          ))}
+        </div>
+      )}
+
+      <p class="archive-note">
+        The full historical exhibition archive is being migrated from the
+        legacy site over the coming weeks.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .archive-page {
+    background: var(--na-paper);
+    color: var(--na-ink);
+  }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    text-align: center;
+  }
+
+  .page-header h1.display-page {
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(var(--na-fs-lead), 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .archive {
+    padding-block: var(--na-s-9) clamp(var(--na-s-14), 8vw, var(--na-s-16));
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--na-s-14) var(--na-s-9);
+  }
+
+  .archive-empty {
+    color: var(--na-muted);
+    font-style: italic;
+    max-width: 60ch;
+  }
+
+  .archive-note {
+    margin-top: var(--na-s-16);
+    font-family: var(--na-font-body);
+    font-size: var(--na-fs-small);
+    color: var(--na-muted);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 1000px) {
+    .archive-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .archive-grid { grid-template-columns: 1fr; gap: var(--na-s-12); }
+  }
+</style>

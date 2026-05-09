@@ -1,0 +1,149 @@
+---
+import { u } from '../lib/url';
+
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  date: Date;
+  image?: string;
+  imageAlt?: string;
+  category?: string;
+}
+
+const { href, title, description, date, image, imageAlt = '', category } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const imageSrc = image
+  ? (image.startsWith('/') && !image.startsWith('//') ? u(image) : image)
+  : undefined;
+---
+
+<article class="card">
+  <a class="card-link" href={href}>
+    <div class="card-media">
+      {imageSrc ? (
+        <img src={imageSrc} alt={imageAlt} loading="lazy" decoding="async" />
+      ) : (
+        <div class="card-media-placeholder" aria-hidden="true"></div>
+      )}
+    </div>
+    <div class="card-body">
+      <p class="card-meta">
+        {category && <span class="card-category">{category}</span>}
+        {category && <span class="card-meta-sep" aria-hidden="true">·</span>}
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+      </p>
+      <h3 class="card-title">{title}</h3>
+      {description && <p class="card-excerpt">{description}</p>}
+      <span class="card-readmore">Read more <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .card {
+    background: transparent;
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card-media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--na-sand);
+    margin-bottom: var(--na-s-7);
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--na-dur-slow) var(--na-ease),
+                filter var(--na-dur-slow) var(--na-ease);
+  }
+
+  .card-media-placeholder {
+    width: 100%;
+    height: 100%;
+    background:
+      linear-gradient(135deg, var(--na-sand-light) 0%, var(--na-sand-mid) 50%, var(--na-clay) 100%);
+  }
+
+  .card-link:hover .card-media img {
+    transform: scale(1.04);
+    filter: saturate(1.05);
+  }
+  .card-link:hover .card-title { color: var(--na-bronze); }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--na-s-4);
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--na-s-4);
+    margin: 0;
+    font-family: var(--na-font-headline);
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    font-size: var(--na-fs-small);
+    color: var(--na-bronze-deep, var(--na-bronze));
+    font-weight: 500;
+  }
+
+  .card-category { color: var(--na-bronze-deep, var(--na-bronze)); font-weight: 600; }
+  .card-meta-sep { color: var(--na-fog); }
+
+  .card-title {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 28px);
+    line-height: 1.15;
+    margin: 0;
+    color: var(--na-ink);
+    transition: color var(--na-dur-fast) var(--na-ease);
+    max-width: none;
+  }
+
+  .card-excerpt {
+    font-family: var(--na-font-body);
+    font-size: var(--na-fs-body);
+    line-height: 1.55;
+    color: var(--na-graphite);
+    margin: 0;
+    max-width: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-readmore {
+    font-family: var(--na-font-headline);
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    font-size: var(--na-fs-small);
+    font-weight: 500;
+    color: var(--na-bronze-deep, var(--na-bronze));
+    margin-top: var(--na-s-4);
+  }
+
+  .card-link:hover .card-readmore { color: var(--na-bronze); }
+</style>

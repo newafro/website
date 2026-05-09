@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { u } from '../lib/url';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = 'New Afro — a cultural platform and creative agency connecting African and European creative ecosystems.',
+  image,
+  noIndex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+// Default OG image is a 1200x630 brand card — used whenever a page doesn't
+// supply its own hero image via the `image` prop.
+const ogPath = image ?? u('/og/default.jpg');
+const ogImage = new URL(ogPath, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#bb8923" />
+    <link rel="icon" type="image/png" sizes="32x32" href={u('/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="192x192" href={u('/favicon-192.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={u('/apple-touch-icon.png')} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Self-hosted variable fonts — preload the two faces used above the fold. */}
+    <link rel="preload" href={u('/fonts/cormorant-italic.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={u('/fonts/dm-sans.woff2')} as="font" type="font/woff2" crossorigin />
+
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="New Afro" />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

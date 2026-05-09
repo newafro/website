@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Captured /archive page is the editorial archive — 97 images + 1 video.
+// We read /public/uploads/archive/ at build time and render every captured
+// body image in capture order, skipping social icons + the hero (#01).
+const archiveDir = path.resolve('public/uploads/archive');
+const SKIP_HERO = '01-';
+const SOCIAL_HASHES = ['45bce1d', '4057345b', 'e1aa082'];
+const archiveImages = fs.existsSync(archiveDir)
+  ? fs.readdirSync(archiveDir)
+      .filter(f => /^\d+-/.test(f))
+      .filter(f => !f.startsWith(SKIP_HERO))
+      .filter(f => !SOCIAL_HASHES.some(h => f.includes(h)))
+      .sort()
+  : [];
+
+---
+
+<BaseLayout
+  title="The Archive — New Afro"
+  description="Editorial archive of pop-ups, exhibitions, restitution work, and live programming captured across the New Afro programme."
+>
+  <article class="archive-page">
+    <header class="page-header page-header--video">
+      <video
+        class="page-header__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={u('/uploads/video/archive-hero-poster.png')}
+        aria-hidden="true"
+      >
+        <source src={u('/uploads/video/archive-hero.mp4')} type="video/mp4" />
+      </video>
+      <div class="page-header__scrim" aria-hidden="true"></div>
+      <div class="container-narrow page-header__inner">
+        <img
+          class="page-eyebrow-mark page-eyebrow-mark--invert"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
+          alt="New Afro"
+          width="56"
+          height="45"
+          loading="eager"
+          decoding="async"
+        />
+        <h1 id="archive-headline" class="display-page display-page--invert">THE ARCHIVE</h1>
+        <p class="lede lede--invert">Slow stories from the team.</p>
+      </div>
+    </header>
+
+    <section class="archive-grid-section container">
+      <div class="archive-grid">
+        {archiveImages.map((file, idx) => (
+          <figure class={`archive-tile archive-tile--${idx % 6}`}>
+            <img
+              src={u(`/uploads/archive/${file}`)}
+              alt={`New Afro archive — image ${idx + 1}`}
+              loading={idx < 3 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
+      <p class="archive-note">
+        The full archive is being migrated from the legacy site over the coming weeks.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .archive-page {
+    background: #2a1a06; /* near-black warm to match capture's dark archive backdrop */
+    color: var(--na-cream-warm);
+  }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-12);
+    text-align: center;
+  }
+
+  .page-header h1.display-page {
+    color: var(--na-paper);
+    margin: 0 auto var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .page-header .lede {
+    color: rgba(255, 249, 235, 0.9);
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.5;
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .archive-grid-section {
+    padding-block: clamp(var(--na-s-12), 6vw, var(--na-s-16));
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--na-s-5);
+  }
+
+  .archive-tile {
+    margin: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    grid-column: span 4;
+    aspect-ratio: 3 / 2;
+  }
+
+  /* Editorial rhythm — vary tile sizes to match the masonry feel of capture. */
+  .archive-tile--0 { grid-column: span 6; aspect-ratio: 4 / 3; }
+  .archive-tile--1 { grid-column: span 6; aspect-ratio: 4 / 3; }
+  .archive-tile--2 { grid-column: span 4; aspect-ratio: 3 / 4; }
+  .archive-tile--3 { grid-column: span 4; aspect-ratio: 3 / 4; }
+  .archive-tile--4 { grid-column: span 4; aspect-ratio: 3 / 4; }
+  .archive-tile--5 { grid-column: span 12; aspect-ratio: 16 / 7; }
+
+  .archive-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .archive-tile:hover img {
+    transform: scale(1.03);
+  }
+
+  .archive-note {
+    margin: var(--na-s-12) auto 0;
+    text-align: center;
+    color: rgba(255, 249, 235, 0.65);
+    font-family: var(--na-font-body);
+    font-size: 14px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .archive-tile img { transition: none; }
+  }
+
+  @media (max-width: 900px) {
+    .archive-grid { grid-template-columns: repeat(6, 1fr); }
+    .archive-tile,
+    .archive-tile--0,
+    .archive-tile--1,
+    .archive-tile--2,
+    .archive-tile--3,
+    .archive-tile--4 { grid-column: span 3; aspect-ratio: 4 / 3; }
+    .archive-tile--5 { grid-column: span 6; aspect-ratio: 16 / 9; }
+  }
+
+  @media (max-width: 540px) {
+    .archive-grid { grid-template-columns: 1fr; }
+    .archive-tile,
+    .archive-tile--0,
+    .archive-tile--1,
+    .archive-tile--2,
+    .archive-tile--3,
+    .archive-tile--4,
+    .archive-tile--5 { grid-column: span 1; aspect-ratio: 4 / 3; }
+  }
+</style>

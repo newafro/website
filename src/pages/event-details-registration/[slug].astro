@@ -1,0 +1,389 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { u } from '../../lib/url';
+
+export async function getStaticPaths() {
+  // At build time, look up captured per-event images from
+  // public/uploads/event-<slug>/. Inlined so Astro can serialize getStaticPaths.
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const SOCIAL = ['45bce1d', '4057345b', 'e1aa082'];
+  function imagesFor(slug: string): string[] {
+    const dir = path.resolve(`public/uploads/event-${slug}`);
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir)
+      .filter(f => /^\d+-/.test(f))
+      .filter(f => !SOCIAL.some(h => f.includes(h)))
+      .sort();
+  }
+  const events = [
+    {
+      slug: 'nazo-po-tozali-on-the-way-to-find-myself',
+      title: 'NAZO PO TOZALI... on the way to find myself.',
+      date: 'Fri 05 Sept | Mainz',
+      intro:
+        'Join us on 05.09 (Opening) at Institut français Mainz for a powerful moment of art and humanity through photography and short film with artists Benga Mavinga, Soum Eveline, and Jean-Baptiste Joire.',
+      timeRange: '05 Sept 2025, 19:00 – 28 Sept 2025, 23:00',
+      location: 'Mainz, Schillerstraße 11, 55116 Mainz, Germany',
+      body: true,
+    },
+    { slug: 'heritage-memoires-en-mouvements', title: 'Héritage...Mémoires en mouvements?', date: 'Fri 05 Dec', location: 'Cotonou', context: 'A reflection on memory, heritage, and movement, programmed in Cotonou as part of the New Afro Africa cycle.' },
+    { slug: 'private-showroom-africancreativestotheworld', title: 'Private Showroom #AFricancreativestotheworld', date: 'Fri 13 Dec', location: 'Mainz', context: 'An invitation-only showroom presenting African creatives to a curated audience of collectors, partners, and press.' },
+    { slug: 'i-love-my-solitude-but-im-meant-to-be-a-lover', title: "I love my solitude... But I'm meant to be a lover.", date: 'Thu 20 Jun', location: 'Mainz', context: 'A solo exhibition exploring intimacy, solitude, and longing through the work of a featured New Afro artist.' },
+    { slug: 'restitution-et-apres-restitution-und-dann', title: 'RESTITUTION... et après? Restitution...und dann?', date: 'Thu 23 May', location: 'Mainz', context: 'A panel and exhibition probing the question that follows restitution: what comes after the artefacts return home?' },
+    { slug: 'benjamin-abana-new-afro-near-week', title: 'BENJAMIN ABANA + NEW AFRO + NEAR WEEK', date: 'Fri 18 Aug', location: 'København', context: 'A Copenhagen pop-up co-hosted with NEAR Week featuring painter Benjamin Abana — work, conversation, and a night of programming.' },
+    { slug: 'begegnung-rencontre-pop-up-abidjan', title: 'Begegnung / Rencontre Pop-Up Abidjan', date: 'Tue 21 Mar', location: 'Abidjan', context: 'A pop-up encounter in Abidjan — a meeting point between European and West African creative communities.' },
+    { slug: 'la-teranga-en-couleur', title: 'LA TERANGA EN COULEUR', date: 'Thu 16 Mar', location: 'Mainz', context: 'An interkulturelle Ausstellung at Institut français Mainz, in collaboration with Senegalese artists, on hospitality and color.' },
+    { slug: 'rencontre-begegnung', title: '"Rencontre" / Begegnung', date: 'Fri 30 Sept', location: 'Schießgartenstraße 10, Mainz', context: 'An encounter and exchange evening at our Mainz space — works on view, food, music, and open conversation.' },
+    { slug: 'new-afro-x-benjamin-abana', title: 'NEW AFRO x BENJAMIN ABANA', date: 'Thu 19 May', location: 'LA SALA, Mainz', context: 'A focused presentation of Benjamin Abana\'s painting practice at LA SALA, with the artist in attendance.' },
+    { slug: 'new-afro-launch', title: 'New Afro Launch', date: 'Sat 22 Feb', location: 'Atelier Christiane Schauder, Mainz', context: 'The launch night of the New Afro programme — first artists, first partners, the start of the cycle.' },
+  ];
+
+  return events.map(e => ({ params: { slug: e.slug }, props: { ...e, images: imagesFor(e.slug) } }));
+}
+
+
+const { slug } = Astro.params;
+const { title, date, intro, timeRange, location, body, context, images = [] } = Astro.props;
+const heroImage = images[0] ? u(`/uploads/event-${slug}/${images[0]}`) : null;
+const galleryImages: string[] = images.slice(1, 5).map((f: string) => u(`/uploads/event-${slug}/${f}`));
+---
+
+<BaseLayout title={`${title} — New Afro`} description={intro ?? `${title} — ${date}`}>
+  <article class="event-detail">
+    <header class="page-header">
+      <div class="container-narrow">
+        <p class="eyebrow page-eyebrow">Event</p>
+        <h1>{title}</h1>
+        <p class="event-detail__date">{date}{location ? ` | ${location}` : ''}</p>
+        {intro && <p class="lede">{intro}</p>}
+      </div>
+    </header>
+
+    {heroImage && (
+      <figure class="event-detail__hero container-narrow">
+        <img src={heroImage} alt={title} loading="eager" decoding="async" />
+      </figure>
+    )}
+
+    {(timeRange || location) && (
+      <section class="event-detail__when container-narrow">
+        <h2>Time &amp; Location</h2>
+        {timeRange && <p>{timeRange}</p>}
+        {location && <p>{location}</p>}
+      </section>
+    )}
+
+    {body && (
+      <section class="event-detail__body container-narrow">
+        <h2>About the event</h2>
+        <p><strong>ABOUT THE EXHIBITION:</strong></p>
+
+        <p>Who am I? What defines me?</p>
+        <p>
+          To what extent are we shaped by our surroundings, our heritage, the
+          choices of others? Isn't life a constant search for oneself? And if
+          so, how much do others define us? To what degree does the past of
+          those who resemble us weigh on who we are? Are we forever connected?
+        </p>
+        <p>
+          "Naza po tozali" in Lingala means: "I am because we are." This deep
+          reflection gave birth to this exhibition, driven by the desire to
+          explore a subject, a concept, that resonates today with particular
+          intensity. In the midst of a global identity crisis, marked by the
+          rise of extremist groups calling for exclusive identities, the
+          awakening of once-oppressed peoples, waves of clandestine migration,
+          and the growing normalization of hateful and "remigration"
+          discourses, one question arises: Who are we in society today?
+        </p>
+        <p>
+          The idea of a communal "we" — an identity woven by many voices,
+          echoes through time, from Greek philosophy to modern thought.
+          Souleymane Bachir Diagne speaks of the necessity to "build humanity
+          together." Ubuntu's spirit also proclaims our interdependence. But
+          can we truly "build humanity together" if we don't begin by being
+          human?
+        </p>
+        <p>
+          Through an exclusively photographic exhibition, three artists from
+          different cultural backgrounds (DR Congo-Germany, Burkina Faso,
+          France-Senegal) explore the concept of identity by engaging with
+          their environment, confronting certain traditions, and observing the
+          political choices that still shape our coexistence and define who we
+          are, while seeking to understand who they themselves are. Their
+          gaze, far removed from the usual Eurocentric lenses, offers a
+          different, plural, and de-centered reading of our shared humanity.
+        </p>
+
+        <h3>Program</h3>
+
+        <h4>05.09.2025: Opening</h4>
+        <p>
+          With the presence of the three artists (Benga Mavinga, Eveline Soum
+          &amp; Jean-Baptiste Joire)<br />
+          Time: 19:00<br />
+          Location: Institut français Mainz, Schillerstraße 11, 55116 Mainz<br />
+          Languages: German / French / English
+        </p>
+
+        <h4>06.09.2025: Artist Talk</h4>
+        <p>
+          With the three artists<br />
+          Moderation: Chéria Essieke-Bayer (Independent Curator)<br />
+          German translation: Alina Guillouet<br />
+          Topic: Naza Po Tozali / Ich bin, weil wir sind (Identity, Heritage,
+          Memory)<br />
+          Time: 18:30–20:00<br />
+          Location: Institut français Mainz, Schillerstraße 11, 55116 Mainz
+        </p>
+
+        <h4>26–28.09.2025: 3x Klingeln &amp; Finissage</h4>
+
+        <p>
+          Huge thanks to the Institut français Mainz, OFAJ, and Kultursommer
+          RLP, Förderverein für das Institut français Mainz e.V., the
+          Ministerium für Familie, Frauen, Kultur und Integration and Schloss
+          Vaux for supporting this exhibition.
+        </p>
+
+        <p>
+          Photo credits: Benga Mavinga, Éveline Soum.<br />
+          Graphic Design: Maria Bayer<br />
+          An exhibition curated by Cheria Essieke-Bayer and the New Afro Team.
+        </p>
+      </section>
+    )}
+
+    {!body && (
+      <section class="event-detail__body container-narrow">
+        <h2>About the event</h2>
+        {context && <p>{context}</p>}
+        <p class="event-detail__sync">
+          <em>Full event details from the original archive will sync shortly.</em>
+        </p>
+
+        <div class="event-detail__cta-block">
+          <h3>Were you at this event?</h3>
+          <p>
+            We're rebuilding the archive from photos, programmes, and stories
+            shared by the people who were there. If you have something to add —
+            a photo, a quote, a memory — we'd love to hear from you.
+          </p>
+          <p>
+            <a class="na-btn" href={u('/contact')}>Get in touch</a>
+            <a class="na-btn na-btn--ghost" href={u('/events')}>All events</a>
+          </p>
+        </div>
+      </section>
+    )}
+
+    {galleryImages.length > 0 && (
+      <section class="event-detail__gallery container-narrow">
+        <h2>Gallery</h2>
+        <ul class="event-detail__gallery-grid">
+          {galleryImages.map((src: string, idx: number) => (
+            <li>
+              <img src={src} alt={`${title} — image ${idx + 2}`} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <footer class="event-detail__footer container-narrow">
+      <a class="na-btn" href={u('/events')}>← All events</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .event-detail {
+    background: var(--na-paper);
+    color: var(--na-ink);
+  }
+
+  .page-header {
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    text-align: left;
+  }
+
+  .page-eyebrow {
+    color: var(--na-bronze-deep, var(--na-bronze));
+    margin: 0 0 var(--na-s-7);
+  }
+
+  .page-header h1 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(40px, 7vw, 78px);
+    line-height: 1.1;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-7);
+    max-width: 18ch;
+  }
+
+  .event-detail__date {
+    font-family: var(--na-font-headline);
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    color: var(--na-bronze-deep, var(--na-bronze));
+    font-size: var(--na-fs-body);
+    margin: 0 0 var(--na-s-9);
+  }
+
+  .lede {
+    font-family: var(--na-font-body);
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.5;
+    color: var(--na-ink);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  .event-detail__when,
+  .event-detail__body {
+    padding-block: clamp(var(--na-s-9), 5vw, var(--na-s-12));
+  }
+
+  .event-detail__when h2,
+  .event-detail__body h2 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 50px);
+    line-height: 1.15;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-7);
+  }
+
+  .event-detail__body h3 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.2;
+    color: var(--na-ink);
+    margin: var(--na-s-12) 0 var(--na-s-7);
+  }
+
+  .event-detail__body h4 {
+    font-family: var(--na-font-headline);
+    font-weight: 600;
+    font-size: var(--na-fs-lead);
+    color: var(--na-ink);
+    text-transform: none;
+    letter-spacing: 0;
+    margin: var(--na-s-9) 0 var(--na-s-5);
+  }
+
+  .event-detail__body p,
+  .event-detail__when p {
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-7);
+    max-width: none;
+  }
+
+  .event-detail__placeholder {
+    color: var(--na-muted);
+  }
+
+  .event-detail__placeholder a {
+    color: var(--na-bronze-deep, var(--na-bronze));
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .event-detail__sync {
+    color: var(--na-graphite);
+    font-style: italic;
+    border-left: 2px solid var(--na-bronze);
+    padding-left: var(--na-s-7);
+    margin: var(--na-s-9) 0;
+  }
+
+  .event-detail__cta-block {
+    margin-top: var(--na-s-12);
+    padding: clamp(var(--na-s-9), 4vw, var(--na-s-12));
+    background: var(--na-cream, var(--na-sand-light));
+    border: 1px solid rgba(50, 28, 1, 0.08);
+  }
+
+  .event-detail__cta-block h3 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.2;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-5);
+  }
+
+  .event-detail__cta-block .na-btn {
+    border-radius: 0;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-right: var(--na-s-5);
+  }
+
+  .event-detail__footer {
+    padding-block: var(--na-s-9) clamp(var(--na-s-14), 8vw, var(--na-s-16));
+  }
+
+  .event-detail__footer .na-btn {
+    border-radius: 0;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .event-detail__hero {
+    margin: 0 auto var(--na-s-9);
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--na-clay);
+  }
+
+  .event-detail__hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .event-detail__gallery {
+    padding-block: clamp(var(--na-s-9), 5vw, var(--na-s-12));
+  }
+
+  .event-detail__gallery h2 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 50px);
+    line-height: 1.15;
+    color: var(--na-ink);
+    margin: 0 0 var(--na-s-7);
+  }
+
+  .event-detail__gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--na-s-7);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .event-detail__gallery-grid img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .event-detail__gallery-grid { grid-template-columns: 1fr; }
+  }
+</style>
