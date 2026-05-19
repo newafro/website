@@ -60,7 +60,7 @@ After DNS propagates, verify the custom domain in the `newafro/website-preview` 
 5. When approved, open a pull request from `staging` into `main`.
 6. Merging to `main` deploys `https://newafro.com`.
 
-CMS edits also target `staging`, so editors can update events, posts, and artists without accidentally publishing directly to production.
+CMS edits also target `staging`, so editors can update events, posts, and artists without accidentally publishing directly to production. See [team-access.md](team-access.md) for editor onboarding.
 
 ## Approval Language
 

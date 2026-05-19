@@ -1,0 +1,89 @@
+# Team Access
+
+Gus, Maria, Cheria, and Ken should be able to update the website through the CMS and give feedback through WhatsApp.
+
+## Access Model
+
+There are two team-facing entry points:
+
+```text
+CMS editing:      https://newafro.com/admin/
+Preview review:   WhatsApp group + https://preview.newafro.com
+Production site:  https://newafro.com
+```
+
+The team should not need to understand Git branches for daily work. The system maps simple actions onto the release flow:
+
+- CMS edits publish to `staging`
+- `staging` deploys to `preview.newafro.com`
+- approved preview changes are promoted to `main`
+- `main` deploys to `newafro.com`
+
+## Required People
+
+| Person | CMS login | WhatsApp feedback | Production approval |
+| --- | --- | --- | --- |
+| Gus | yes | yes | yes |
+| Maria | yes | yes | yes |
+| Cheria | yes | yes | yes |
+| Ken | yes | yes | yes |
+
+## CMS Login Setup
+
+The CMS uses GitHub login through the Decap OAuth proxy. Each person needs:
+
+1. A GitHub account.
+2. Access to `newafro/website` with write permission, ideally through a `website-editors` team in the `newafro` GitHub organization.
+3. Access to the New Afro OAuth proxy used by `public/admin/config.yml`.
+4. A successful login test at `https://newafro.com/admin/`.
+
+Editors do not need direct write access to `newafro/website-preview`; the preview deploy token handles that.
+
+## WhatsApp Setup
+
+The WhatsApp bot should allow the approved New Afro group and the four named team members.
+
+Store the operational values in 1Password, not in the repository:
+
+```text
+New Afro Website Bot / WhatsApp group id
+New Afro Website Bot / allowed phone numbers
+New Afro Website Bot / GitHub token for issue and PR creation
+New Afro Website Preview Deploy / NEWAFRO_PREVIEW_DEPLOY_TOKEN
+New Afro Decap OAuth / OAuth proxy credentials
+```
+
+The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
+
+## Minimal Onboarding Message
+
+Send this to each team member once access is ready:
+
+```text
+You can update the New Afro website here:
+https://newafro.com/admin/
+
+Sign in with GitHub.
+
+Your edits first go to preview:
+https://preview.newafro.com
+
+Nothing goes to the public site until the preview is approved.
+
+For feedback, write in the WhatsApp group:
+"New Afro, please change ..."
+or reply:
+"Approved for production"
+```
+
+## Access Checklist
+
+- [ ] Gus has GitHub write access to `newafro/website`
+- [ ] Maria has GitHub write access to `newafro/website`
+- [ ] Cheria has GitHub write access to `newafro/website`
+- [ ] Ken has GitHub write access to `newafro/website`
+- [ ] All four can log in at `https://newafro.com/admin/`
+- [ ] WhatsApp bot can read the approved New Afro group
+- [ ] WhatsApp bot can identify the four approved team members
+- [ ] Preview deploy succeeds at `https://preview.newafro.com`
+- [ ] Production publish requires explicit approval text

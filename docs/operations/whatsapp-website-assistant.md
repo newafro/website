@@ -89,14 +89,14 @@ The menu is still too heavy on mobile
 The bot should answer:
 
 ```text
-Got it. I’ll update the mobile menu on preview and send a new link when ready.
+Got it. I will update the mobile menu on preview and send a new link when ready.
 ```
 
 It should not require the team to know branches, commits, workflows, or GitHub Actions.
 
 ## Production Guardrails
 
-Production publish requires an explicit approval phrase from an allowed approver:
+Production publish requires an explicit approval phrase from Gus, Maria, Cheria, or Ken:
 
 ```text
 Approved for production
@@ -158,6 +158,7 @@ Do not post:
 The first useful version should support:
 
 - intake from one approved WhatsApp group
+- recognition of Gus, Maria, Cheria, and Ken as approved team members
 - text, screenshots, flyers, and links
 - GitHub issue creation
 - staging PR creation by a human/agent
