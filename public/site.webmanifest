@@ -1,0 +1,27 @@
+{
+  "name": "New Afro",
+  "short_name": "New Afro",
+  "description": "A cultural platform and creative agency connecting African and European creative ecosystems.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8f2e5",
+  "theme_color": "#bb8923",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

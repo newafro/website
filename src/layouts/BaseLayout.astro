@@ -21,7 +21,7 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 // Default OG image is a 1200x630 brand card — used whenever a page doesn't
 // supply its own hero image via the `image` prop.
-const ogPath = image ?? u('/og/default.jpg');
+const ogPath = image ?? u('/og/default.png');
 const ogImage = new URL(ogPath, Astro.site).toString();
 const fontCss = `
 @font-face {
@@ -62,9 +62,13 @@ const fontCss = `
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#bb8923" />
+    <meta name="apple-mobile-web-app-title" content="New Afro" />
+    <link rel="icon" href={u('/favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
     <link rel="icon" type="image/png" sizes="32x32" href={u('/favicon-32.png')} />
     <link rel="icon" type="image/png" sizes="192x192" href={u('/favicon-192.png')} />
     <link rel="apple-touch-icon" sizes="180x180" href={u('/apple-touch-icon.png')} />
+    <link rel="manifest" href={u('/site.webmanifest')} />
     <link rel="canonical" href={canonical} />
 
     {/* Self-hosted variable fonts — preload the two faces used above the fold. */}
@@ -83,6 +87,9 @@ const fontCss = `
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="New Afro" />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

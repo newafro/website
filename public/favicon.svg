@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#d97757"/>
-  <text x="50%" y="56%" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#fff">N</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="New Afro">
+  <rect width="64" height="64" rx="10" fill="#f8f2e5"/>
+  <path d="M7 9h15c4 0 8 4 8 8v11h-9V18H7V9Zm28 0h8v11c0 5 4 9 9 9h5v9h-7c-8 0-15-7-15-15V9Zm14 0h8v14h-8V9ZM7 24h9v8H7v-8Zm17 15h9c0 5 4 9 9 9h15v9H41c-10 0-17-8-17-18ZM7 40h9v8h10v9H7V40Zm31-7h8v8h-8v-8Z" fill="#0b0a08"/>
+  <path d="M23 24h10l8 8-8 8H23l8-8-8-8Z" fill="none" stroke="#0b0a08" stroke-width="5" stroke-linejoin="round"/>
 </svg>

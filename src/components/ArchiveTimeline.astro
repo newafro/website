@@ -1,0 +1,257 @@
+---
+import { u } from '../lib/url';
+
+const projects = [
+  {
+    kicker: '2025 · Cotonou',
+    title: 'Exhibition: Héritage... Mémoires en Mouvement?',
+    venue: 'at Galerie Zato Benin',
+    date: '05 DEC - 18 JAN',
+    poster: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png',
+    image: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg',
+    detail: '/uploads/archive/03-d5693e_da0348303e0e4716af35c2ae6ee69ab5-mv2.jpeg',
+  },
+  {
+    kicker: '2025 · Mainz',
+    title: 'NAZO PO TOZALI... on the way to find myself.',
+    venue: 'at Institut français Mainz',
+    date: '05 SEPT - 28 SEPT',
+    poster: '/uploads/events/05-e7ed0d_351931db808f4108a357420140c5cdd2-mv2.jpg',
+    image: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg',
+    detail: '/uploads/archive/05-d5693e_9586547c75354a43b64721b9750a2983-mv2.jpg',
+  },
+  {
+    kicker: '2024 · Mainz',
+    title: 'Private Showroom #AFricancreativestotheworld',
+    venue: 'a New Afro showroom format',
+    date: '13 DEC',
+    poster: '/uploads/events/07-d5693e_ec58158892924021bec94be2da3c8c35-mv2.png',
+    image: '/uploads/archive/06-e7ed0d_d700c5d9ae674e04abcec90a8c0c5212-mv2.jpg',
+    detail: '/uploads/archive/07-d5693e_7bdb007d0fa046bebda86a2b69782381-mv2.jpg',
+  },
+  {
+    kicker: '2024 · Mainz',
+    title: 'RESTITUTION... et après? Restitution... und dann?',
+    venue: 'panel, exhibition, and community programme',
+    date: '23 MAY',
+    poster: '/uploads/events/11-e7ed0d_cfc4cf679c3643bc890b4967b9eef404-mv2.jpg',
+    image: '/uploads/archive/08-d5693e_f22c351904a840e084fc76aa667716ee-mv2.jpg',
+    detail: '/uploads/archive/09-d5693e_2840031d05904b5da9c8ba61e9347901-mv2.jpg',
+  },
+  {
+    kicker: '2024 · Mainz',
+    title: 'Rencontre / Begegnung',
+    venue: 'live painting, exhibition, and exchange',
+    date: '27 APR',
+    poster: '/uploads/events/19-e7ed0d_8ca1c3a84c3d437abbe6b525fa5b6309-mv2.png',
+    image: '/uploads/archive/10-d5693e_ef1d98e5ce464b84bbb5693b55544174-mv2.jpg',
+    detail: '/uploads/archive/11-d5693e_be81d225e6c640348cb749e1c2ee7fce-mv2.jpg',
+  },
+];
+---
+
+<section class="archive-timeline" aria-labelledby="archive-title">
+  <div class="archive-kicker">THE ARCHIVE</div>
+  <h1 id="archive-title">Projects, exhibitions, and field notes.</h1>
+
+  <ol class="project-list">
+    {projects.map(project => (
+      <li class="archive-project">
+        <div class="project-meta">
+          <span>{project.kicker}</span>
+          <strong>{project.date}</strong>
+        </div>
+        <div class="project-body">
+          <header class="project-title">
+            <h2>{project.title}</h2>
+            <p>{project.venue}</p>
+          </header>
+          <div class="project-strip">
+            <figure class="project-poster">
+              <img src={u(project.poster)} alt={`${project.title} visual`} loading="lazy" decoding="async" />
+            </figure>
+            <figure class="project-image project-image--main">
+              <img src={u(project.image)} alt={`${project.title} archive image`} loading="lazy" decoding="async" />
+            </figure>
+            <figure class="project-image project-image--detail">
+              <img src={u(project.detail)} alt={`${project.title} detail image`} loading="lazy" decoding="async" />
+            </figure>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .archive-timeline {
+    background:
+      radial-gradient(circle at 78% 6%, rgba(101, 63, 20, 0.34), transparent 34%),
+      #2a1705;
+    color: var(--na-cream-warm);
+    min-height: 100vh;
+    padding: clamp(96px, 11vw, 150px) 0 clamp(72px, 9vw, 128px);
+  }
+
+  .archive-kicker {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto var(--na-s-5);
+    font-family: var(--na-font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: rgba(255, 249, 235, 0.62);
+  }
+
+  .archive-timeline > h1 {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto clamp(72px, 8vw, 118px);
+    font-family: var(--na-font-display);
+    font-size: clamp(38px, 6vw, 86px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: 0;
+    color: var(--na-cream-warm);
+  }
+
+  .project-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(76px, 10vw, 148px);
+  }
+
+  .archive-project {
+    display: grid;
+    grid-template-columns: minmax(88px, 13vw) minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .project-meta {
+    position: sticky;
+    top: 112px;
+    padding-left: clamp(18px, 3vw, 48px);
+    color: rgba(255, 249, 235, 0.58);
+    font-family: var(--na-font-sans);
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .project-meta strong {
+    display: block;
+    margin-top: 12px;
+    color: var(--na-cream-warm);
+    font-size: clamp(18px, 2.4vw, 34px);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .project-body {
+    min-width: 0;
+  }
+
+  .project-title {
+    text-align: center;
+    margin: 0 0 clamp(38px, 5vw, 72px);
+    padding-right: clamp(16px, 3vw, 44px);
+  }
+
+  .project-title h2 {
+    margin: 0 0 var(--na-s-5);
+    font-family: var(--na-font-display);
+    font-size: clamp(36px, 4.6vw, 66px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.98;
+    letter-spacing: 0;
+    color: var(--na-cream-warm);
+  }
+
+  .project-title p {
+    margin: 0;
+    font-family: var(--na-font-sans);
+    font-size: clamp(18px, 1.8vw, 28px);
+    line-height: 1.2;
+    color: rgba(255, 249, 235, 0.9);
+  }
+
+  .project-strip {
+    display: grid;
+    grid-template-columns: minmax(260px, 30vw) minmax(0, 1fr) minmax(140px, 13vw);
+    height: clamp(430px, 43vw, 650px);
+    overflow: hidden;
+  }
+
+  .project-strip figure {
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    background: rgba(255, 249, 235, 0.06);
+  }
+
+  .project-strip img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-poster img {
+    object-fit: contain;
+    background: #1b1004;
+  }
+
+  .project-image--detail img {
+    filter: saturate(0.95) contrast(1.05);
+  }
+
+  @media (max-width: 900px) {
+    .archive-project {
+      grid-template-columns: 1fr;
+    }
+
+    .project-meta {
+      position: static;
+      width: min(680px, calc(100% - 32px));
+      margin: 0 auto -24px;
+      padding-left: 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .project-meta strong {
+      margin-top: 0;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .project-title {
+      width: min(680px, calc(100% - 32px));
+      margin-inline: auto;
+      padding-right: 0;
+      text-align: left;
+    }
+
+    .project-strip {
+      grid-template-columns: 1fr;
+      height: auto;
+      gap: 0;
+    }
+
+    .project-strip figure {
+      aspect-ratio: 4 / 3;
+    }
+
+    .project-poster {
+      aspect-ratio: 3 / 4;
+    }
+  }
+</style>
