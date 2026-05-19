@@ -1,0 +1,40 @@
+name: Preview feedback
+description: Feedback on https://preview.newafro.com before production.
+title: "[Preview feedback] "
+labels:
+  - website
+  - preview
+body:
+  - type: input
+    id: preview_url
+    attributes:
+      label: Preview URL
+      placeholder: https://preview.newafro.com/...
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What needs changing?
+      description: Keep this visual and concrete. Screenshots are useful.
+      placeholder: On mobile, the menu text is too large and the Archive first image is cropped too hard.
+    validations:
+      required: true
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Review decision
+      options:
+        - Needs changes
+        - Approved for production
+        - Needs missing content
+        - Do not publish
+    validations:
+      required: true
+  - type: textarea
+    id: whatsapp_context
+    attributes:
+      label: WhatsApp context
+      description: Optional paste of the original team message or bot summary.
+    validations:
+      required: false

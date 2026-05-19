@@ -1,0 +1,50 @@
+name: Website change
+description: Request a content, image, layout, or page update for New Afro.
+title: "[Website] "
+labels:
+  - website
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for changes that should go to preview before production.
+  - type: textarea
+    id: request
+    attributes:
+      label: What should change?
+      description: Write this in normal language. Links, screenshots, and pasted WhatsApp context are welcome.
+      placeholder: Add the new event to the Events page using the attached flyer.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or section
+      placeholder: Events, Archive, Contact, Home, Artist profile...
+    validations:
+      required: false
+  - type: textarea
+    id: assets
+    attributes:
+      label: Assets or links
+      description: Add Drive links, image names, Instagram links, ticket links, or references.
+    validations:
+      required: false
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      options:
+        - Preview first
+        - Production hotfix
+        - Design exploration
+    validations:
+      required: true
+  - type: textarea
+    id: approval
+    attributes:
+      label: Approval notes
+      description: Who needs to approve this before production?
+      placeholder: Cheria approves visual/content; Gus approves publish.
+    validations:
+      required: false

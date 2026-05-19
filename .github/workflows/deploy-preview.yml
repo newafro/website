@@ -1,0 +1,50 @@
+name: Deploy Preview to GitHub Pages
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build preview site
+        env:
+          DEPLOY_TARGET: apex
+          SITE_URL: https://preview.newafro.com
+        run: npm run build
+
+      - name: Set preview custom domain
+        run: |
+          printf '%s\n' 'preview.newafro.com' > dist/CNAME
+          touch dist/.nojekyll
+
+      - name: Publish preview site
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.NEWAFRO_PREVIEW_DEPLOY_TOKEN }}
+          external_repository: newafro/website-preview
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          cname: preview.newafro.com
+          commit_message: "Deploy preview from newafro/website@${{ github.sha }}"

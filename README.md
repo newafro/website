@@ -27,12 +27,14 @@ src/styles/        design tokens + global styles
 
 ## Edit content
 
-- Editors: open `/admin/` (after OAuth proxy is configured) and edit through the CMS UI.
+- Editors: open `/admin/` (after OAuth proxy is configured) and edit through the CMS UI. CMS publishes to the `staging` branch first, so changes appear on `https://preview.newafro.com` before production.
 - Developers: edit markdown under `src/content/` and push to `main`.
 
 ## Deploy
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds Astro for `https://newafro.com` and publishes to GitHub Pages.
+
+Pushes to `staging` trigger `.github/workflows/deploy-preview.yml`, which builds Astro for `https://preview.newafro.com` and publishes to the separate `newafro/website-preview` GitHub Pages repository. See [docs/operations/staging-preview.md](docs/operations/staging-preview.md).
 
 Local/default builds also use the apex/root domain shape. To build the legacy GitHub Pages subpath preview explicitly:
 
