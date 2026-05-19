@@ -49,7 +49,7 @@ Store the operational values in 1Password, not in the repository:
 New Afro Website Bot / WhatsApp group id
 New Afro Website Bot / allowed phone numbers
 New Afro Website Bot / GitHub token for issue and PR creation
-New Afro Website Preview Deploy / NEWAFRO_PREVIEW_DEPLOY_KEY
+New Afro Website Preview Deploy / NEWAFRO_PREVIEW_DEPLOY_TOKEN
 New Afro Decap OAuth / OAuth proxy credentials
 ```
 

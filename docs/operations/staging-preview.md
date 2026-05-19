@@ -31,10 +31,12 @@ custom domain: preview.newafro.com
 The source repository needs this GitHub Actions secret:
 
 ```text
-NEWAFRO_PREVIEW_DEPLOY_KEY
+NEWAFRO_PREVIEW_DEPLOY_TOKEN
 ```
 
-Use an SSH deploy key with write access only to `newafro/website-preview`. Store the private key in the `newafro/website` repository secret and keep a copy in 1Password if the team wants a recovery copy.
+Use a fine-grained GitHub token with write access only to `newafro/website-preview` contents. Store the token in 1Password and mirror it into the `newafro/website` repository secret.
+
+An SSH deploy key would be cleaner, but GitHub currently rejects deploy keys for this preview repository.
 
 ## DNS
 
