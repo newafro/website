@@ -41,7 +41,17 @@ Editors do not need direct write access to `newafro/website-preview`; the previe
 
 ## WhatsApp Setup
 
-The WhatsApp bot should allow the approved New Afro group and the four named team members.
+The WhatsApp bot should allow the approved New Afro group and the four named team members. The friendly path is account whitelisting, not a technical pairing flow for each teammate.
+
+Recommended setup:
+
+1. Pair the bot once with the WhatsApp bridge account.
+2. Add that bot account to the New Afro team group.
+3. Whitelist Gus, Maria, Cheria, and Ken by WhatsApp phone number.
+4. Let each person confirm once in the group with a message such as `New Afro, it's Maria`.
+5. Store the confirmed WhatsApp identity next to their name.
+
+After that, the team can just write naturally in the group.
 
 Store the operational values in 1Password, not in the repository:
 

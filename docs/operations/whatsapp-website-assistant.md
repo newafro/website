@@ -29,6 +29,26 @@ Avoid developer language unless the user asks for it. Never post routine "sessio
 
 ## Group Chat UX
 
+Pairing should feel like joining a normal team chat, not authorizing a technical system.
+
+Recommended pairing:
+
+1. Add the bot to the approved New Afro WhatsApp group.
+2. Whitelist Gus, Maria, Cheria, and Ken by WhatsApp phone number.
+3. Ask each person to send one simple message in the group:
+
+```text
+New Afro, it's Gus
+```
+
+The bot replies:
+
+```text
+Hi Gus. You can send website changes here. I will put changes on preview first, then ask before anything goes live.
+```
+
+No one should need to scan a bot QR code except the operator who owns the WhatsApp bridge session.
+
 The bot should respond when mentioned with one of these natural triggers:
 
 ```text
