@@ -13,11 +13,9 @@ gallery:
   - "/uploads/post-new-afro-showroom-in-abidjan-ivory-coast/08-e7ed0d_bbdc23af3b8743e5a976bbb852510187-mv2.jpg"
   - "/uploads/post-new-afro-showroom-in-abidjan-ivory-coast/09-e7ed0d_82350f844f514bcb8469c360b0264941-mv2.jpeg"
   - "/uploads/post-new-afro-showroom-in-abidjan-ivory-coast/10-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
-draft: false
+draft: true
 ---
 
 _Ivory Coast is located in West Africa on the coast next to Liberia, Guinea, Mali, Ghana etc._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

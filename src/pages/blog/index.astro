@@ -35,7 +35,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
     <section class="container journal">
       {posts.length === 0 ? (
-        <p class="journal-empty">No entries yet — the journal is being migrated.</p>
+        <p class="journal-empty">Journal entries are currently under editorial review.</p>
       ) : (
         <div class="journal-grid">
           {posts.map(post => (

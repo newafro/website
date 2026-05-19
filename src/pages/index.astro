@@ -2,10 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { u } from '../lib/url';
 
-// Hero now uses the captured 1080p MP4 from the live site. The poster keeps the
-// page rendered before the video decodes, and acts as a still fallback when
-// JS / video / autoplay is blocked. The braided-hair photo and Ken Burns CSS
-// stay as a no-video fallback for prefers-reduced-motion users.
+// The poster keeps the page rendered before the video decodes and acts as a
+// still fallback when video autoplay is blocked.
 const heroVideo  = u('/uploads/video/home-hero.mp4');
 const heroPoster = u('/uploads/video/home-hero-poster.png');
 const heroFallbackImg = u('/uploads/home/01-d5693e_d5b6e3b365ec452f9f9b7066fbc14491f000.jpg');
@@ -50,11 +48,12 @@ const brandMark  = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png
 <style>
   .home-hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 0;
+    height: clamp(620px, 56vw, 807px);
     width: 100%;
     overflow: hidden;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     color: var(--na-cream-warm);
     isolation: isolate;
@@ -110,9 +109,10 @@ const brandMark  = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png
 
   .home-hero__inner {
     text-align: center;
-    padding: 0 var(--na-s-8) clamp(var(--na-s-12), 8vh, var(--na-s-20));
+    padding: 0 var(--na-s-8);
     width: 100%;
     max-width: var(--na-container);
+    transform: translateY(-8px);
   }
 
   .home-hero__headline {
@@ -142,7 +142,8 @@ const brandMark  = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png
 
   @media (max-width: 900px) {
     .home-hero {
-      min-height: calc(100vh - 120px);
+      height: calc(100vh - 92px);
+      min-height: 560px;
       align-items: center;
     }
 
@@ -152,7 +153,7 @@ const brandMark  = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png
     }
 
     .home-hero__inner {
-      padding: 0 var(--na-s-8) clamp(48px, 12vh, 96px);
+      padding: 0 var(--na-s-8);
     }
 
     .home-hero__mark {

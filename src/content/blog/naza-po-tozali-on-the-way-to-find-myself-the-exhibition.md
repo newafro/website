@@ -12,11 +12,9 @@ gallery:
   - "/uploads/post-naza-po-tozali-on-the-way-to-find-myself-the-exhibition/06-d5693e_233fe4444d404cf7b9ee3178edef1228-mv2.webp"
   - "/uploads/post-naza-po-tozali-on-the-way-to-find-myself-the-exhibition/07-d5693e_1871cb22f983492ab71f32cacc36982c-mv2.webp"
   - "/uploads/post-naza-po-tozali-on-the-way-to-find-myself-the-exhibition/10-e7ed0d_f0884df2a35f41bab45aa161a04d0f9b-mv2.jpg"
-draft: false
+draft: true
 ---
 
 _A journey of self-discovery at the French Institute Mainz, where Naza Afro presented an exhibition of personal works._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

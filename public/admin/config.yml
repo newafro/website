@@ -13,48 +13,113 @@ public_folder: "/uploads"
 
 publish_mode: editorial_workflow
 
-site_url: https://newafro.net
-display_url: https://newafro.net
-logo_url: https://newafro.net/favicon.svg
+site_url: https://newafro.com
+display_url: https://newafro.com
+logo_url: https://newafro.com/favicon.svg
 
 collections:
   - name: "blog"
-    label: "Blog Posts"
+    label: "Journal"
+    label_singular: "Journal Post"
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     extension: "md"
     format: "frontmatter"
     preview_path: "blog/{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title", "category"]
+    view_filters:
+      - label: "Drafts"
+        field: "draft"
+        pattern: true
+      - label: "Published"
+        field: "draft"
+        pattern: false
+    view_groups:
+      - label: "Category"
+        field: "category"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "Category", name: "category", widget: "select", required: false,
-          options: ["art", "music", "events", "community", "interviews", "general"] }
+          options: ["Art", "Music", "Events", "Community", "Interview", "Showroom", "Exhibition", "Diary", "Editorial", "General"] }
       - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Hero Image", name: "hero_image", widget: "image", required: false,
           media_folder: "/public/uploads/blog", public_folder: "/uploads/blog" }
       - { label: "Hero Alt Text", name: "hero_alt", widget: "string", required: false }
+      - { label: "Gallery", name: "gallery", widget: "list", required: false,
+          field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
-  - name: "pages"
-    label: "Pages"
-    files:
-      - file: "src/content/pages/about.md"
-        label: "About"
-        name: "about"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text", required: false }
-          - { label: "Hero Image", name: "hero_image", widget: "image", required: false }
-          - { label: "Body", name: "body", widget: "markdown" }
-      - file: "src/content/pages/contact.md"
-        label: "Contact"
-        name: "contact"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text", required: false }
-          - { label: "Body", name: "body", widget: "markdown" }
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    folder: "src/content/events"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    preview_path: "event-details-registration/{{slug}}"
+    summary: "{{title}} — {{date_label}}"
+    sortable_fields: ["start_date", "title", "status", "order"]
+    view_groups:
+      - label: "Status"
+        field: "status"
+      - label: "City"
+        field: "city"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Card Description", name: "description", widget: "text", required: false }
+      - { label: "Display Date", name: "date_label", widget: "string", hint: "Example: Fri 05 Sept" }
+      - { label: "Start Date", name: "start_date", widget: "datetime" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "City", name: "city", widget: "string", required: false }
+      - { label: "Status", name: "status", widget: "select",
+          options: ["open", "learn_more", "closed", "sold_out", "cancelled"], default: "learn_more" }
+      - { label: "CTA Label", name: "cta_label", widget: "string", required: false }
+      - { label: "CTA URL", name: "cta_url", widget: "string", required: false }
+      - { label: "Hero Image", name: "hero_image", widget: "image", required: false,
+          media_folder: "/public/uploads/events", public_folder: "/uploads/events" }
+      - { label: "Hero Alt Text", name: "hero_alt", widget: "string", required: false }
+      - { label: "Gallery", name: "gallery", widget: "list", required: false,
+          field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Full Event Copy Ready", name: "body_ready", widget: "boolean", default: false, required: false }
+      - { label: "Sort Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "artists"
+    label: "Artists"
+    label_singular: "Artist"
+    folder: "src/content/artists"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{name}}"
+    sortable_fields: ["order", "name", "country"]
+    view_groups:
+      - label: "Discipline"
+        field: "disciplines"
+      - label: "Country"
+        field: "country"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Practice", name: "role", widget: "string", required: false }
+      - { label: "City", name: "city", widget: "string", required: false }
+      - { label: "Country", name: "country", widget: "string", required: false }
+      - { label: "Disciplines", name: "disciplines", widget: "list", required: false }
+      - { label: "Portrait", name: "portrait", widget: "image", required: false,
+          media_folder: "/public/uploads/artists", public_folder: "/uploads/artists" }
+      - { label: "Portrait Alt Text", name: "portrait_alt", widget: "string", required: false }
+      - { label: "Short Bio", name: "short_bio", widget: "text" }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - { label: "Instagram", name: "instagram", widget: "string", required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: true, required: false }
+      - { label: "Sort Order", name: "order", widget: "number", default: 0, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Long Bio", name: "body", widget: "markdown", required: false }

@@ -1,20 +1,255 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { u } from '../lib/url';
-const target = u('/projects');
+
+const artists = [
+  {
+    name: 'Chidi Nwaubani (Looty)',
+    location: 'Nigeria, UK',
+    image: u('/uploads/projects/01-Chidi.jpeg'),
+  },
+  {
+    name: 'Nuits Balnéaires (photography)',
+    location: "Côte d'Ivoire",
+    image: u('/uploads/projects/02-Portrait-Nuits-Baln-C3-A9aires--Octobre-2023-_edited.jpg'),
+  },
+  {
+    name: 'Chelsea Odufu (Black Lady Goddess)',
+    location: 'Nigeria, Guyana, United States',
+    image: u('/uploads/projects/03-DSC00595_edited-20-1-.webp'),
+  },
+  {
+    name: 'Ibaaku (Musical performance)',
+    location: 'Senegal',
+    image: u('/uploads/projects/04-IBAAKU-9_edited.jpg'),
+  },
+];
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=${target}`} />
-    <link rel="canonical" href={target} />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting…</title>
-    <script is:inline define:vars={{ target }}>
-      window.location.replace(target);
-    </script>
-  </head>
-  <body>
-    <p>Redirecting to <a href={target}>{target}</a>…</p>
-  </body>
-</html>
+
+<BaseLayout
+  title="Restitution... et après? — New Afro"
+  description="An itinerary project initiated by New Afro around restitution, cultural memory, and contemporary African artistic practice."
+>
+  <article class="project-page">
+    <section class="project-hero">
+      <div class="project-hero__inner">
+        <h1>Restitution...et après?</h1>
+        <p class="project-subtitle">an itinerary project</p>
+        <div class="project-rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="project-body">
+      <div class="project-grid">
+        <div class="project-copy">
+          <p>
+            "African cultural heritage needs to be restituted." This claim,
+            widely voiced by African cultural and political actors since the
+            independence era, has gained renewed visibility in recent years.
+          </p>
+          <p>
+            Yet, beyond its apparent urgency, restitution remains a complex and
+            multifaceted process that raises critical questions: What should be
+            restituted, and to whom? Under what conditions? Can restitution ever
+            be complete? And more importantly, what happens after return?
+          </p>
+          <p>
+            <em>Restitution... and then what?</em> is an itinerant curatorial
+            and research-based project initiated in 2024 that seeks to move
+            beyond the moment of restitution itself, in order to examine its
+            long-term cultural, social, and artistic implications across African
+            and diasporic contexts.
+          </p>
+          <p>
+            Combining exhibitions, public programs, and editorial formats, the
+            project creates a space for dialogue between artists, researchers,
+            and cultural practitioners, exploring how restitution contributes to
+            the reconstruction of cultural identity, the reactivation of
+            collective memory, and the transmission and reinterpretation of
+            cultural heritage.
+          </p>
+          <p>
+            Informed by ongoing research, including a Master's thesis focusing
+            on Benin as a case study following the restitution of 26 royal
+            artifacts, the project adopts a transnational and forward-looking
+            perspective, engaging with both material and immaterial dimensions
+            of heritage and restitution.
+          </p>
+        </div>
+
+        <aside class="project-artists" aria-label="Project artists">
+          <p class="artist-intro">
+            Meet the first 4 artists of this project<br />
+            and their respective projects presented 23.05-06.06.2024<br />
+            at Institut français Mainz.
+          </p>
+
+          <div class="artist-grid">
+            {artists.map(artist => (
+              <figure>
+                <img src={artist.image} alt={artist.name} loading="lazy" decoding="async" />
+                <figcaption>
+                  <strong>{artist.name}</strong>
+                  <span>{artist.location}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </aside>
+      </div>
+
+      <p class="project-cta">
+        <a class="catalogue-link" href={u('/contact-7')}>View Catalogue</a>
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-page {
+    min-height: 100vh;
+    background: #4a2b08;
+    color: #fff9eb;
+  }
+
+  .project-hero {
+    padding: clamp(74px, 8vw, 116px) 24px 52px;
+    text-align: center;
+  }
+
+  .project-hero h1 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(72px, 11vw, 136px);
+    line-height: 0.95;
+    margin: 0 0 18px;
+    color: #fff9eb;
+  }
+
+  .project-subtitle {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1.1;
+    margin: 0 auto 34px;
+    max-width: none;
+  }
+
+  .project-rule {
+    width: 290px;
+    max-width: 60vw;
+    height: 1px;
+    margin: 0 auto;
+    background: rgba(255, 249, 235, 0.6);
+  }
+
+  .project-body {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 36px 24px 96px;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .project-copy {
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    text-align: justify;
+  }
+
+  .project-copy p {
+    margin: 0 0 22px;
+    max-width: none;
+  }
+
+  .artist-intro {
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 auto 26px;
+    max-width: 42ch;
+  }
+
+  .artist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 76px 34px;
+  }
+
+  .artist-grid figure {
+    margin: 0;
+  }
+
+  .artist-grid img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    background: #fff9eb;
+    border: 6px solid #fff9eb;
+  }
+
+  .artist-grid figcaption {
+    padding-top: 12px;
+    font-family: var(--na-font-body);
+    font-size: 14px;
+    line-height: 1.25;
+    color: #fff9eb;
+  }
+
+  .artist-grid strong,
+  .artist-grid span {
+    display: block;
+  }
+
+  .project-cta {
+    margin: 72px auto 0;
+    text-align: center;
+  }
+
+  .catalogue-link {
+    min-width: 232px;
+    min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 44px;
+    border-radius: 999px;
+    background: #fff9eb;
+    color: #4a2b08;
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-size: 22px;
+    text-decoration: none;
+  }
+
+  .catalogue-link:hover {
+    color: #4a2b08;
+    background: #ded9c7;
+  }
+
+  @media (max-width: 860px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .artist-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .project-copy {
+      text-align: left;
+    }
+  }
+</style>

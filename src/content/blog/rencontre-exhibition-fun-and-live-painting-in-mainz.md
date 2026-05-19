@@ -14,11 +14,9 @@ gallery:
   - "/uploads/post-rencontre-exhibition-fun-and-live-painting-in-mainz/09-e7ed0d_560cdcd8fca54aa98748096f2f045aaa-mv2.jpg"
   - "/uploads/post-rencontre-exhibition-fun-and-live-painting-in-mainz/10-17cc92_e547a630d2a14542b1548df8b020b7f9-mv2.jpg"
   - "/uploads/post-rencontre-exhibition-fun-and-live-painting-in-mainz/12-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
-draft: false
+draft: true
 ---
 
 _A live painting and music encounter in Mainz — celebrating Senegalese, Ivoirian, and German creatives in conversation._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

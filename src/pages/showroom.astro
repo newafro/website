@@ -37,8 +37,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     <section class="container archive">
       {posts.length === 0 ? (
         <p class="archive-empty">
-          The journal is being migrated from the legacy site over the coming
-          weeks. In the meantime, browse the
+          Journal entries are currently under editorial review. In the meantime,
+          browse the
           <a href={u('/community')}>community</a> we work with.
         </p>
       ) : (
@@ -56,11 +56,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
           ))}
         </div>
       )}
-
-      <p class="archive-note">
-        The full historical exhibition archive is being migrated from the
-        legacy site over the coming weeks.
-      </p>
     </section>
   </article>
 </BaseLayout>
@@ -103,14 +98,6 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .archive-empty {
     color: var(--na-muted);
     font-style: italic;
-    max-width: 60ch;
-  }
-
-  .archive-note {
-    margin-top: var(--na-s-16);
-    font-family: var(--na-font-body);
-    font-size: var(--na-fs-small);
-    color: var(--na-muted);
     max-width: 60ch;
   }
 

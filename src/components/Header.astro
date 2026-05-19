@@ -3,304 +3,183 @@ import { u } from '../lib/url';
 
 const nav = [
   { href: '/', label: 'HOME' },
-  { href: '/about', label: 'THE AGENCY' },
+  { href: '/general-1', label: 'THE AGENCY' },
   { href: '/community', label: 'COMMUNITY' },
-  { href: '/archive', label: 'THE ARCHIVE' },
-  { href: '/projects', label: 'PROJECTS' },
+  { href: '/behind-the-scenes', label: 'THE ARCHIVE' },
+  { href: '/single-project', label: 'PROJECTS' },
   { href: '/events', label: 'EVENTS' },
 ];
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
-const currentPath = Astro.url.pathname.replace(new RegExp(`^${base}`), '').replace(/\/$/, '') || '/';
 ---
 
-<header class="site-header" data-tone="paper">
-  <div class="container header-inner">
-    <a class="brand" href={u('/')} aria-label="New Afro home">
-      <img
-        src={u('/logo.png')}
-        srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
-        alt=""
-        width="56"
-        height="45"
-        loading="eager"
-        decoding="async"
-      />
-      <span class="brand__mark">New Afro</span>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand-link" href={u('/')} aria-label="New Afro home">
+      <img src={u('/logo.png')} alt="" width="48" height="39" loading="eager" decoding="async" />
     </a>
+  </div>
 
-    <nav id="primary-nav" class="nav" aria-label="Primary">
+  <button
+    class="nav-toggle"
+    aria-controls="primary-nav"
+    aria-expanded="false"
+    type="button"
+  >
+    <span class="visually-hidden">Toggle menu</span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+  </button>
+
+  <nav id="primary-nav" class="nav-panel" aria-label="Primary">
+    <div class="nav-panel__inner">
       <ul>
         {nav.map(item => (
-          <li>
-            <a
-              href={u(item.href)}
-              aria-current={currentPath === item.href.replace(/\/$/, '') ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
+          <li><a href={u(item.href)}>{item.label}</a></li>
         ))}
       </ul>
-    </nav>
-
-    <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" type="button">
-      <span class="visually-hidden">Toggle menu</span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-      <span class="bar" aria-hidden="true"></span>
-    </button>
-  </div>
+    </div>
+  </nav>
 </header>
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
   const nav = document.getElementById('primary-nav');
+
   if (toggle && nav) {
     const setOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
       nav.classList.toggle('is-open', open);
       document.body.classList.toggle('nav-locked', open);
     };
+
     toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      setOpen(!open);
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
-    nav.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      // Click on the ::before backdrop region — target is the nav itself
-      if (target === nav) setOpen(false);
+
+    nav.addEventListener('click', (event) => {
+      if (event.target === nav || event.target instanceof HTMLAnchorElement) {
+        setOpen(false);
+      }
     });
   }
 </script>
 
 <style>
   .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: var(--na-paper);
-    border-bottom: 1px solid rgba(50, 28, 1, 0.1);
-    backdrop-filter: saturate(180%) blur(8px);
+    position: relative;
+    z-index: 80;
+    background: #fff;
+    color: #000;
   }
 
   .header-inner {
+    width: 100%;
+    max-width: 1040px;
+    height: 92px;
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--na-s-9);
-    padding-block: var(--na-s-7);
+    justify-content: flex-end;
   }
 
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--na-s-5);
-    color: var(--na-ink);
-    text-decoration: none;
-  }
-
-  .brand img {
-    height: 45px;
-    width: auto;
-    display: block;
-  }
-
-  .brand__mark {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: 28px;
-    letter-spacing: -0.01em;
-  }
-
-  @media (max-width: 480px) {
-    .brand__mark { display: none; }
-  }
-
-  /* Mobile header: white band with solid brown square hamburger,
-     logo + wordmark hidden — matches newafro.net at ≤900px */
-  @media (max-width: 900px) {
-    .header-inner {
-      padding-inline: 0 !important;
-      padding-block: 0;
-      gap: 0;
-      min-height: 120px;
-      max-width: 100%;
-    }
-
-    .brand img,
-    .brand__mark {
-      display: none;
-    }
-
-    .brand {
-      flex: 1;
-      min-height: 64px;
-    }
-  }
-
-  .nav ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--na-s-9);
-    align-items: center;
-  }
-
-  .nav a {
-    font-family: var(--na-font-headline);
-    font-size: var(--na-fs-menu);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: var(--na-tracking-caps);
-    color: var(--na-ink);
-    text-decoration: none;
-    padding-block: var(--na-s-3);
-    transition: color var(--na-dur-fast) var(--na-ease);
-  }
-
-  .nav a:hover { color: var(--na-bronze); }
-
-  .nav a[aria-current='page'] {
-    color: var(--na-bronze);
-    border-bottom: 1px solid var(--na-bronze);
+  .brand-link {
+    display: none;
   }
 
   .nav-toggle {
-    display: none;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 5px;
-    width: 36px;
-    height: 36px;
-    z-index: 60;
-    position: relative;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    position: fixed;
+    top: 23px;
+    left: 24px;
+    flex: 0 0 46px;
+    z-index: 90;
   }
 
-  .nav-toggle .bar {
-    display: block;
-    height: 1.5px;
-    width: 22px;
-    margin-inline: auto;
-    background: var(--na-ink);
-    transition: transform var(--na-dur-base) var(--na-ease),
-                opacity var(--na-dur-fast) var(--na-ease),
-                background-color var(--na-dur-fast) var(--na-ease);
-  }
-
-  .nav-toggle[aria-expanded='true'] .bar { background: var(--na-cream-warm); }
-  .nav-toggle[aria-expanded='true'] .bar:nth-child(2) { transform: translateY(7px) rotate(45deg); }
-  .nav-toggle[aria-expanded='true'] .bar:nth-child(3) { opacity: 0; }
-  .nav-toggle[aria-expanded='true'] .bar:nth-child(4) { transform: translateY(-7px) rotate(-45deg); }
-
-  @media (max-width: 900px) {
+  @media (min-width: 1200px) {
     .nav-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      width: 64px;
-      height: 64px;
-      background: var(--na-bronze-deep);
-      border-radius: 0;
-      flex-shrink: 0;
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 60;
-    }
-
-    .nav-toggle .bar {
-      height: 3px;
-      width: 28px;
-      background: var(--na-paper);
-    }
-
-    .nav-toggle[aria-expanded='true'] {
-      background: #000000;
-      position: fixed;
-      top: 0;
-      right: 0;
-    }
-
-    .nav-toggle[aria-expanded='true'] .bar { background: #FFFFFF; }
-
-    .nav {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 78%;
-      background: var(--na-ink);
-      transform: translateX(100%);
-      transition: transform var(--na-dur-base) var(--na-ease);
-      z-index: 55;
-      display: flex;
-      overflow-y: auto;
-    }
-
-    .nav::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 22%;
-      background: rgba(50, 28, 1, 0.4);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity var(--na-dur-base) var(--na-ease);
-    }
-
-    .nav.is-open {
-      transform: translateX(0);
-    }
-
-    .nav.is-open::before {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .nav ul {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: var(--na-s-12) var(--na-s-9) var(--na-s-9);
-      width: 100%;
-      flex-wrap: nowrap;
-    }
-
-    .nav li {
-      border-bottom: 0;
-      width: 100%;
-    }
-
-    .nav a {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: var(--na-s-7) var(--na-s-9);
-      font-family: var(--na-font-display);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(28px, 6vw, 34px);
-      line-height: 1.2;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--na-cream-warm);
-    }
-
-    .nav a:hover {
-      color: var(--na-cream-warm);
-      border-bottom: 0;
-    }
-
-    .nav a[aria-current='page'] {
-      color: var(--na-cream-warm);
-      background: rgba(255, 249, 235, 0.18);
-      border-bottom: 0;
+      left: auto;
+      right: 24px;
     }
   }
 
-  body.nav-locked { overflow: hidden; }
+  .bar {
+    width: 39px;
+    height: 4px;
+    display: block;
+    background: currentColor;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    transform: translateY(10px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(3) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded="true"] .bar:nth-child(4) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  .nav-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background: rgba(255, 255, 255, 0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .nav-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-panel__inner {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 96px 24px;
+  }
+
+  .nav-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .nav-panel a {
+    font-family: var(--na-font-page-display);
+    font-size: clamp(38px, 7vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .nav-panel a:hover {
+    color: #6b4708;
+  }
+
+  :global(.nav-locked) {
+    overflow: hidden;
+  }
 </style>

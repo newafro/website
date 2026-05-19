@@ -1,20 +1,36 @@
 ---
+import PageLayout from '../layouts/PageLayout.astro';
 import { u } from '../lib/url';
-const target = u('/artist-inquiries');
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=${target}`} />
-    <link rel="canonical" href={target} />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting…</title>
-    <script is:inline define:vars={{ target }}>
-      window.location.replace(target);
-    </script>
-  </head>
-  <body>
-    <p>Redirecting to <a href={target}>{target}</a>…</p>
-  </body>
-</html>
+
+<PageLayout
+  title="Get in touch."
+  eyebrow="Artist Inquiries"
+  description="If you're an artist or curator interested in collaborating with New Afro — exhibitions, pop-ups, residencies, or features in our journal — get in touch."
+>
+  <p>
+    We accept rolling inquiries from artists, curators, and creative
+    entrepreneurs whose practice resonates with our programme. If you would
+    like to be considered for an upcoming exhibition, residency, pop-up, or
+    feature in the journal, please send a short note about your work.
+  </p>
+
+  <p>
+    Email us at
+    <a href="mailto:cheria@newafro.net">cheria@newafro.net</a>
+    or use the contact form. Please include:
+  </p>
+
+  <ul>
+    <li>A short paragraph about your practice</li>
+    <li>A link to your portfolio or website</li>
+    <li>The cities you are based in or travel to</li>
+    <li>What kind of collaboration you are looking for</li>
+  </ul>
+
+  <p>We try to read everything that comes in, even when we cannot reply quickly.</p>
+
+  <p>
+    <a class="na-btn" href={u('/contact-7')}>Contact us</a>
+  </p>
+</PageLayout>

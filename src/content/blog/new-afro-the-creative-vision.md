@@ -17,11 +17,9 @@ gallery:
   - "/uploads/post-new-afro-the-creative-vision/19-e7ed0d_af6e56b68c4745ccb002528da2f2b5e2-mv2.webp"
   - "/uploads/post-new-afro-the-creative-vision/20-e7ed0d_38d5030a9fcf4e56ad99ab48e3f58c82-mv2.webp"
   - "/uploads/post-new-afro-the-creative-vision/21-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
-draft: false
+draft: true
 ---
 
 _Creativity isn't possible without a vision._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

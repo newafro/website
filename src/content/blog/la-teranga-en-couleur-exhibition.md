@@ -15,11 +15,9 @@ gallery:
   - "/uploads/post-la-teranga-en-couleur-exhibition/08-e7ed0d_84557d36356c495f84b8efac4e674a9c-mv2.webp"
   - "/uploads/post-la-teranga-en-couleur-exhibition/09-e7ed0d_b7d82430f7bb499695828caddd1eef9f-mv2.webp"
   - "/uploads/post-la-teranga-en-couleur-exhibition/14-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
-draft: false
+draft: true
 ---
 
 _An exhibition curated by Cheria Essieke in collaboration with Institut Français Mainz & Partners._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

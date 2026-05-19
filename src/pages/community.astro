@@ -1,144 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { u } from '../lib/url';
 
-// Captured 15 artist portraits live at /uploads/community/02..16-*.{jpg,jpeg,webp}.
-// We bind by capture-order to the artist roster below — each name maps to the
-// next captured image. Falls back to the legacy /artists/<slug>.jpg if a file
-// from the capture is missing.
-const capturedPortraits = [
-  u('/uploads/community/02-e7ed0d_1244b9e3eb5a4ea69bfee84a05669fd2-mv2.jpg'),
-  u('/uploads/community/03-e7ed0d_dabeab4562804d868b2b7749ab9aa8bc-mv2.jpeg'),
-  u('/uploads/community/04-7273cd_3c5c0dc0b45b4dff988168492474d604-mv2.jpg'),
-  u('/uploads/community/05-d5693e_e01c090b67fb4099aac3f41408abc745-mv2.jpg'),
-  u('/uploads/community/06-7273cd_1f092add36d741829f7ddc956433f1ee-mv2.jpg'),
-  u('/uploads/community/07-e7ed0d_5e0a0afb201a4d428fd9c3931fa3df8f-mv2.jpg'),
-  u('/uploads/community/08-d5693e_dbfba9bc54d940a887279e3d4d0a48dc-mv2.jpg'),
-  u('/uploads/community/09-d5693e_af0048380a524a06bfd98b2ee62a5e7b-mv2.jpg'),
-  u('/uploads/community/10-7273cd_5ec88f9a32bb462e83cb751970e6e43a-mv2.jpg'),
-  u('/uploads/community/11-7273cd_9fa80cb964b0445781f49d7d220aa21c-mv2.jpeg'),
-  u('/uploads/community/12-7273cd_7a65e39878884b4987e92dadac95b0b1-mv2.jpg'),
-  u('/uploads/community/13-7273cd_a51885a3ad724341bafd98ec80b034f6-mv2.jpeg'),
-  u('/uploads/community/14-d5693e_c659b2e9529c49dfb0c5b76029de1223-mv2.jpg'),
-  u('/uploads/community/15-7273cd_bb812e182c2044b9b31da367b2397550-mv2.webp'),
-  u('/uploads/community/16-7273cd_16fa0e5400e648b48f5c4bfe512414b2-mv2.jpg'),
-];
+const artists = (await getCollection('artists', ({ data }) => !data.draft && data.featured))
+  .sort((a, b) => a.data.order - b.data.order);
 
-const artists = [
-  {
-    name: 'Benjamin Abana',
-    blurb: 'Through bold strokes and soulful portraits, Benjamin transforms color into a dialogue between cultures.',
-    image: u('/uploads/artists/benjamin-abana.jpg'),
-  },
-  {
-    name: 'Cheria Essieke Bayer',
-    blurb: 'Cheria bridges cultures through bold, immersive exhibitions that celebrate African creativity and identity.',
-    image: u('/uploads/artists/cheria-essieke-bayer.jpg'),
-  },
-  {
-    name: 'Nuits Balnéaires',
-    blurb: 'Nuits Balnéaires blends poetry and photography to explore memory, imagination and spirituality.',
-    image: u('/uploads/artists/nuits-balneaires.jpg'),
-  },
-  {
-    name: 'Tobi Onabolu',
-    blurb: 'Tobi Onabolu navigates movement and identity through layered, boundary-dissolving films and performances.',
-    image: u('/uploads/artists/tobi-onabolu.jpg'),
-  },
-  {
-    name: 'Maria Bayer',
-    blurb: 'Maria transforms introspection and identity into bold, poetic visual narratives.',
-    image: u('/uploads/artists/maria-bayer.jpg'),
-  },
-  {
-    name: 'Jean-Baptiste Joire',
-    blurb: "Jean-Baptiste channels Dakar's colors and spirit through photography and film, transforming everyday encounters into vivid artistic reflections.",
-    image: u('/uploads/artists/jean-baptiste-joire.jpg'),
-  },
-  {
-    name: 'Benga Mavinga',
-    blurb: 'Benga Mavinga engages with identity and diasporic memory through immersive, sensorial photography.',
-    image: u('/uploads/artists/benga-mavinga.jpg'),
-  },
-  {
-    name: 'Eveline Soum',
-    blurb: 'Eveline Soum reconfigures womanhood and inheritance through open-ended visual narratives.',
-    image: u('/uploads/artists/eveline-soum.jpg'),
-  },
-  {
-    name: 'Ibaaku',
-    blurb: 'Ibaaku, the Sonic Poet blends tradition and futurism in immersive audio-visual performances.',
-    image: u('/uploads/artists/ibaaku.jpg'),
-  },
-  {
-    name: 'Chidi Nwaubani',
-    blurb: 'Chidi explores restitution and cultural memory through immersive, boundary-blurring NFT art.',
-    image: u('/uploads/artists/chidi-nwaubani.jpg'),
-  },
-  {
-    name: 'Néo',
-    blurb: 'Néo channels inner moods into vibrant, evocative paintings on the human condition.',
-    image: u('/uploads/artists/neo.jpg'),
-  },
-  {
-    name: 'Lyanel',
-    blurb: 'Lyanel creates hybrid, contemporary art and jewelry that blend tradition and avant-garde design.',
-    image: u('/uploads/artists/lyanel.jpg'),
-  },
-  {
-    name: 'Francel Aris Dagbeto',
-    blurb: 'Francel transforms Beninese traditions and nature into vivid, culturally rooted paintings.',
-    image: u('/uploads/artists/francel-aris-dagbeto.jpg'),
-  },
-  {
-    name: 'Chelsea Odufu',
-    blurb: 'Chelsea fuses Afro-futurism and archival imagery to explore Black culture, identity, and memory through film and visual art.',
-    image: u('/uploads/artists/chelsea-odufu.webp'),
-  },
-  {
-    name: 'Julie Kouassi',
-    blurb: 'Julie Kouassi reclaims artisanal heritage through hand-stitched, individuality-driven couture.',
-    image: u('/uploads/artists/julie-kouassi.jpg'),
-  },
-];
-
-// Capture-derived bind: 16 partner logos at /uploads/community/17..32-*.{png,jpg,webp}.
 const partners = [
-  { name: 'Institut Français Mainz',       image: u('/uploads/community/17-7273cd_d8b78cb3d75a45a4aa0487356ec4e120-mv2.png') },
-  { name: 'VAUX Sekt-Manufaktur',          image: u('/uploads/community/18-7273cd_cc00a59eb65b45b3909e44d7b3580982-mv2.png') },
-  { name: 'NEAR Week',                     image: u('/uploads/community/19-7273cd_b69b49a6fd904a1eafa0fa93becbe8b2-mv2.png') },
-  { name: 'P. Art.',                       image: u('/uploads/community/20-7273cd_a031feaa13a244779b35b152b13614cc-mv2.png') },
-  { name: 'Mainz',                         image: u('/uploads/community/21-7273cd_ef7e6f58ad1d4262aa769d288fd3cf6e-mv2.jpg') },
-  { name: 'Partner',                       image: u('/uploads/community/22-7273cd_37db48e9420b4c94af869d6e268ef0d0-mv2.jpg') },
-  { name: 'Charlette',                     image: u('/uploads/community/23-7273cd_7fbf2d35e8084ad899db0882d0d14faf-mv2.jpg') },
-  { name: 'Institut Français Deutschland', image: u('/uploads/community/24-7273cd_5fc087ad6e0247a19097016e7aa9981a-mv2.png') },
-  { name: 'Partner',                       image: u('/uploads/community/25-7273cd_fbdd3a66ca67408da0e1d4bd585e2ec6-mv2.jpg') },
-  { name: 'Kobler',                        image: u('/uploads/community/26-7273cd_c980195e61d8464f89c04da544e829c2-mv2.png') },
-  { name: 'Partner',                       image: u('/uploads/community/27-7273cd_4e9a1058bc294a15868d4c923785af59-mv2.jpg') },
-  { name: 'Pulse',                         image: u('/uploads/community/28-7273cd_85e567f9ec554dfeb6ded5da23b852f5-mv2.jpg') },
-  { name: 'Partner',                       image: u('/uploads/community/29-7273cd_5dff59bcadd3476f8f6a1337b93d7d5a-mv2.jpg') },
-  { name: 'Knäppel',                       image: u('/uploads/community/30-7273cd_21d72018c8fc468190892c5ef6143c84-mv2.png') },
-  { name: 'Partner',                       image: u('/uploads/community/31-7273cd_f9854ead37374e648bfec598b0079790-mv2.webp') },
-  { name: 'Partner',                       image: u('/uploads/community/32-7273cd_1dd6899fea8c4df4860ce3f32e44075e-mv2.png') },
+  { name: 'Institut Français Mainz', image: u('/uploads/partners/institut-francais-mainz.png') },
+  { name: 'Institut Français Deutschland', image: u('/uploads/partners/institut-francais-deutschland.png') },
+  { name: 'VAUX Sekt-Manufaktur', image: u('/uploads/partners/vaux-sekt-manufaktur.png') },
+  { name: 'NEAR Week', image: u('/uploads/community/19-7273cd_b69b49a6fd904a1eafa0fa93becbe8b2-mv2.png') },
+  { name: 'P. Art.', image: u('/uploads/community/20-7273cd_a031feaa13a244779b35b152b13614cc-mv2.png') },
 ];
-
-// Replace each artist's static image with the captured portrait at the same
-// position. We keep the original as a fallback via onerror.
-const artistsWithCapture = artists.map((a, i) => ({
-  ...a,
-  fallback: a.image,
-  image: capturedPortraits[i] ?? a.image,
-}));
 ---
 
 <BaseLayout
   title="Community — New Afro"
-  description="A global community of African creators and those who support them — across Mainz, Cotonou, Abidjan, København, Paris, and beyond."
+  description="Artists, collaborators, and partners connected through the New Afro programme."
 >
   <article class="community-page">
-    <header class="page-header page-header--video">
+    <header class="community-hero">
       <video
-        class="page-header__video"
+        class="community-hero__video"
         autoplay
         muted
         loop
@@ -149,59 +33,56 @@ const artistsWithCapture = artists.map((a, i) => ({
       >
         <source src={u('/uploads/video/community-hero.mp4')} type="video/mp4" />
       </video>
-      <div class="page-header__scrim" aria-hidden="true"></div>
-      <div class="container-narrow page-header__inner">
-        <img
-          class="page-eyebrow-mark page-eyebrow-mark--invert"
-          src={u('/logo.png')}
-          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
-          alt="New Afro"
-          width="56"
-          height="45"
-          loading="eager"
-          decoding="async"
-        />
-        <h1 id="community-headline" class="display-page display-page--invert">COMMUNITY</h1>
-        <p class="lede lede--invert">The Power to connect and create.</p>
+      <div class="community-hero__scrim" aria-hidden="true"></div>
+      <div class="community-hero__inner">
+        <h1>COMMUNITY</h1>
+        <p>The Power to connect and create.</p>
       </div>
     </header>
 
-    <section class="section section--artists">
+    <section class="community-section">
       <div class="container">
-        <header class="section-header">
+        <header class="section-heading">
           <h2>Artists &amp; Creatives</h2>
         </header>
 
         <div class="artist-grid">
-          {artistsWithCapture.map(a => (
-            <article class="artist-card">
-              <div class="artist-media">
-                <img
-                  src={a.image}
-                  alt={`Portrait of ${a.name}`}
-                  loading="lazy"
-                  decoding="async"
-                  onerror={`this.onerror=null;this.src='${a.fallback}'`}
-                />
-              </div>
-              <p class="artist-name">{a.name}</p>
-              <p class="artist-blurb">{a.blurb}</p>
-            </article>
-          ))}
+          {artists.map(artist => {
+            const portrait = artist.data.portrait
+              ? (artist.data.portrait.startsWith('/') ? u(artist.data.portrait) : artist.data.portrait)
+              : undefined;
+            return (
+              <article class="artist-card">
+                {portrait && (
+                  <img
+                    src={portrait}
+                    alt={artist.data.portrait_alt ?? `Portrait of ${artist.data.name}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div class="artist-card__body">
+                  <h3>{artist.data.name}</h3>
+                  {artist.data.role && <p class="artist-role">{artist.data.role}</p>}
+                  <p>{artist.data.short_bio}</p>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
 
-    <section class="section section--partners">
+    <section class="community-section community-section--partners">
       <div class="container">
-        <header class="section-header">
+        <header class="section-heading">
           <h2>Collaborators &amp; Partners</h2>
         </header>
 
         <ul class="partner-grid" aria-label="Partner organisations">
-          {partners.map(p => (
-            <li class="partner-cell">
-              <img src={p.image} alt={p.name} loading="lazy" decoding="async" />
+          {partners.map(partner => (
+            <li>
+              <img src={partner.image} alt={partner.name} loading="lazy" decoding="async" />
             </li>
           ))}
         </ul>
@@ -212,147 +93,163 @@ const artistsWithCapture = artists.map((a, i) => ({
 
 <style>
   .community-page {
-    background: var(--na-paper);
-    color: var(--na-ink);
+    background: #fff;
+    color: #000;
   }
 
-  .page-header {
-    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
-    text-align: center;
-  }
-
-  .page-header h1.display-page {
-    margin: 0 auto var(--na-s-7);
-    max-width: 18ch;
-  }
-
-  .lede {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(18px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: var(--na-ink);
-    max-width: 60ch;
-    margin: 0 auto;
-  }
-
-  .section {
-    padding-block: clamp(var(--na-s-12), 6vw, var(--na-s-14));
-  }
-
-  .section-header {
-    margin-bottom: var(--na-s-12);
-    text-align: center;
-  }
-
-  .section-header h2 {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.1;
-    color: var(--na-ink);
-    margin: 0;
-  }
-
-  /* Artist grid (3-col desktop → 2 → 1) */
-  .artist-grid {
+  .community-hero {
+    position: relative;
+    min-height: 520px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--na-s-12) var(--na-s-9);
-  }
-
-  .artist-card { display: flex; flex-direction: column; }
-
-  .artist-media {
-    aspect-ratio: 4 / 5;
+    place-items: center;
+    text-align: center;
     overflow: hidden;
-    background: var(--na-clay);
-    margin-bottom: var(--na-s-6);
+    isolation: isolate;
+    background: #2a1a06;
   }
 
-  .artist-media img {
+  .community-hero__video,
+  .community-hero__scrim {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .community-hero__video {
     object-fit: cover;
-    transition: transform var(--na-dur-slow) var(--na-ease),
-                filter var(--na-dur-slow) var(--na-ease);
+    z-index: -2;
   }
 
-  .artist-card:hover .artist-media img {
-    transform: scale(1.04);
-    filter: saturate(1.05);
+  .community-hero__scrim {
+    background: rgba(0, 0, 0, 0.36);
+    z-index: -1;
   }
 
-  .artist-name {
+  .community-hero h1 {
+    font-family: var(--na-font-page-display);
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(60px, 9vw, 116px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: 0 0 18px;
+  }
+
+  .community-hero p {
     font-family: var(--na-font-display);
     font-style: italic;
-    font-weight: 300;
-    font-size: clamp(20px, 2vw, 24px);
-    line-height: 1.2;
-    color: var(--na-ink);
-    margin: 0 0 var(--na-s-3);
-  }
-
-  .artist-blurb {
-    font-family: var(--na-font-body);
-    font-size: var(--na-fs-small);
-    line-height: 1.5;
-    color: var(--na-ink);
+    font-size: clamp(22px, 3vw, 34px);
+    color: #fff;
     margin: 0;
     max-width: none;
   }
 
-  /* Partners — grayscale logo wall, full color on hover */
-  .section--partners {
-    background: var(--na-cream);
+  .community-section {
+    padding-block: clamp(72px, 7vw, 110px);
+  }
+
+  .section-heading {
+    text-align: center;
+    margin-bottom: clamp(48px, 6vw, 76px);
+  }
+
+  .section-heading h2 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .artist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px 32px;
+  }
+
+  .artist-card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: #ded9c7;
+  }
+
+  .artist-card__body {
+    padding-top: 18px;
+    text-align: center;
+  }
+
+  .artist-card h3 {
+    font-family: var(--na-font-headline);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0 0 6px;
+  }
+
+  .artist-role {
+    color: #6b4708;
+    font-size: 14px;
+    margin: 0 0 10px;
+  }
+
+  .artist-card p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 30ch;
+  }
+
+  .community-section--partners {
+    background: #fbf7ed;
   }
 
   .partner-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--na-s-9);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
     align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .partner-cell {
-    aspect-ratio: 3 / 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--na-s-7);
-    background: var(--na-paper);
-    border: 1px solid rgba(50, 28, 1, 0.08);
+  .partner-grid li {
+    min-height: 132px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    padding: 24px;
   }
 
-  .partner-cell img {
+  .partner-grid img {
     max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
+    max-height: 84px;
     object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition: filter var(--na-dur-slow) var(--na-ease),
-                opacity var(--na-dur-slow) var(--na-ease);
   }
 
-  .partner-cell:hover img {
-    filter: grayscale(0%);
-    opacity: 1;
+  @media (max-width: 900px) {
+    .artist-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .partner-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  @media (max-width: 1000px) {
-    .artist-grid { grid-template-columns: repeat(2, 1fr); }
-    .partner-grid { grid-template-columns: repeat(3, 1fr); }
-  }
+  @media (max-width: 560px) {
+    .community-hero {
+      min-height: 360px;
+    }
 
-  @media (max-width: 720px) {
-    .partner-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 480px) {
-    .artist-grid { grid-template-columns: 1fr; gap: var(--na-s-9); }
+    .artist-grid,
+    .partner-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

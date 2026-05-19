@@ -16,11 +16,9 @@ gallery:
   - "/uploads/post-i-love-my-solitude-but-i-m-meant-to-be-a-lover/25-e7ed0d_6dff2ea88ad7400982ffddd025c5fc5e-mv2.webp"
   - "/uploads/post-i-love-my-solitude-but-i-m-meant-to-be-a-lover/30-e7ed0d_e52f1aa1a9f14b239d13ef422d4b92b4-mv2.webp"
   - "/uploads/post-i-love-my-solitude-but-i-m-meant-to-be-a-lover/31-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
-draft: false
+draft: true
 ---
 
 _An exhibition featuring the work of the talented French-Iranian artist NÉO, delving into the loving solitude of contemporary creative practice._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

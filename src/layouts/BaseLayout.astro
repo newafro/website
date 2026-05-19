@@ -23,6 +23,36 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 // supply its own hero image via the `image` prop.
 const ogPath = image ?? u('/og/default.jpg');
 const ogImage = new URL(ogPath, Astro.site).toString();
+const fontCss = `
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('${u('/fonts/jost.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url('${u('/fonts/dm-sans.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('${u('/fonts/manrope.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('${u('/fonts/cormorant-italic.woff2')}') format('woff2');
+}
+`;
 ---
 
 <!doctype html>
@@ -40,6 +70,7 @@ const ogImage = new URL(ogPath, Astro.site).toString();
     {/* Self-hosted variable fonts — preload the two faces used above the fold. */}
     <link rel="preload" href={u('/fonts/cormorant-italic.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={u('/fonts/dm-sans.woff2')} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontCss}></style>
 
     {noIndex && <meta name="robots" content="noindex,nofollow" />}
 

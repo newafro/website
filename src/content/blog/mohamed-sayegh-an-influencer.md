@@ -6,11 +6,9 @@ author: "NewAfro Team"
 category: "Interview"
 hero_image: "/uploads/post-mohamed-sayegh-an-influencer/08-e7ed0d_3e96b60c5d8f4da78e7d7aa6abc82d0b-mv2.png"
 hero_alt: "Mohamed Sayegh, an Influencer"
-draft: false
+draft: true
 ---
 
 _How cultural origins can influence the perception of fashion: an interview with New Afro Mohamed Sayegh._
 
-Body copy is being recovered from the legacy archive. The hero and
-gallery below are sourced verbatim from the original post.
-
+Draft note: add verified article copy before publishing. Keep the existing hero and gallery only if the image credits are confirmed.

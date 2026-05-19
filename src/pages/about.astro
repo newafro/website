@@ -2,171 +2,150 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { u } from '../lib/url';
 
-const heroMark      = u('/uploads/agency/01-Asset-2011_2x.png');
-const structuralImg = u('/uploads/agency/02-d5693e_86b37a23b8e54299b3b66a0a83993602-mv2.jpg');
-const roleImg       = u('/uploads/agency/04-e7ed0d_a3c5ac89d66d468e843ae9e0d93741b5-mv2.jpg');
-const roleSpreadImg = u('/uploads/agency/03-e7ed0d_904c847a6e474f2386bc4ad39554086f-mv2.jpg');
-const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5cae-mv2.jpg');
+// The strategic agency pitch follows the live Wix slug at /general-1.
+const heroLeft  = u('/uploads/about/01-IMG_6772.jpeg');
+const heroRight = u('/uploads/about/02-2fbda9_32a2c7a9b85a4d4f8cbd647a8fe33219-mv2_png.avif');
+
+const team = [
+  {
+    name: 'Chéria Essieke-Bayer',
+    role: 'Founder & Director',
+    image: u('/uploads/about/03-2024-08_HoR_VAUX_LArtiste-03130_edited_edited.jpg'),
+    fallback: u('/uploads/about/cheria-essieke-bayer.jpg'),
+    email: 'cheria@newafro.net',
+  },
+  {
+    name: 'Gustav Friis',
+    role: 'Co-Founder',
+    image: u('/uploads/about/04-WhatsApp-20Image-202026-02-17-20at-2009_40_24.jpeg'),
+    fallback: u('/uploads/about/gustav-friis.jpg'),
+    email: 'gus@newafro.net',
+  },
+  {
+    name: 'Ken Samb',
+    role: 'Assistant of Creative Direction',
+    image: u('/uploads/about/05-Hair-20Story-20Mockup_edited.jpg'),
+    fallback: u('/uploads/about/ken-samb.jpg'),
+    email: 'ken.samb@newafro.net',
+  },
+  {
+    name: 'Maria Bayer',
+    role: 'Design & Social Media Student Assistant',
+    image: u('/uploads/about/06-IMG_8578_heic.png'),
+    fallback: u('/uploads/about/maria-bayer.jpg'),
+    email: 'maria@newafro.net',
+  },
+];
 ---
 
 <BaseLayout
-  title="The Agency — New Afro"
-  description="New Afro operates as a strategic creative agency positioning cultural entrepreneurs and creative brands seeking to expand between African and European markets."
+  title="About / Team — New Afro"
+  description="The people behind New Afro: a small team of curators, designers, and operators connecting African and European creative ecosystems."
 >
-  <article class="agency-page">
+  <article class="team-page">
     <header class="page-header">
       <div class="container-narrow">
         <img
-          class="page-eyebrow-mark agency-hero-mark"
-          src={heroMark}
+          class="page-eyebrow-mark"
+          src={u('/logo.png')}
+          srcset={`${u('/logo.png')} 1x, ${u('/logo@2x.png')} 2x`}
           alt="New Afro"
-          width="61"
-          height="70"
+          width="56"
+          height="45"
           loading="eager"
           decoding="async"
         />
-        <h1 class="display-page">THE AGENCY</h1>
-        <p class="agency-deck">
-          We operate as a strategic creative agency positioning cultural
-          entrepreneurs, and creative brands seeking to expand between African
-          and European markets.
+        <h1 class="display-page">ABOUT</h1>
+        <p class="page-deck">
+          New Afro is a cultural platform and creative agency connecting
+          African and European creative ecosystems.
         </p>
       </div>
     </header>
 
-    <section class="section spread spread--left">
-      <div class="container spread-grid">
-        <figure class="spread-media">
-          <img
-            src={structuralImg}
-            alt="VAUX — L’Artiste, by New Afro"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption class="spread-caption">VAUX</figcaption>
-        </figure>
-        <div class="spread-copy">
-          <h2>THE STRUCTURAL GAP</h2>
-          <p class="lede">
-            Across Africa and Europe, creative ambition exists on both sides.<br />
-            Access does not.
-          </p>
+    <section class="team-intro">
+      <div class="container team-intro__grid">
+        <div class="team-intro__copy">
           <p>
-            Creative entrepreneurs from the African continent and its diaspora
-            often encounter structural barriers when entering European markets:
-            limited access, institutional opacity, weak positioning frameworks,
-            and a lack of trusted intermediaries capable of translating
-            cultural and strategic value.
-          </p>
-          <p>
-            At the same time, European creative entrepreneurs and institutions
-            seeking to engage African markets frequently struggle with
-            contextual understanding, cultural fluency, and the ability to
-            build partnerships that are credible, respectful, and sustainable.
-          </p>
-          <p class="coda">
-            The issue is not talent.<br />
-            It is navigation, positioning, and trust.
+            We work with artists, cultural institutions, creative entrepreneurs,
+            and brands who want to build meaningful, sustainable connections
+            across continents. We believe contemporary African creativity is
+            essential to today's cultural landscape. Yet representation, market
+            understanding, remain unequal. New Afro exists to address these
+            gaps, both culturally and economically.
           </p>
         </div>
-      </div>
-    </section>
-
-    <section class="section role-section">
-      <div class="container role-grid">
-        <div class="role-copy">
-          <h2>OUR ROLE</h2>
-          <p class="lede">
-            We operate at the intersection of strategy, culture, and market
-            intelligence.
-          </p>
-          <p>
-            We design cross-continental positioning and expansion strategies
-            for creative entrepreneurs, companies, and institutions operating
-            between Africa and Europe. Our work integrates consulting,
-            management advisory, and market-entry architecture grounded in the
-            social, cultural, and economic realities of both regions.
-          </p>
-          <p>
-            Our authority is rooted in lived experience: years of being based
-            between Africa and Europe, initiating and producing cultural
-            projects, and building long-term relationships across countries
-            on both continents. This continuous presence allows us to
-            understand institutional ecosystems, informal networks, and the
-            unspoken codes that shape opportunity.
-          </p>
-          <p>
-            We act as cultural translators and strategic intermediaries,
-            structuring clarity, alignment, and durable partnerships that
-            extend beyond symbolic collaboration toward measurable, long-term
-            growth.
-          </p>
-        </div>
-        <figure class="role-media">
-          <img
-            src={roleImg}
-            alt="Lyanell x Heels Bleed — New Afro project"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption class="spread-caption spread-caption--bottom">LYANELL X<br />HEELS BLEED</figcaption>
+        <figure class="team-intro__media">
+          <img src={heroLeft} alt="New Afro team at work" loading="eager" decoding="async" />
         </figure>
       </div>
     </section>
 
-    <section class="section role-spread-section">
-      <figure class="role-spread">
-        <img
-          src={roleSpreadImg}
-          alt="New Afro at work — cross-continental partnerships"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </section>
-
-    <section class="section clients-section">
-      <div class="container clients-grid">
-        <figure class="clients-media">
-          <img
-            src={clientsImg}
-            alt="New Afro clients — cross-market engagement"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption class="spread-caption">VAUX</figcaption>
+    <section class="practice container">
+      <h2 class="display practice__title">Cultural &amp; Curatorial Practice</h2>
+      <div class="practice__grid">
+        <p>
+          Our projects challenge dominant narratives and move beyond tokenism.
+          We create thoughtful, critical, and emotionally engaging cultural
+          experiences that question recognitions and expand perspectives. We do
+          not curate for representation alone. We curate to reshape how art,
+          identity, and society are understood.
+        </p>
+        <figure class="practice__media">
+          <img src={heroRight} alt="New Afro curatorial work" loading="lazy" decoding="async" />
         </figure>
-        <div class="clients-copy">
-          <h2>OUR CLIENTS</h2>
-          <ul class="clients-list">
-            <li>Creative entrepreneurs shaping cultural and economic narratives</li>
-            <li>Companies of all sizes (small, medium and large), expanding across Africa and Europe.</li>
-            <li>International institutions seeking credible cross-market engagement</li>
-          </ul>
-        </div>
       </div>
     </section>
 
-    <section class="section cta-section">
-      <div class="container-narrow cta-inner">
-        <h2>LET’S WORK TOGETHER</h2>
-        <p class="cta-line">Reach out!</p>
-        <p>We’re excited to connect with you and explore meaningful collaborations.</p>
-        <p class="cta-write">Write us at:</p>
-        <a class="cta-email" href="mailto:hello@newafro.net">hello@newafro.net</a>
+    <section class="practice practice--alt container">
+      <h2 class="display practice__title">Creative Agency</h2>
+      <div class="practice__grid practice__grid--reverse">
+        <p>
+          We support artists, creative entrepreneurs, and cultural brands
+          expanding between Africa and European markets. Through strategy
+          consulting, positioning, management guidance, and network development,
+          we help our clients navigate new ecosystems with clarity and
+          confidence. We understand markets, but also mentalities. We translate
+          cultural complexity into sustainable opportunity.
+        </p>
+      </div>
+    </section>
+
+    <section class="team-grid-section">
+      <div class="container">
+        <h2 class="display team-grid-section__title">Our Team</h2>
+        <hr class="team-grid-section__rule" />
+        <ul class="team-grid">
+          {team.map(person => (
+            <li class="team-card">
+              <figure class="team-card__media">
+                <img
+                  src={person.image}
+                  alt={person.name}
+                  loading="lazy"
+                  decoding="async"
+                  onerror={`this.onerror=null;this.src='${person.fallback}'`}
+                />
+              </figure>
+              <p class="team-card__name">{person.name}</p>
+              <p class="team-card__role">{person.role}</p>
+              <a class="team-card__email" href={`mailto:${person.email}`}>{person.email}</a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   </article>
 </BaseLayout>
 
 <style>
-  .agency-page {
+  .team-page {
     background: var(--na-cream);
     color: var(--na-ink);
   }
 
   .page-header {
-    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-12);
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
     text-align: center;
   }
 
@@ -175,7 +154,7 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     max-width: 18ch;
   }
 
-  .agency-deck {
+  .page-deck {
     font-family: var(--na-font-body);
     font-size: clamp(15px, 1.2vw, 17px);
     line-height: 1.5;
@@ -184,92 +163,18 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     max-width: 60ch;
   }
 
-  .agency-hero-mark {
-    display: block;
-    margin: 0 auto var(--na-s-7);
-    width: 61px;
-    height: 70px;
-    object-fit: contain;
+  .team-intro {
+    padding-block: var(--na-s-9) var(--na-s-12);
   }
 
-  .section {
-    padding-block: clamp(var(--na-s-12), 6vw, var(--na-s-14));
-  }
-
-  .spread-grid,
-  .role-grid,
-  .clients-grid {
+  .team-intro__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: clamp(var(--na-s-9), 4vw, var(--na-s-14));
-    align-items: center;
+    align-items: start;
   }
 
-  .spread-media,
-  .role-media,
-  .clients-media {
-    position: relative;
-    margin: 0;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    background: var(--na-clay);
-  }
-
-  .spread-media img,
-  .role-media img,
-  .clients-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .spread-caption {
-    position: absolute;
-    right: var(--na-s-9);
-    bottom: var(--na-s-9);
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(34px, 4vw, 64px);
-    line-height: 1;
-    color: #d8593c;
-    letter-spacing: 0.02em;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.25);
-    pointer-events: none;
-  }
-
-  .spread-caption--bottom {
-    left: 50%;
-    right: auto;
-    bottom: var(--na-s-9);
-    transform: translateX(-50%);
-    text-align: center;
-    color: #fff;
-    font-size: clamp(28px, 3.2vw, 50px);
-    line-height: 1.05;
-    letter-spacing: 0.04em;
-  }
-
-  .spread-copy h2,
-  .role-copy h2,
-  .clients-copy h2,
-  .cta-inner h2 {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(32px, 4vw, 50px);
-    line-height: 1.15;
-    color: var(--na-ink);
-    margin: 0 0 var(--na-s-9);
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-
-  .spread-copy p,
-  .role-copy p,
-  .clients-copy p,
-  .cta-inner p {
+  .team-intro__copy p {
     font-family: var(--na-font-body);
     font-size: 16px;
     line-height: 1.6;
@@ -278,127 +183,157 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     max-width: 60ch;
   }
 
-  .lede {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(20px, 2vw, 26px) !important;
-    line-height: 1.4 !important;
-    color: var(--na-ink);
-    margin-bottom: var(--na-s-9) !important;
-  }
-
-  .coda {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(18px, 1.6vw, 22px) !important;
-    line-height: 1.4 !important;
-    color: var(--na-bronze-deep, var(--na-bronze));
-    margin-top: var(--na-s-9);
-  }
-
-  .role-spread-section {
-    padding-block: 0;
-  }
-
-  .role-spread {
+  .team-intro__media {
     margin: 0;
-    width: 100%;
-    aspect-ratio: 1440 / 627;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--na-clay);
   }
 
-  .role-spread img {
+  .team-intro__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .clients-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--na-s-7);
+  .practice {
+    padding-block: clamp(var(--na-s-9), 5vw, var(--na-s-12));
   }
 
-  .clients-list li {
+  .practice__title {
+    font-style: italic;
+    font-weight: 300;
+    text-align: center;
+    margin: 0 0 var(--na-s-9);
+    font-size: clamp(32px, 5vw, 56px);
+    color: var(--na-ink);
+  }
+
+  .practice__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(var(--na-s-9), 4vw, var(--na-s-14));
+    align-items: center;
+  }
+
+  .practice__grid p {
     font-family: var(--na-font-body);
     font-size: 16px;
     line-height: 1.6;
     color: var(--na-ink);
-    padding-left: 1.2em;
-    position: relative;
-    max-width: 50ch;
+    margin: 0;
+    max-width: 60ch;
   }
 
-  .clients-list li::before {
-    content: '·';
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
+  .practice__grid--reverse p {
+    margin-left: auto;
   }
 
-  .cta-section {
+  .practice__media {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .practice__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .team-grid-section {
+    background: var(--na-cream-warm);
+    padding-block: clamp(var(--na-s-14), 8vw, var(--na-s-16));
     text-align: center;
-    padding-block: clamp(var(--na-s-14), 7vw, var(--na-s-16));
   }
 
-  .cta-inner h2 {
+  .team-grid-section__title {
+    font-style: italic;
+    font-weight: 300;
+    margin: 0 0 var(--na-s-5);
+    font-size: clamp(36px, 6vw, 64px);
+  }
+
+  .team-grid-section__rule {
+    border: 0;
+    border-top: 1px solid var(--na-bronze);
+    width: 64px;
+    margin: 0 auto var(--na-s-12);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(var(--na-s-7), 2vw, var(--na-s-9));
+  }
+
+  .team-card {
     text-align: center;
-    margin-bottom: var(--na-s-9);
   }
 
-  .cta-line {
+  .team-card__media {
+    margin: 0 auto var(--na-s-6);
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--na-clay);
+  }
+
+  .team-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .team-card__name {
     font-family: var(--na-font-display);
     font-style: italic;
     font-weight: 300;
-    font-size: clamp(20px, 2vw, 26px) !important;
-    margin: 0 0 var(--na-s-7) !important;
+    font-size: clamp(18px, 1.6vw, 22px);
+    margin: 0 0 var(--na-s-3);
+    color: var(--na-ink);
   }
 
-  .cta-write {
-    margin-top: var(--na-s-9) !important;
-    margin-bottom: var(--na-s-3) !important;
+  .team-card__role {
+    font-family: var(--na-font-headline);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: var(--na-tracking-caps);
+    color: var(--na-graphite);
+    margin: 0 0 var(--na-s-3);
   }
 
-  .cta-email {
-    font-family: var(--na-font-ui);
-    font-size: clamp(16px, 1.4vw, 20px);
-    color: var(--na-bronze-deep, var(--na-bronze));
+  .team-card__email {
+    font-family: var(--na-font-body);
+    font-size: 13px;
+    color: var(--na-bronze-deep);
+    text-decoration: none;
+  }
+
+  .team-card__email:hover {
+    color: var(--na-bronze);
     text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
-
-  .cta-email:hover { color: var(--na-bronze); }
 
   @media (max-width: 1000px) {
-    .spread-grid,
-    .role-grid,
-    .clients-grid {
+    .team-intro__grid,
+    .practice__grid {
       grid-template-columns: 1fr;
-      gap: var(--na-s-9);
     }
 
-    .role-grid .role-media { order: -1; }
-
-    .spread-media,
-    .role-media,
-    .clients-media {
-      aspect-ratio: 4 / 3;
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--na-s-9);
     }
   }
 
-  @media (max-width: 640px) {
-    .spread-caption {
-      font-size: 26px;
-      right: var(--na-s-7);
-      bottom: var(--na-s-7);
+  @media (max-width: 480px) {
+    .team-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -2,16 +2,16 @@
 import { u } from '../lib/url';
 
 const ourWork = [
-  { href: u('/archive'), label: 'THE ARCHIVE' },
-  { href: u('/projects'), label: 'PROJECTS' },
-  { href: u('/about'), label: 'THE AGENCY' },
+  { href: u('/behind-the-scenes'), label: 'THE ARCHIVE' },
+  { href: u('/single-project'), label: 'PROJECTS' },
+  { href: u('/general-1'), label: 'THE AGENCY' },
 ];
 
 const workWithUs = [
   { href: u('/career'), label: 'Career' },
-  { href: u('/contact'), label: 'Contact' },
-  { href: u('/artist-inquiries'), label: 'Artist Inquiries' },
-  { href: u('/team'), label: 'About us' },
+  { href: u('/contact-7'), label: 'Contact' },
+  { href: u('/general-8'), label: 'Artist Inquiries' },
+  { href: u('/about'), label: 'About us' },
 ];
 
 const information = [
@@ -67,7 +67,7 @@ const information = [
 
   <script is:inline>
     (function () {
-      const msg = "Newsletter coming back online soon — drop us a note via /contact for now.";
+      const msg = "Newsletter coming back online soon — drop us a note via /contact-7 for now.";
       document.querySelectorAll('form[data-newsletter-form]').forEach(function (form) {
         if (form.dataset.bound === '1') return;
         form.dataset.bound = '1';
@@ -86,7 +86,7 @@ const information = [
 
 <style>
   .site-footer {
-    margin-top: var(--na-s-20);
+    margin-top: 0;
     padding-block: var(--na-s-14) var(--na-s-9);
     background: var(--na-sand);
     color: var(--na-ink);

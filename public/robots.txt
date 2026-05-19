@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://newafro.net/sitemap-index.xml
+Sitemap: https://newafro.com/sitemap-index.xml
