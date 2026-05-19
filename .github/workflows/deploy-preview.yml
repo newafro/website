@@ -42,7 +42,7 @@ jobs:
       - name: Publish preview site
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.NEWAFRO_PREVIEW_DEPLOY_TOKEN }}
+          deploy_key: ${{ secrets.NEWAFRO_PREVIEW_DEPLOY_KEY }}
           external_repository: newafro/website-preview
           publish_branch: gh-pages
           publish_dir: ./dist
