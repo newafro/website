@@ -48,7 +48,7 @@ collections:
           options: ["Art", "Music", "Events", "Community", "Interview", "Showroom", "Exhibition", "Diary", "Editorial", "General"] }
       - { label: "Tags", name: "tags", widget: "list", required: false }
       - { label: "Hero Image", name: "hero_image", widget: "image", required: false,
-          media_folder: "/public/uploads/blog", public_folder: "/uploads/blog" }
+          media_folder: "public/uploads/blog", public_folder: "/uploads/blog" }
       - { label: "Hero Alt Text", name: "hero_alt", widget: "string", required: false }
       - { label: "Gallery", name: "gallery", widget: "list", required: false,
           field: { label: "Image", name: "image", widget: "image" } }
@@ -83,7 +83,7 @@ collections:
       - { label: "CTA Label", name: "cta_label", widget: "string", required: false }
       - { label: "CTA URL", name: "cta_url", widget: "string", required: false }
       - { label: "Hero Image", name: "hero_image", widget: "image", required: false,
-          media_folder: "/public/uploads/events", public_folder: "/uploads/events" }
+          media_folder: "public/uploads/events", public_folder: "/uploads/events" }
       - { label: "Hero Alt Text", name: "hero_alt", widget: "string", required: false }
       - { label: "Gallery", name: "gallery", widget: "list", required: false,
           field: { label: "Image", name: "image", widget: "image" } }
@@ -114,7 +114,7 @@ collections:
       - { label: "Country", name: "country", widget: "string", required: false }
       - { label: "Disciplines", name: "disciplines", widget: "list", required: false }
       - { label: "Portrait", name: "portrait", widget: "image", required: false,
-          media_folder: "/public/uploads/artists", public_folder: "/uploads/artists" }
+          media_folder: "public/uploads/artists", public_folder: "/uploads/artists" }
       - { label: "Portrait Alt Text", name: "portrait_alt", widget: "string", required: false }
       - { label: "Short Bio", name: "short_bio", widget: "text" }
       - { label: "Website", name: "website", widget: "string", required: false }
