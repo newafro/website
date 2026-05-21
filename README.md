@@ -30,6 +30,12 @@ src/styles/        design tokens + global styles
 - Editors: open `/admin/` (after OAuth proxy is configured) and edit through the CMS UI. CMS publishes to the `staging` branch first, so changes appear on `https://preview.newafro.com` before production.
 - Developers: edit markdown under `src/content/` and push to `main`.
 
+## Operations
+
+Use [docs/operations/README.md](docs/operations/README.md) as the launch and
+handoff index. It links the preview-only designer review, first CMS login test,
+team access checklist, staging DNS notes, and OAuth proxy blocker.
+
 ## Deploy
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds Astro for `https://newafro.com` and publishes to GitHub Pages.
