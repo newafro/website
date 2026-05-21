@@ -48,3 +48,8 @@ jobs:
           publish_dir: ./dist
           cname: preview.newafro.com
           commit_message: "Deploy preview from newafro/website@${{ github.sha }}"
+
+      - name: Smoke public preview
+        run: |
+          sleep 20
+          npm run smoke:public

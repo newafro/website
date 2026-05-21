@@ -3,6 +3,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import WebSocket from 'ws';
 
 const previewUrl = (process.env.PREVIEW_URL || 'https://preview.newafro.com').replace(/\/$/, '');
 const loginUrl = (process.env.LOGIN_URL || 'https://login.newafro.com').replace(/\/$/, '');
@@ -153,10 +154,6 @@ function createCdpClient(wsUrl) {
 }
 
 async function main() {
-  if (typeof WebSocket !== 'function') {
-    throw new Error('This smoke check needs a Node runtime with global WebSocket support.');
-  }
-
   const chrome = findChrome();
   if (!chrome) {
     throw new Error('Chrome/Chromium was not found. Set CHROME_BIN to run browser smoke checks.');
