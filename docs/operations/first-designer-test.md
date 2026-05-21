@@ -40,6 +40,12 @@ The designer onboarding is blocked until the OAuth proxy is live. The visible
 preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
 
+Current state on 2026-05-21: `preview.newafro.com` and `login.newafro.com`
+load over HTTPS, the public browser smoke check passes, and
+`login.newafro.com` shows a clear pending-login screen. The remaining blocker
+is `decap-oauth.newafro.com`, which still needs the Render custom-domain CNAME
+in Namecheap before the designer can sign in or save CMS changes.
+
 If the designer is ready before OAuth is fixed, run a preview-only review
 instead of the CMS login test. Have her inspect `https://preview.newafro.com`
 on desktop and mobile, mark visual feedback as `Fix before launch`,
