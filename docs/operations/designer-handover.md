@@ -6,6 +6,8 @@ in the CMS, review layout changes on preview, and promote only approved work to
 production.
 
 For the short launch handoff, use [release-handoff.md](release-handoff.md).
+For the no-login review that can start before OAuth is ready, use
+[preview-only-review.md](preview-only-review.md).
 
 ## What To Use
 
@@ -40,6 +42,8 @@ to preview.
 
 Use this while CMS login is still blocked or before the designer has GitHub
 access. It lets the designer contribute without touching deployment.
+
+For the detailed checklist, use [preview-only-review.md](preview-only-review.md).
 
 1. Open `https://preview.newafro.com`.
 2. Review the home page, menu, archive, events, projects, community, and agency

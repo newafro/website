@@ -17,6 +17,8 @@ screen loads, but saving content is blocked until the OAuth proxy DNS is live.
 ## Track A: Designer Review Can Start Now
 
 The designer can review the preview site before CMS login is ready.
+Use `docs/operations/preview-only-review.md` for the detailed no-login
+checklist.
 
 1. Open `https://preview.newafro.com` on desktop and phone.
 2. Review home, menu, archive, events, projects, community, and agency.

@@ -63,6 +63,8 @@ on desktop and mobile, mark visual feedback as `Fix before launch`,
 `Nice to improve`, `Missing asset`, or `Approved`, and stop before any CMS save
 step.
 
+Use `docs/operations/preview-only-review.md` for that no-login review.
+
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
 
