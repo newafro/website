@@ -24,6 +24,7 @@ designer to ignore browser certificate warnings.
 - `preview.newafro.com` resolves and loads.
 - `login.newafro.com` resolves and redirects to the CMS.
 - GitHub Pages HTTPS enforcement is enabled for both `preview` and `login`.
+- The OAuth deploy-config preflight has passed with the exact Render target.
 - `decap-oauth.newafro.com` is deployed and reachable.
 - `https://decap-oauth.newafro.com/auth?provider=github` redirects to GitHub.
 - The designer has a GitHub account.
@@ -32,6 +33,11 @@ designer to ignore browser certificate warnings.
 
 OAuth deployment is tracked in
 `https://github.com/newafro/decap-oauth/issues/1`.
+
+The no-local-secrets OAuth preflight is:
+`https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml`.
+Use it with the exact Render custom-domain DNS target before changing
+Namecheap.
 
 The first designer dry run is tracked in
 `https://github.com/newafro/website/issues/2`.
