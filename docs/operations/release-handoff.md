@@ -67,6 +67,18 @@ Then add the printed Namecheap record in the `newafro.com` Advanced DNS zone.
 The host must be `decap-oauth`. The value must be the exact Render target. It
 must not be `newafro.github.io` and must not include `https://`.
 
+If the operator does not want OAuth secrets on a laptop, store
+`GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET` as secrets in
+`newafro/decap-oauth`, then run this GitHub Actions preflight with the exact
+Render target as the input:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
+```
+
+That workflow prints the same Namecheap `decap-oauth` CNAME value without
+exposing the OAuth secret.
+
 ## After DNS Is Added
 
 Run these checks from the website repo:

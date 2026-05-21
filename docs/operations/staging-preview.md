@@ -126,6 +126,16 @@ npm run check:deploy-config
 This prints the exact Namecheap record and catches common wrong values such as
 `newafro.github.io`, a value with `https://`, or a mismatched `PUBLIC_URL`.
 
+If the OAuth credentials should stay out of the local shell, store
+`GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET` as secrets in
+`newafro/decap-oauth`, then run the same check from GitHub Actions:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
+```
+
+Use the exact Render custom-domain DNS target as the workflow input.
+
 The Namecheap record must look like this:
 
 ```text
