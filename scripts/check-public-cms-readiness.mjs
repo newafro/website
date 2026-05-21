@@ -165,7 +165,21 @@ async function checkCmsConfig() {
       }
     }
 
+    const draftDefaults = text.match(/name:\s*"draft"[^}\n]*default:\s*true/g) || [];
+    if (draftDefaults.length < 3) {
+      fail('CMS config should default Journal, Events, and Artists entries to Draft: true');
+      return;
+    }
+
+    const galleryFields = text.match(/name:\s*"gallery"[\s\S]*?field:\s*\{ label:\s*"Image", name:\s*"image", widget:\s*"image" \}/g) || [];
+    if (galleryFields.length < 2) {
+      fail('CMS config should keep Journal and Events galleries as scalar image lists');
+      return;
+    }
+
     pass('CMS config targets staging and includes editor collections');
+    pass('CMS config defaults new editor entries to drafts');
+    pass('CMS config gallery fields match the Astro content schema');
   } catch (error) {
     fail(`CMS config failed: ${error.message}`);
   }
