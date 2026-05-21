@@ -3,6 +3,7 @@ import { resolve4, resolveCname } from 'node:dns/promises';
 import fs from 'node:fs';
 
 const CHECK_TIMEOUT_MS = 15000;
+const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
 const failures = [];
 const lines = [];
 
@@ -39,6 +40,9 @@ function printOauthDnsInstructions() {
   log('  TTL:   Automatic');
   log('');
   log('The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.');
+  log('');
+  log('After adding OAuth repo secrets and DNS, run the OAuth operator preflight:');
+  log(`  ${OAUTH_OPERATOR_WORKFLOW_URL}`);
 }
 
 async function withTimeout(promise, label) {

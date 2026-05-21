@@ -18,6 +18,9 @@ Required Namecheap record for the OAuth proxy:
   TTL:   Automatic
 
 The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.
+
+After adding OAuth repo secrets and DNS, run the OAuth operator preflight:
+  https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 EOF
 }
 
