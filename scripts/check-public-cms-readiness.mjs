@@ -1,31 +1,44 @@
 #!/usr/bin/env node
 import { resolve4, resolveCname } from 'node:dns/promises';
+import fs from 'node:fs';
 
 const CHECK_TIMEOUT_MS = 15000;
 const failures = [];
+const lines = [];
+
+function log(line = '') {
+  console.log(line);
+  lines.push(line);
+}
+
+function writeSummary() {
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n'));
+  }
+}
 
 function normalizeHost(value) {
   return value.replace(/\.$/, '');
 }
 
 function pass(message) {
-  console.log(`PASS ${message}`);
+  log(`PASS ${message}`);
 }
 
 function fail(message) {
   failures.push(message);
-  console.log(`FAIL ${message}`);
+  log(`FAIL ${message}`);
 }
 
 function printOauthDnsInstructions() {
-  console.log('');
-  console.log('Required Namecheap record for the OAuth proxy:');
-  console.log('  Type:  CNAME Record');
-  console.log('  Host:  decap-oauth');
-  console.log('  Value: the exact Render custom-domain target, without https://');
-  console.log('  TTL:   Automatic');
-  console.log('');
-  console.log('The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.');
+  log('');
+  log('Required Namecheap record for the OAuth proxy:');
+  log('  Type:  CNAME Record');
+  log('  Host:  decap-oauth');
+  log('  Value: the exact Render custom-domain target, without https://');
+  log('  TTL:   Automatic');
+  log('');
+  log('The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.');
 }
 
 async function withTimeout(promise, label) {
@@ -55,7 +68,7 @@ async function fetchText(url, options = {}) {
 }
 
 async function checkDns(host, { expectedCname } = {}) {
-  console.log(`\n== DNS: ${host} ==`);
+  log(`\n== DNS: ${host} ==`);
   let cnames = [];
   let addresses = [];
 
@@ -72,10 +85,10 @@ async function checkDns(host, { expectedCname } = {}) {
   }
 
   if (cnames.length > 0) {
-    console.log(`CNAME ${cnames.join(', ')}`);
+    log(`CNAME ${cnames.join(', ')}`);
   }
   if (addresses.length > 0) {
-    console.log(`A ${addresses.join(', ')}`);
+    log(`A ${addresses.join(', ')}`);
   }
 
   if (cnames.length === 0 && addresses.length === 0) {
@@ -96,10 +109,10 @@ async function checkDns(host, { expectedCname } = {}) {
 }
 
 async function checkPage(name, url, expectedText = []) {
-  console.log(`\n== Page: ${name} ==`);
+  log(`\n== Page: ${name} ==`);
   try {
     const { response, text } = await fetchText(url);
-    console.log(`${response.status} ${response.url}`);
+    log(`${response.status} ${response.url}`);
 
     if (!response.ok) {
       fail(`${name} returned HTTP ${response.status}`);
@@ -120,10 +133,10 @@ async function checkPage(name, url, expectedText = []) {
 }
 
 async function checkCmsConfig() {
-  console.log('\n== CMS Config ==');
+  log('\n== CMS Config ==');
   try {
     const { response, text } = await fetchText('https://preview.newafro.com/admin/config.yml');
-    console.log(`${response.status} ${response.url}`);
+    log(`${response.status} ${response.url}`);
 
     if (!response.ok) {
       fail(`CMS config returned HTTP ${response.status}`);
@@ -155,17 +168,17 @@ async function checkCmsConfig() {
 }
 
 async function checkOauthProxy({ dnsReady }) {
-  console.log('\n== OAuth Proxy ==');
+  log('\n== OAuth Proxy ==');
 
   if (!dnsReady) {
-    console.log('skipped because decap-oauth.newafro.com has no DNS result');
+    log('skipped because decap-oauth.newafro.com has no DNS result');
     printOauthDnsInstructions();
     return;
   }
 
   try {
     const root = await fetchText('https://decap-oauth.newafro.com/');
-    console.log(`root ${root.response.status} ${root.response.url}`);
+    log(`root ${root.response.status} ${root.response.url}`);
     if (!root.response.ok) {
       fail(`OAuth root returned HTTP ${root.response.status}`);
       return;
@@ -177,7 +190,7 @@ async function checkOauthProxy({ dnsReady }) {
 
   try {
     const health = await fetchText('https://decap-oauth.newafro.com/healthz');
-    console.log(`health ${health.response.status} ${health.response.url}`);
+    log(`health ${health.response.status} ${health.response.url}`);
     if (!health.response.ok) {
       fail(`OAuth health returned HTTP ${health.response.status}`);
       return;
@@ -197,7 +210,7 @@ async function checkOauthProxy({ dnsReady }) {
       redirect: 'manual',
     });
     const location = auth.response.headers.get('location') || '';
-    console.log(`auth ${auth.response.status} ${location}`);
+    log(`auth ${auth.response.status} ${location}`);
     if (auth.response.status !== 302 || !location.startsWith('https://github.com/login/oauth/authorize')) {
       fail('OAuth auth endpoint does not redirect to GitHub authorize');
       return;
@@ -210,7 +223,7 @@ async function checkOauthProxy({ dnsReady }) {
   pass('OAuth proxy is ready for Decap CMS login');
 }
 
-console.log('New Afro public CMS readiness');
+log('New Afro public CMS readiness');
 
 await checkDns('preview.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkDns('login.newafro.com', { expectedCname: 'newafro.github.io' });
@@ -222,12 +235,14 @@ await checkPage('Friendly login page', 'https://login.newafro.com/', ['https://p
 await checkCmsConfig();
 await checkOauthProxy({ dnsReady: oauthDnsReady });
 
-console.log('\n== Summary ==');
+log('\n== Summary ==');
 if (failures.length > 0) {
   for (const failure of failures) {
-    console.log(`- ${failure}`);
+    log(`- ${failure}`);
   }
+  writeSummary();
   process.exit(1);
 }
 
-console.log('All public CMS readiness checks passed.');
+log('All public CMS readiness checks passed.');
+writeSummary();
