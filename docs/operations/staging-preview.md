@@ -94,7 +94,7 @@ host. For the current Namecheap DNS setup, Render is the lowest-friction path:
    ```text
    Application name: New Afro Studio CMS
    Homepage URL: https://newafro.com
-   Authorization callback URL: https://decap-oauth.newafro.com/callback
+   Authorization callback URL: https://decap-oauth.newafro.com/callback?provider=github
    ```
 
 2. Store the GitHub OAuth values in the OAuth proxy host:
