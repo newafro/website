@@ -76,6 +76,14 @@ New Afro Decap OAuth / decap-oauth.newafro.com client id and secret
 
 The OAuth proxy source is `https://github.com/newafro/decap-oauth`.
 
+The public readiness monitor is:
+
+```text
+https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
+```
+
+Use it after DNS or OAuth changes to confirm whether editor login is ready.
+
 The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
 
 ## Minimal Onboarding Message

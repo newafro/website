@@ -33,12 +33,21 @@ designer to ignore browser certificate warnings.
 OAuth deployment is tracked in
 `https://github.com/newafro/decap-oauth/issues/1`.
 
+The first designer dry run is tracked in
+`https://github.com/newafro/website/issues/2`.
+
 The designer onboarding is blocked until the OAuth proxy is live. The visible
 preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
 
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
+
+You can also run the default-branch public monitor from GitHub:
+
+```text
+https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
+```
 
 ## Session Script
 

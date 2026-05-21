@@ -133,10 +133,17 @@ For a public check that can run without GitHub admin credentials, use:
 npm run check:cms-readiness
 ```
 
-The same check is wired into the `CMS Readiness` GitHub Actions workflow for
-manual and daily runs after this staging branch is promoted to the repository's
-default branch. It verifies the public preview, friendly login URL, CMS config,
-and OAuth proxy endpoints.
+The default branch also has a public monitor that can be run without checking
+out the repository:
+
+```text
+https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
+```
+
+That `Public CMS Readiness` workflow runs manually and daily. It verifies the
+public preview, friendly login URL, CMS config, and OAuth proxy endpoints. It
+is expected to fail until `decap-oauth.newafro.com` is deployed and DNS is
+added.
 
 ## Release Flow
 
