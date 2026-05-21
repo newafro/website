@@ -215,6 +215,12 @@ async function checkOauthProxy({ dnsReady }) {
       fail('OAuth auth endpoint does not redirect to GitHub authorize');
       return;
     }
+
+    const redirectUri = new URL(location).searchParams.get('redirect_uri');
+    if (redirectUri !== 'https://decap-oauth.newafro.com/callback?provider=github') {
+      fail(`OAuth auth endpoint has wrong GitHub callback URL: ${redirectUri || '(missing)'}`);
+      return;
+    }
   } catch (error) {
     fail(`OAuth auth failed: ${error.message}`);
     return;

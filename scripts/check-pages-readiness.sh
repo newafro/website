@@ -98,6 +98,7 @@ else
   oauth_auth_headers="$(curl -sSI --max-time 15 'https://decap-oauth.newafro.com/auth?provider=github' || true)"
   oauth_auth_status="$(awk 'NR == 1 { print $2 }' <<<"$oauth_auth_headers")"
   oauth_auth_location="$(awk 'BEGIN { IGNORECASE = 1 } /^location:/ { print }' <<<"$oauth_auth_headers" | tr -d '\r')"
+  oauth_redirect_uri="$(node -e 'const line = process.argv[1] || ""; const value = line.replace(/^location:\s*/i, "").trim(); try { console.log(new URL(value).searchParams.get("redirect_uri") || ""); } catch { console.log(""); }' "$oauth_auth_location")"
   sed -n '1,10p' <<<"$oauth_auth_headers" | sed 's/^/  /'
 
   if [[ ! "$oauth_root_status" =~ ^(200|204)$ ]]; then
@@ -108,6 +109,9 @@ else
     readiness_failed=1
   elif [[ "$oauth_auth_status" != "302" || "$oauth_auth_location" != *"github.com/login/oauth/authorize"* ]]; then
     echo "  status: blocked, auth endpoint did not redirect to GitHub OAuth"
+    readiness_failed=1
+  elif [[ "$oauth_redirect_uri" != "https://decap-oauth.newafro.com/callback?provider=github" ]]; then
+    echo "  status: blocked, auth endpoint used wrong GitHub callback URL: ${oauth_redirect_uri:-missing}"
     readiness_failed=1
   else
     echo "  status: OAuth proxy ready"
