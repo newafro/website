@@ -208,6 +208,18 @@ async function checkLocalContentAssets() {
   }
 }
 
+async function checkPreviewRelease() {
+  const result = await run('node', ['scripts/check-preview-release.mjs']);
+  const output = `${result.stdout || ''}${result.stderr ? `\n${result.stderr}` : ''}`.trim();
+  if (output) console.log(output);
+
+  if (result.ok) {
+    pass('preview release marker matches the staging branch');
+  } else {
+    failPreview('preview release marker does not match the staging branch');
+  }
+}
+
 async function checkOauthSecrets() {
   const result = await run('gh', [
     'secret',
@@ -293,6 +305,7 @@ console.log('New Afro first designer readiness');
 
 section('Preview-Only Review');
 await checkLocalContentAssets();
+await checkPreviewRelease();
 await checkDns('preview.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkDns('login.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkGithubPages('newafro/website-preview', 'preview.newafro.com');

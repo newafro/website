@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 import { resolve4, resolveCname } from 'node:dns/promises';
+import { execFile } from 'node:child_process';
 import fs from 'node:fs';
+import { promisify } from 'node:util';
 
 const CHECK_TIMEOUT_MS = 15000;
 const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
+const execFileAsync = promisify(execFile);
 const failures = [];
 const lines = [];
 
@@ -69,6 +72,37 @@ async function fetchText(url, options = {}) {
     const text = await response.text().catch(() => '');
     return { response, text };
   }, url);
+}
+
+async function run(command, args) {
+  try {
+    const result = await execFileAsync(command, args, {
+      timeout: CHECK_TIMEOUT_MS,
+      maxBuffer: 1024 * 1024 * 10,
+    });
+    return { ok: true, stdout: result.stdout || '', stderr: result.stderr || '' };
+  } catch (error) {
+    return {
+      ok: false,
+      stdout: error.stdout || '',
+      stderr: error.stderr || error.message || '',
+    };
+  }
+}
+
+async function checkPreviewRelease() {
+  log('\n== Preview Release Marker ==');
+  const result = await run('node', ['scripts/check-preview-release.mjs']);
+  const output = `${result.stdout || ''}${result.stderr ? `\n${result.stderr}` : ''}`.trim();
+  if (output) {
+    for (const line of output.split('\n')) log(line);
+  }
+
+  if (result.ok) {
+    pass('Preview release marker matches the staging branch');
+  } else {
+    fail('Preview release marker does not match the staging branch');
+  }
 }
 
 async function checkDns(host, { expectedCname } = {}) {
@@ -253,6 +287,7 @@ await checkDns('preview.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkDns('login.newafro.com', { expectedCname: 'newafro.github.io' });
 const oauthDnsReady = await checkDns('decap-oauth.newafro.com');
 
+await checkPreviewRelease();
 await checkPage('Preview home', 'https://preview.newafro.com/', ['New Afro', 'Where art connects cultures.']);
 await checkPage('Preview admin', 'https://preview.newafro.com/admin/', ['New Afro Studio']);
 await checkPage('Friendly login page', 'https://login.newafro.com/', ['https://preview.newafro.com/admin/']);

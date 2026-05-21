@@ -77,6 +77,8 @@ npm run check:first-designer
 This includes a local upload asset scan. If it reports a missing
 `/uploads/...` file, fix the asset path or put the missing file in
 `public/uploads` before asking the designer to review the affected page.
+It also checks that `preview.newafro.com/release.json` matches the current
+`staging` branch, so the review is against the latest candidate.
 
 If it says `Preview-only review: READY` and `CMS login/save dry run: BLOCKED`,
 start only the preview review flow. Start this CMS save test only when it says

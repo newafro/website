@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "check:cms-config": "node scripts/check-cms-config.mjs",
     "check:content-assets": "node scripts/check-content-assets.mjs",
+    "check:preview-release": "node scripts/check-preview-release.mjs",
     "check:cms-readiness": "node scripts/check-public-cms-readiness.mjs",
     "check:first-designer": "node scripts/check-first-designer-readiness.mjs",
     "smoke:public": "node scripts/smoke-public-browser.mjs",

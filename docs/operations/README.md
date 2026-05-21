@@ -69,6 +69,7 @@ From the website repo:
 ```bash
 npm run check:first-designer
 npm run check:content-assets
+npm run check:preview-release
 ./scripts/check-pages-readiness.sh
 npm run check:cms-readiness
 npm run smoke:public
@@ -83,6 +84,10 @@ videos are caught before review.
 `npm run check:content-assets` scans the Astro, CMS, and content files for
 `/uploads/...` references and fails when a referenced file is missing from
 `public/uploads`.
+
+`npm run check:preview-release` checks `https://preview.newafro.com/release.json`
+against the current `staging` branch head, so onboarding does not accidentally
+review an older deployed build.
 
 `./scripts/check-pages-readiness.sh` is the best operator-side first check: it
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and
