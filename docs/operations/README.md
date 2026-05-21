@@ -15,22 +15,28 @@ OAuth:      https://decap-oauth.newafro.com
 
 - `newafro.com`, `preview.newafro.com`, and `login.newafro.com` are on GitHub
   Pages with approved HTTPS certificates and HTTPS enforcement.
-- `login.newafro.com` opens the preview CMS route.
+- `login.newafro.com` and `login.newafro.com/admin/` open the preview CMS route.
 - `decap-oauth.newafro.com` still needs the Render custom-domain CNAME in
   Namecheap before GitHub CMS login and saving can work.
 
 Latest readiness evidence, checked on 2026-05-22 in Berlin:
 
-- `preview.newafro.com` is serving staging commit `2e4e213`.
+- `preview.newafro.com/release.json` matches the current `staging` branch when
+  the readiness gates run.
 - The first-designer readiness workflow runs against `staging` and currently
   reports `Preview-only review: READY` / `CMS login/save dry run: BLOCKED`:
-  `https://github.com/newafro/website/actions/runs/26259065240`.
+  `https://github.com/newafro/website/actions/runs/26259933522`.
+- The public CMS readiness workflow currently passes preview, login, CMS
+  config, and release-marker checks, then blocks on OAuth DNS:
+  `https://github.com/newafro/website/actions/runs/26259933520`.
+- The friendly login redirect repo is deployed at commit `9fd5134`, so both
+  `/` and `/admin/` are valid entry points for non-technical editors.
 - `newafro/decap-oauth` validates at commit `d8c841f`.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
 - The OAuth operator preflight still fails on the external setup: missing
   `decap-oauth.newafro.com` DNS and missing OAuth repo secrets:
-  `https://github.com/newafro/decap-oauth/actions/runs/26257887542`.
+  `https://github.com/newafro/decap-oauth/actions/runs/26259933488`.
 
 ## Use The Right Checklist
 
@@ -124,10 +130,12 @@ that summary first when the scheduled monitor is red; it lists the current
 entry points, the exact remaining CMS login/save blockers, and the next
 operator action before the full check log.
 
-`npm run smoke:public` also checks `https://preview.newafro.com/release.json`.
-In CI, the preview smoke check fails if that marker does not match the exact
-staging commit GitHub just deployed, so a green deploy proves the browser is
-testing the current release candidate.
+`npm run smoke:public` checks `https://preview.newafro.com/release.json`, the
+preview home page, the CMS route, and both `login.newafro.com/` and
+`login.newafro.com/admin/` redirecting into the preview CMS. In CI, the preview
+smoke check fails if that marker does not match the exact staging commit GitHub
+just deployed, so a green deploy proves the browser is testing the current
+release candidate.
 
 From the OAuth repo:
 

@@ -346,6 +346,7 @@ await checkPreviewRelease();
 await checkPage('Preview home', 'https://preview.newafro.com/', ['New Afro', 'Where art connects cultures.']);
 await checkPage('Preview admin', 'https://preview.newafro.com/admin/', ['New Afro Studio']);
 await checkPage('Friendly login page', 'https://login.newafro.com/', ['https://preview.newafro.com/admin/']);
+await checkPage('Friendly login admin path', 'https://login.newafro.com/admin/', ['https://preview.newafro.com/admin/']);
 await checkCmsConfig();
 await checkOauthProxy({ dnsReady: oauthDnsReady });
 

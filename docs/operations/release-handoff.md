@@ -11,19 +11,21 @@ Preview:    https://preview.newafro.com
 CMS login:  https://login.newafro.com
 ```
 
-`preview.newafro.com` and `login.newafro.com` are live over HTTPS. The CMS
-screen loads, but saving content is blocked until the OAuth proxy DNS is live.
+`preview.newafro.com` and `login.newafro.com` are live over HTTPS. Both
+`login.newafro.com/` and `login.newafro.com/admin/` open the preview CMS route.
+The CMS screen loads, but saving content is blocked until the OAuth proxy DNS is
+live.
 
-Current evidence, checked on 2026-05-22 in Berlin: `preview.newafro.com` is
-serving staging commit `2e4e213`. The first-designer readiness workflow runs
-against staging and reports that visual review is ready while CMS saving is
-blocked:
-`https://github.com/newafro/website/actions/runs/26259065240`.
+Current evidence, checked on 2026-05-22 in Berlin: the preview release marker
+matches `staging`, browser smoke passes for preview/admin/login, and the
+first-designer readiness workflow reports that visual review is ready while CMS
+saving is blocked:
+`https://github.com/newafro/website/actions/runs/26259933522`.
 
 The OAuth repo validates at `d8c841f`, but the latest OAuth operator preflight
 still fails because `decap-oauth.newafro.com` has no DNS result and the OAuth
 repo does not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets:
-`https://github.com/newafro/decap-oauth/actions/runs/26257887542`.
+`https://github.com/newafro/decap-oauth/actions/runs/26259933488`.
 
 ## Track A: Designer Review Can Start Now
 
@@ -125,6 +127,8 @@ The first real designer CMS test starts only after those checks pass.
 ## First CMS Save Test
 
 1. Open `https://login.newafro.com`.
+   `https://login.newafro.com/admin/` is also valid if someone bookmarks the
+   editor path directly.
 2. Sign in with GitHub.
 3. Open `Journal`, `Events`, and `Artists`.
 4. Create a draft post named `CMS test - delete after onboarding`.

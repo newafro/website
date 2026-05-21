@@ -23,6 +23,7 @@ designer to ignore browser certificate warnings.
 
 - `preview.newafro.com` resolves and loads.
 - `login.newafro.com` resolves and redirects to the CMS.
+- `login.newafro.com/admin/` resolves and redirects to the CMS.
 - GitHub Pages HTTPS enforcement is enabled for both `preview` and `login`.
 - The OAuth deploy-config preflight has passed with the exact Render target.
 - `decap-oauth.newafro.com` is deployed and reachable.
@@ -52,18 +53,19 @@ preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
 
 Current state on 2026-05-22: `preview.newafro.com` and `login.newafro.com`
-load over HTTPS, the public browser smoke check passes, and
-`login.newafro.com` shows a clear pending-login screen. The remaining blocker
-is `decap-oauth.newafro.com`, which still needs the Render custom-domain CNAME
-in Namecheap before the designer can sign in or save CMS changes.
+load over HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the
+public browser smoke check passes, and the CMS shows a clear pending-login
+screen. The remaining blocker is `decap-oauth.newafro.com`, which still needs
+the Render custom-domain CNAME in Namecheap before the designer can sign in or
+save CMS changes.
 
 Latest first-designer readiness workflow:
-`https://github.com/newafro/website/actions/runs/26259065240`. It checks
+`https://github.com/newafro/website/actions/runs/26259933522`. It checks
 `staging`, reports `Preview-only review: READY`, and keeps CMS login/save
 blocked until OAuth is live.
 
 Latest OAuth operator preflight:
-`https://github.com/newafro/decap-oauth/actions/runs/26257887542`. It should
+`https://github.com/newafro/decap-oauth/actions/runs/26259933488`. It should
 be red until the DNS record and OAuth repo secrets are added; its GitHub job
 summary now lists the missing setup items without exposing secrets.
 
@@ -119,8 +121,9 @@ Run the browser smoke check as well from the website repo:
 npm run smoke:public
 ```
 
-This verifies the rendered preview home page, the preview CMS route, and
-`login.newafro.com` redirecting into the preview CMS on desktop/mobile Chrome.
+This verifies the rendered preview home page, the preview CMS route, and both
+`login.newafro.com/` and `login.newafro.com/admin/` redirecting into the preview
+CMS on desktop/mobile Chrome.
 
 You can also run the default-branch public monitor from GitHub:
 

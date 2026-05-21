@@ -401,6 +401,7 @@ await checkGithubPages('newafro/login', 'login.newafro.com');
 await checkPage('Preview home', `${PREVIEW_URL}/`, ['New Afro', 'Where art connects cultures.']);
 await checkPage('Preview admin', `${PREVIEW_URL}/admin/`, ['New Afro Studio']);
 await checkPage('Friendly login page', `${LOGIN_URL}/`, [`${PREVIEW_URL}/admin/`]);
+await checkPage('Friendly login admin path', `${LOGIN_URL}/admin/`, [`${PREVIEW_URL}/admin/`]);
 await checkLiveCmsConfig();
 
 section('CMS Login And Save Dry Run');

@@ -64,6 +64,19 @@ const checks = [
       assertBlockedEditorStatus(page, 'login destination');
     },
   },
+  {
+    name: 'login admin mobile',
+    url: `${loginUrl}/admin/?smoke=${cacheToken}`,
+    viewport: { width: 390, height: 844, mobile: true },
+    waitMs: 9000,
+    assert(page) {
+      assertIncludes(page.href, `${previewUrl}/admin/`, 'login admin redirects to preview admin');
+      assertEqual(page.cmsLoaded, true, 'login admin destination loads Decap CMS');
+      assertEqual(page.configError, false, 'login admin destination has no CMS config error');
+      assertIncludes(page.text, 'Login with GitHub', 'login admin destination action');
+      assertBlockedEditorStatus(page, 'login admin destination');
+    },
+  },
 ];
 
 const failures = [];
