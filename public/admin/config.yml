@@ -5,8 +5,10 @@ backend:
   name: github
   repo: newafro/website
   branch: staging
-  base_url: https://decap-oauth.newafro.net
+  base_url: https://decap-oauth.newafro.com
   auth_endpoint: /auth
+
+local_backend: true
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
@@ -15,12 +17,13 @@ publish_mode: editorial_workflow
 
 site_url: https://preview.newafro.com
 display_url: https://preview.newafro.com
-logo_url: https://preview.newafro.com/favicon.svg
+logo_url: https://newafro.com/favicon.svg
 
 collections:
   - name: "blog"
     label: "Journal"
     label_singular: "Journal Post"
+    description: "Draft or publish journal stories once copy and image credits are verified."
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
@@ -58,6 +61,7 @@ collections:
   - name: "events"
     label: "Events"
     label_singular: "Event"
+    description: "Create and update exhibitions, pop-ups, talks, and event detail pages."
     folder: "src/content/events"
     create: true
     slug: "{{slug}}"
@@ -95,6 +99,7 @@ collections:
   - name: "artists"
     label: "Artists"
     label_singular: "Artist"
+    description: "Manage artist profiles shown on the Community page."
     folder: "src/content/artists"
     create: true
     slug: "{{slug}}"

@@ -3,10 +3,10 @@ import { u } from '../lib/url';
 
 const nav = [
   { href: '/', label: 'HOME' },
-  { href: '/general-1', label: 'THE AGENCY' },
+  { href: '/agency', label: 'THE AGENCY' },
   { href: '/community', label: 'COMMUNITY' },
-  { href: '/behind-the-scenes', label: 'THE ARCHIVE' },
-  { href: '/single-project', label: 'PROJECTS' },
+  { href: '/archive', label: 'THE ARCHIVE' },
+  { href: '/projects', label: 'PROJECTS' },
   { href: '/events', label: 'EVENTS' },
 ];
 ---
@@ -149,8 +149,12 @@ const nav = [
 
   .nav-panel {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 70;
+    overflow: hidden auto;
     background:
       radial-gradient(circle at 74% 12%, rgba(153, 105, 47, 0.95), transparent 46%),
       linear-gradient(105deg, #1f1203 0%, #2d1804 28%, #58340f 58%, #8a622e 100%);
@@ -159,16 +163,24 @@ const nav = [
     transition: opacity 220ms ease;
   }
 
+  @supports (height: 100dvh) {
+    .nav-panel {
+      height: 100dvh;
+    }
+  }
+
   .nav-panel.is-open {
     opacity: 1;
     pointer-events: auto;
   }
 
   .nav-panel__inner {
+    box-sizing: border-box;
+    width: 100%;
     min-height: 100%;
     display: flex;
     align-items: center;
-    padding: clamp(104px, 14vw, 180px) 24px clamp(64px, 9vw, 120px);
+    padding: clamp(88px, 12vw, 140px) 24px clamp(48px, 7vw, 96px);
   }
 
   .nav-panel ul {
@@ -176,14 +188,14 @@ const nav = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: clamp(28px, 4.6vw, 56px);
+    gap: clamp(20px, 3.8vw, 44px);
     text-align: left;
     margin-left: clamp(28px, 19vw, 400px);
   }
 
   .nav-panel a {
     font-family: var(--na-font-display);
-    font-size: clamp(42px, 4.2vw, 58px);
+    font-size: clamp(38px, 3.8vw, 54px);
     font-style: italic;
     font-weight: 300;
     line-height: 0.9;
@@ -224,7 +236,22 @@ const nav = [
     }
 
     .nav-panel a {
-      font-size: clamp(38px, 15vw, 56px);
+      font-size: clamp(36px, 14vw, 52px);
+    }
+  }
+
+  @media (max-height: 760px) and (min-width: 761px) {
+    .nav-panel__inner {
+      padding-top: 72px;
+      padding-bottom: 44px;
+    }
+
+    .nav-panel ul {
+      gap: 20px;
+    }
+
+    .nav-panel a {
+      font-size: clamp(34px, 3.4vw, 48px);
     }
   }
 

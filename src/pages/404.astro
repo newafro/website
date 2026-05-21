@@ -19,10 +19,11 @@ import { u } from '../lib/url';
     var base = (BASE || '/').replace(/\/$/, '');
     var path = location.pathname.replace(base, '') || '/';
     var map = {
-      '/artist-inquiries': '/general-8',
-      '/archive': '/behind-the-scenes',
-      '/contact': '/contact-7',
-      '/projects': '/single-project',
+      '/general-1': '/agency',
+      '/general-8': '/artist-inquiries',
+      '/behind-the-scenes': '/archive',
+      '/contact-7': '/contact',
+      '/single-project': '/projects',
       '/terms': '/imprint'
     };
     if (map[path] || map[path.replace(/\/$/, '')]) {

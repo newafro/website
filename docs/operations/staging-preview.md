@@ -2,6 +2,8 @@
 
 Production is `https://newafro.com`.
 Staging is `https://preview.newafro.com`.
+CMS login is `https://login.newafro.com`, which redirects to
+`https://newafro.com/admin/`.
 
 The preview site is for design review, WhatsApp feedback, and team approval before a change reaches production.
 
@@ -51,7 +53,33 @@ TTL:   Automatic
 
 Do not add `A` or `AAAA` records for `preview`.
 
-After DNS propagates, verify the custom domain in the `newafro/website-preview` GitHub Pages settings and enable HTTPS enforcement.
+For the friendly CMS login URL, add this record too:
+
+```text
+Type:  CNAME Record
+Host:  login
+Value: newafro.github.io.
+TTL:   Automatic
+```
+
+The `newafro/login` GitHub Pages repository serves only a tiny redirect page
+from `login.newafro.com` to `https://newafro.com/admin/`.
+
+The CMS also needs an OAuth proxy because Decap CMS cannot complete GitHub
+login from a static GitHub Pages site without a small server-side callback.
+Use this domain for that service:
+
+```text
+decap-oauth.newafro.com
+```
+
+Add the DNS record required by the OAuth proxy host. The exact value depends on
+where that proxy is deployed, for example a VPS, Render/Fly service, or
+Cloudflare Worker custom domain. Do not point this host at GitHub Pages unless
+the OAuth proxy is actually running there.
+
+After DNS propagates, verify the custom domains in GitHub Pages settings for
+`newafro/website-preview` and `newafro/login`, then enable HTTPS enforcement.
 
 ## Release Flow
 

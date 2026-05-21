@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { u } from '../lib/url';
+---
+
+<BaseLayout
+  title="Artist Inquiries — New Afro"
+  description="Artist enquiries for photographers, painters, visual artists, performers, and cultural collaborators."
+>
+  <article class="artist-inquiries">
+    <section class="artist-intro">
+      <h1>Artist enquiries</h1>
+      <p>
+        New Afro’s mission is to shine a light on creativity and contemporary
+        art by artists with African backgrounds. We connect artists,
+        institutions, and audiences through exhibitions, editorial work,
+        pop-ups, and cultural projects.
+      </p>
+    </section>
+
+    <section class="artist-banner" aria-labelledby="artist-call">
+      <img src={u('/uploads/artist-inquiries/01-t-C3-A9l-C3-A9chargement_edited_edited_edited.jpg')} alt="" loading="eager" decoding="async" />
+      <div class="artist-banner__copy">
+        <h2 id="artist-call">Are you a photographer, painter, visual artist, or performer?</h2>
+        <p>
+          Want to collaborate with New Afro? If so, we’d love to hear from you.
+          Send a short note and a portfolio link.
+        </p>
+        <a href="mailto:hello@newafro.net">hello@newafro.net</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .artist-inquiries {
+    background: var(--na-cream);
+    color: var(--na-ink);
+  }
+
+  .artist-intro {
+    min-height: 495px;
+    display: grid;
+    align-content: center;
+    width: min(980px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 96px 0 72px;
+  }
+
+  .artist-intro h1 {
+    margin: 0 0 32px;
+    font-family: var(--na-font-page-display);
+    font-size: clamp(58px, 6vw, 78px);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .artist-intro p {
+    max-width: 760px;
+    margin: 0;
+    font-family: var(--na-font-body);
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.55;
+  }
+
+  .artist-banner {
+    position: relative;
+    min-height: 403px;
+    margin: 0 auto;
+    width: min(1412px, calc(100% - 28px));
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: #2a1705;
+  }
+
+  .artist-banner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.86;
+  }
+
+  .artist-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(42, 23, 5, 0.24), rgba(42, 23, 5, 0.48));
+  }
+
+  .artist-banner__copy {
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+    text-align: center;
+    color: var(--na-paper);
+    padding: 48px 24px;
+  }
+
+  .artist-banner__copy h2 {
+    margin: 0 0 18px;
+    font-family: var(--na-font-display);
+    font-size: clamp(32px, 4vw, 56px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .artist-banner__copy p {
+    margin: 0 0 26px;
+    font-family: var(--na-font-body);
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.45;
+  }
+
+  .artist-banner__copy a {
+    color: var(--na-paper);
+    font-family: var(--na-font-body);
+    font-size: 19px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 760px) {
+    .artist-intro {
+      min-height: 0;
+      padding-top: 118px;
+      width: min(980px, calc(100% - 40px));
+    }
+
+    .artist-intro h1 {
+      font-size: clamp(42px, 13vw, 58px);
+      line-height: 1.05;
+    }
+
+    .artist-intro p {
+      font-size: 17px;
+    }
+
+    .artist-banner {
+      width: 100%;
+      min-height: 520px;
+    }
+  }
+</style>

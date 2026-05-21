@@ -2,15 +2,15 @@
 import { u } from '../lib/url';
 
 const ourWork = [
-  { href: u('/behind-the-scenes'), label: 'THE ARCHIVE' },
-  { href: u('/single-project'), label: 'PROJECTS' },
-  { href: u('/general-1'), label: 'THE AGENCY' },
+  { href: u('/archive'), label: 'THE ARCHIVE' },
+  { href: u('/projects'), label: 'PROJECTS' },
+  { href: u('/agency'), label: 'THE AGENCY' },
 ];
 
 const workWithUs = [
   { href: u('/career'), label: 'Career' },
-  { href: u('/contact-7'), label: 'Contact' },
-  { href: u('/general-8'), label: 'Artist Inquiries' },
+  { href: u('/contact'), label: 'Contact' },
+  { href: u('/artist-inquiries'), label: 'Artist Inquiries' },
   { href: u('/about'), label: 'About us' },
 ];
 
@@ -56,6 +56,7 @@ const information = [
           autocomplete="email"
         />
         <button class="subscribe-btn" type="submit">Subscribe Now</button>
+        <p class="subscribe-note">Newsletter signup is being reconnected. Email us for now.</p>
         <p class="subscribe-msg" data-newsletter-msg hidden></p>
       </form>
     </div>
@@ -67,7 +68,7 @@ const information = [
 
   <script is:inline>
     (function () {
-      const msg = "Newsletter coming back online soon — drop us a note via /contact-7 for now.";
+      const msg = "Newsletter coming back online soon — drop us a note via /contact for now.";
       document.querySelectorAll('form[data-newsletter-form]').forEach(function (form) {
         if (form.dataset.bound === '1') return;
         form.dataset.bound = '1';
@@ -175,6 +176,14 @@ const information = [
 
   .subscribe-msg {
     margin: var(--na-s-3) 0 0;
+    color: var(--na-bronze-deep);
+    font-family: var(--na-font-ui);
+    font-size: var(--na-fs-small);
+    line-height: 1.5;
+  }
+
+  .subscribe-note {
+    margin: 0;
     color: var(--na-bronze-deep);
     font-family: var(--na-font-ui);
     font-size: var(--na-fs-small);

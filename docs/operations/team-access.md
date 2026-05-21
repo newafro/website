@@ -7,7 +7,7 @@ Gus, Maria, Cheria, and Ken should be able to update the website through the CMS
 There are two team-facing entry points:
 
 ```text
-CMS editing:      https://newafro.com/admin/
+CMS editing:      https://login.newafro.com or https://newafro.com/login/
 Preview review:   WhatsApp group + https://preview.newafro.com
 Production site:  https://newafro.com
 ```
@@ -18,6 +18,9 @@ The team should not need to understand Git branches for daily work. The system m
 - `staging` deploys to `preview.newafro.com`
 - approved preview changes are promoted to `main`
 - `main` deploys to `newafro.com`
+
+For a designer-friendly version of the workflow, see
+[designer-handover.md](designer-handover.md).
 
 ## Required People
 
@@ -60,7 +63,7 @@ New Afro Website Bot / WhatsApp group id
 New Afro Website Bot / allowed phone numbers
 New Afro Website Bot / GitHub token for issue and PR creation
 New Afro Website Preview Deploy / NEWAFRO_PREVIEW_DEPLOY_TOKEN
-New Afro Decap OAuth / OAuth proxy credentials
+New Afro Decap OAuth / decap-oauth.newafro.com client id and secret
 ```
 
 The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
@@ -71,7 +74,10 @@ Send this to each team member once access is ready:
 
 ```text
 You can update the New Afro website here:
-https://newafro.com/admin/
+https://login.newafro.com
+
+If that does not open yet, use:
+https://newafro.com/login/
 
 Sign in with GitHub.
 

@@ -92,6 +92,10 @@ const favicon = u('/favicon.svg');
         color: var(--na-graphite);
       }
 
+      .editor-fallback[hidden] {
+        display: none;
+      }
+
       #nc-root {
         position: relative;
         z-index: 1;
@@ -112,8 +116,13 @@ const favicon = u('/favicon.svg');
         <li>Create or update an event, then review it on preview.</li>
         <li>Publish a journal post with a hero image, gallery, and alt text.</li>
         <li>Add an artist profile for the community page.</li>
-        <li>Use WhatsApp feedback to request fixes before production.</li>
+        <li>Keep uncertain journal posts as drafts until copy and credits are confirmed.</li>
+        <li>Use Figma screenshots or WhatsApp feedback to request layout fixes before production.</li>
       </ul>
+      <p>
+        Page layout, navigation, forms, and large design changes are still
+        handled through preview requests, not direct CMS edits.
+      </p>
       <p>
         Preview site: <a href="https://preview.newafro.com">preview.newafro.com</a>
       </p>
@@ -123,6 +132,28 @@ const favicon = u('/favicon.svg');
       </p>
     </section>
 
-    <script src="https://unpkg.com/decap-cms@^3.4.0/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@3.12.2/dist/decap-cms.js"></script>
+    <script is:inline>
+      const fallback = document.getElementById('editor-fallback');
+      const hideFallbackWhenCmsLoads = () => {
+        if (window.CMS && fallback) {
+          fallback.hidden = true;
+          return true;
+        }
+
+        return false;
+      };
+
+      const cmsCheck = window.setInterval(() => {
+        if (hideFallbackWhenCmsLoads()) {
+          window.clearInterval(cmsCheck);
+        }
+      }, 250);
+
+      window.setTimeout(() => window.clearInterval(cmsCheck), 10000);
+      window.addEventListener('load', () => {
+        window.setTimeout(hideFallbackWhenCmsLoads, 500);
+      });
+    </script>
   </body>
 </html>
