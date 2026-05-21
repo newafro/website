@@ -82,7 +82,15 @@ The public readiness monitor is:
 https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
 ```
 
-Use it after DNS or OAuth changes to confirm whether editor login is ready.
+The OAuth operator preflight is:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
+```
+
+Use the OAuth operator preflight first after adding OAuth secrets or
+`decap-oauth` DNS. Then use the website public readiness monitor to confirm
+whether editor login is ready end to end.
 
 The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
 

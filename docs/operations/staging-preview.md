@@ -136,6 +136,16 @@ https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight
 
 Use the exact Render custom-domain DNS target as the workflow input.
 
+After the GitHub OAuth secrets and Namecheap DNS are added, verify the operator
+path from GitHub Actions:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
+```
+
+That workflow checks `decap-oauth.newafro.com` DNS and whether the OAuth repo
+secrets are available to GitHub Actions without printing their values.
+
 The Namecheap record must look like this:
 
 ```text

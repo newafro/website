@@ -39,6 +39,11 @@ The no-local-secrets OAuth preflight is:
 Use it with the exact Render custom-domain DNS target before changing
 Namecheap.
 
+After the GitHub OAuth secrets and Namecheap DNS are added, run the operator
+access preflight from GitHub:
+`https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
+It should pass before scheduling the designer CMS login/save dry run.
+
 The first designer dry run is tracked in
 `https://github.com/newafro/website/issues/2`.
 
@@ -78,6 +83,13 @@ You can also run the default-branch public monitor from GitHub:
 
 ```text
 https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
+```
+
+Run the OAuth operator access workflow first if CMS readiness is failing on
+OAuth secrets or `decap-oauth.newafro.com` DNS:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 ```
 
 ## Session Script

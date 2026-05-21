@@ -79,6 +79,15 @@ https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight
 That workflow prints the same Namecheap `decap-oauth` CNAME value without
 exposing the OAuth secret.
 
+After the OAuth repo secrets and Namecheap DNS are in place, run the operator
+access preflight from GitHub:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
+```
+
+It should pass before attempting the first real CMS login/save test.
+
 ## After DNS Is Added
 
 Run these checks from the website repo:
