@@ -19,9 +19,9 @@ jobs:
 
       - name: Check public CMS readiness
         run: |
-          node --input-type=commonjs <<'NODE'
-          const { resolve4, resolveCname } = require('node:dns/promises');
-          const fs = require('node:fs');
+          node --input-type=module <<'NODE'
+          import { resolve4, resolveCname } from 'node:dns/promises';
+          import fs from 'node:fs';
 
           const failures = [];
           const lines = ['# New Afro public CMS readiness', ''];
