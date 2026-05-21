@@ -12,12 +12,40 @@ body:
       placeholder: https://preview.newafro.com/...
     validations:
       required: true
+  - type: dropdown
+    id: page_area
+    attributes:
+      label: Page or area
+      options:
+        - Home
+        - Menu / navigation
+        - Archive
+        - Events
+        - Projects
+        - Community
+        - Agency
+        - Contact / footer
+        - CMS / login
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: viewport
+    attributes:
+      label: Where did you see it?
+      options:
+        - Mobile
+        - Desktop
+        - Both mobile and desktop
+        - Not viewport-specific
+    validations:
+      required: true
   - type: textarea
     id: feedback
     attributes:
       label: What needs changing?
-      description: Keep this visual and concrete. Screenshots are useful.
-      placeholder: On mobile, the menu text is too large and the Archive first image is cropped too hard.
+      description: Keep this visual and concrete. Screenshots, Figma links, Drive links, and WhatsApp context are useful.
+      placeholder: "On mobile, the menu text is too large and the Archive first image is cropped too hard. Figma comment: ..."
     validations:
       required: true
   - type: dropdown
@@ -25,6 +53,10 @@ body:
     attributes:
       label: Review decision
       options:
+        - Fix before launch
+        - Nice to improve
+        - Missing asset
+        - Approved
         - Needs changes
         - Approved for production
         - Needs missing content
