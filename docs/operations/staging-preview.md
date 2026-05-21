@@ -133,6 +133,18 @@ For a public check that can run without GitHub admin credentials, use:
 npm run check:cms-readiness
 ```
 
+For a rendered browser smoke check of the public preview and CMS login flow,
+use:
+
+```bash
+npm run smoke:public
+```
+
+This command starts headless Chrome locally and verifies
+`preview.newafro.com`, `preview.newafro.com/admin/`, and `login.newafro.com`
+with desktop/mobile viewports. Set `CHROME_BIN` if Chrome is installed in a
+non-standard path.
+
 The default branch also has a public monitor that can be run without checking
 out the repository:
 

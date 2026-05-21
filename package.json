@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:cms-readiness": "node scripts/check-public-cms-readiness.mjs",
+    "smoke:public": "node scripts/smoke-public-browser.mjs",
     "astro": "astro"
   },
   "dependencies": {

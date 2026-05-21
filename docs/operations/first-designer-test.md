@@ -43,6 +43,15 @@ completed without `decap-oauth.newafro.com`.
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
 
+Run the browser smoke check as well from the website repo:
+
+```bash
+npm run smoke:public
+```
+
+This verifies the rendered preview home page, the preview CMS route, and
+`login.newafro.com` redirecting into the preview CMS on desktop/mobile Chrome.
+
 You can also run the default-branch public monitor from GitHub:
 
 ```text
