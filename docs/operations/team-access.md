@@ -19,6 +19,9 @@ The team should not need to understand Git branches for daily work. The system m
 - approved preview changes are promoted to `main`
 - `main` deploys to `newafro.com`
 
+`login.newafro.com` intentionally opens the preview CMS, because editors should
+review their changes on staging before anything reaches production.
+
 For a designer-friendly version of the workflow, see
 [designer-handover.md](designer-handover.md).
 
@@ -78,7 +81,7 @@ Send this to each team member once access is ready:
 You can update the New Afro website here:
 https://login.newafro.com
 
-If that does not open yet, use:
+After the production release is deployed, this fallback should also work:
 https://newafro.com/login/
 
 Sign in with GitHub.

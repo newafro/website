@@ -3,7 +3,7 @@
 Production is `https://newafro.com`.
 Staging is `https://preview.newafro.com`.
 CMS login is `https://login.newafro.com`, which redirects to
-`https://newafro.com/admin/`.
+`https://preview.newafro.com/admin/`.
 
 The preview site is for design review, WhatsApp feedback, and team approval before a change reaches production.
 
@@ -63,7 +63,8 @@ TTL:   Automatic
 ```
 
 The `newafro/login` GitHub Pages repository serves only a tiny redirect page
-from `login.newafro.com` to `https://newafro.com/admin/`.
+from `login.newafro.com` to `https://preview.newafro.com/admin/`. The CMS
+targets `staging`, so this keeps editors inside the review workflow by default.
 
 The CMS also needs an OAuth proxy because Decap CMS cannot complete GitHub
 login from a static GitHub Pages site without a small server-side callback.

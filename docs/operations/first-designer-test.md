@@ -8,7 +8,7 @@ goal is to prove the workflow with one person before inviting the full team.
 ```text
 Preview:        https://preview.newafro.com
 CMS login:      https://login.newafro.com
-Fallback login: https://newafro.com/login/
+Fallback login: https://preview.newafro.com/login/
 Production:     https://newafro.com
 ```
 
