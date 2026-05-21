@@ -222,18 +222,18 @@ const favicon = u('/favicon.svg');
       const defaultPendingDetail =
         'The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes. Design review can continue on preview now; only CMS saving should wait.';
 
-      const showOAuthPending = (message, detail = defaultPendingDetail) => {
+      const showOAuthPending = (message, detailText = defaultPendingDetail) => {
         if (!statusPanel) return;
 
         statusPanel.dataset.state = 'pending';
         document.body.dataset.oauthState = 'pending';
         statusPanel.hidden = false;
-        const detail = statusPanel.querySelector('strong');
-        if (detail && message) {
-          detail.textContent = message;
+        const heading = statusPanel.querySelector('strong');
+        if (heading && message) {
+          heading.textContent = message;
         }
         if (statusDetail) {
-          statusDetail.textContent = detail;
+          statusDetail.textContent = detailText;
         }
       };
 
