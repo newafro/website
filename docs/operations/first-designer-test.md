@@ -40,6 +40,12 @@ The designer onboarding is blocked until the OAuth proxy is live. The visible
 preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
 
+If the designer is ready before OAuth is fixed, run a preview-only review
+instead of the CMS login test. Have her inspect `https://preview.newafro.com`
+on desktop and mobile, mark visual feedback as `Fix before launch`,
+`Nice to improve`, `Missing asset`, or `Approved`, and stop before any CMS save
+step.
+
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
 

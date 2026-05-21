@@ -18,6 +18,10 @@ production.
 
 ## Daily Editing Flow
 
+Start this flow only after `npm run check:cms-readiness` passes. If
+`decap-oauth.newafro.com` is still missing DNS, skip to
+[Preview-Only Review](#preview-only-review) instead.
+
 1. Open `https://login.newafro.com`.
 2. Sign in with GitHub.
 3. Choose `Events`, `Artists`, or `Journal`.
@@ -29,6 +33,27 @@ production.
 The designer should not need to push Git commands manually. If a change needs
 code, layout work, or a new page type, ask the agent to implement it and deploy
 to preview.
+
+## Preview-Only Review
+
+Use this while CMS login is still blocked or before the designer has GitHub
+access. It lets the designer contribute without touching deployment.
+
+1. Open `https://preview.newafro.com`.
+2. Review the home page, menu, archive, events, projects, community, and agency
+   pages on desktop and mobile.
+3. Capture screenshots of anything that feels visually off.
+4. Add comments in Figma or WhatsApp using:
+   - `Fix before launch`
+   - `Nice to improve`
+   - `Missing asset`
+   - `Approved`
+5. Do not try to save website content until `https://login.newafro.com` signs
+   in cleanly with GitHub.
+
+This is useful work even before CMS login is ready: image choices, crop notes,
+copy corrections, missing credits, and layout feedback can all be handled from
+preview screenshots.
 
 ## Figma Review Flow
 
