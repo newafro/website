@@ -17,6 +17,17 @@ function fail(message) {
   console.log(`FAIL ${message}`);
 }
 
+function printOauthDnsInstructions() {
+  console.log('');
+  console.log('Required Namecheap record for the OAuth proxy:');
+  console.log('  Type:  CNAME Record');
+  console.log('  Host:  decap-oauth');
+  console.log('  Value: the exact Render custom-domain target, without https://');
+  console.log('  TTL:   Automatic');
+  console.log('');
+  console.log('The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.');
+}
+
 async function withTimeout(promise, label) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(new Error(`${label} timed out`)), CHECK_TIMEOUT_MS);
@@ -148,6 +159,7 @@ async function checkOauthProxy({ dnsReady }) {
 
   if (!dnsReady) {
     console.log('skipped because decap-oauth.newafro.com has no DNS result');
+    printOauthDnsInstructions();
     return;
   }
 
