@@ -105,6 +105,31 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function stopChrome(chromeProcess) {
+  if (chromeProcess.exitCode !== null || chromeProcess.killed) return;
+
+  const exited = new Promise((resolve) => {
+    chromeProcess.once('exit', resolve);
+  });
+  chromeProcess.kill('SIGKILL');
+  await Promise.race([exited, sleep(2000)]);
+}
+
+async function removeTempDir(dir) {
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    try {
+      await rm(dir, { recursive: true, force: true });
+      return;
+    } catch (error) {
+      if (attempt === 4) {
+        console.warn(`Warning: could not remove temporary Chrome profile: ${error.message || error}`);
+        return;
+      }
+      await sleep(200 * (attempt + 1));
+    }
+  }
+}
+
 function createCdpClient(wsUrl) {
   const ws = new WebSocket(wsUrl);
   let id = 0;
@@ -249,8 +274,8 @@ async function main() {
     }
   } finally {
     if (cdp) cdp.close();
-    chromeProcess.kill('SIGKILL');
-    await rm(userDataDir, { recursive: true, force: true });
+    await stopChrome(chromeProcess);
+    await removeTempDir(userDataDir);
   }
 
   if (failures.length) {
