@@ -91,6 +91,11 @@ function assertBlockedEditorStatus(page, label) {
     'GitHub sign-in needs the New Afro OAuth proxy',
     `${label} OAuth pending detail`
   );
+  assertIncludes(
+    page.statusText,
+    'OAuth operator preflight',
+    `${label} OAuth operator preflight link`
+  );
 }
 
 async function hasDnsResult(host) {

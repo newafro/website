@@ -135,6 +135,18 @@ const favicon = u('/favicon.svg');
         line-height: 1.05;
       }
 
+      .editor-status__actions {
+        margin: 18px 0 0;
+        padding-top: 14px;
+        border-top: 1px solid rgba(90, 55, 11, 0.16);
+        font-size: 13px;
+      }
+
+      .editor-status__actions a {
+        color: var(--na-bronze-deep);
+        font-weight: 600;
+      }
+
       .editor-status[data-state="ready"] {
         display: none;
       }
@@ -182,6 +194,12 @@ const favicon = u('/favicon.svg');
       <div class="editor-status__card">
         <strong>Website editing is waiting on login setup.</strong>
         The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes.
+        <p class="editor-status__actions">
+          Operator check:
+          <a href="https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml">
+            OAuth operator preflight
+          </a>
+        </p>
       </div>
     </section>
 
