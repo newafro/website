@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from 'node:child_process';
+import { resolve4, resolveCname } from 'node:dns/promises';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -7,7 +8,9 @@ import WebSocket from 'ws';
 
 const previewUrl = (process.env.PREVIEW_URL || 'https://preview.newafro.com').replace(/\/$/, '');
 const loginUrl = (process.env.LOGIN_URL || 'https://login.newafro.com').replace(/\/$/, '');
+const oauthHost = process.env.OAUTH_HOST || 'decap-oauth.newafro.com';
 const cacheToken = Date.now();
+let oauthDnsReady = false;
 
 const checks = [
   {
@@ -42,6 +45,7 @@ const checks = [
       assertEqual(page.cmsLoaded, true, 'admin loads Decap CMS');
       assertEqual(page.configError, false, 'admin has no CMS config error');
       assertIncludes(page.text, 'Login with GitHub', 'admin login action');
+      assertBlockedEditorStatus(page, 'admin');
     },
   },
   {
@@ -54,6 +58,7 @@ const checks = [
       assertEqual(page.cmsLoaded, true, 'login destination loads Decap CMS');
       assertEqual(page.configError, false, 'login destination has no CMS config error');
       assertIncludes(page.text, 'Login with GitHub', 'login destination action');
+      assertBlockedEditorStatus(page, 'login destination');
     },
   },
 ];
@@ -70,6 +75,30 @@ function assertEqual(actual, expected, label) {
   if (actual !== expected) {
     failures.push(`${label} should be ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
   }
+}
+
+function assertBlockedEditorStatus(page, label) {
+  if (oauthDnsReady) return;
+
+  assertEqual(page.statusState, 'pending', `${label} OAuth pending status`);
+  assertIncludes(
+    page.statusText,
+    'Website editing is waiting on login setup.',
+    `${label} OAuth pending message`
+  );
+  assertIncludes(
+    page.statusText,
+    'GitHub sign-in needs the New Afro OAuth proxy',
+    `${label} OAuth pending detail`
+  );
+}
+
+async function hasDnsResult(host) {
+  const [cnames, addresses] = await Promise.all([
+    resolveCname(host).catch(() => []),
+    resolve4(host).catch(() => []),
+  ]);
+  return cnames.length > 0 || addresses.length > 0;
 }
 
 function findChrome() {
@@ -183,6 +212,8 @@ async function main() {
   if (!chrome) {
     throw new Error('Chrome/Chromium was not found. Set CHROME_BIN to run browser smoke checks.');
   }
+  oauthDnsReady = await hasDnsResult(oauthHost);
+  console.log(`OAuth DNS ready: ${oauthDnsReady}`);
 
   const port = 10400 + Math.floor(Math.random() * 1000);
   const userDataDir = await mkdtemp(path.join(tmpdir(), 'newafro-public-smoke-'));
