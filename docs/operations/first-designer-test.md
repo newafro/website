@@ -22,6 +22,7 @@ designer to ignore browser certificate warnings.
 - `login.newafro.com` resolves and redirects to the CMS.
 - GitHub Pages HTTPS enforcement is enabled for both `preview` and `login`.
 - `decap-oauth.newafro.com` is deployed and reachable.
+- `https://decap-oauth.newafro.com/auth?provider=github` redirects to GitHub.
 - The designer has a GitHub account.
 - The designer has write access to `newafro/website`.
 - The CMS still writes to `staging`, not `main`.

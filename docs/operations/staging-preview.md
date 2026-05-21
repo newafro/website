@@ -73,10 +73,39 @@ Use this domain for that service:
 decap-oauth.newafro.com
 ```
 
-Add the DNS record required by the OAuth proxy host. The exact value depends on
-where that proxy is deployed, for example a VPS, Render/Fly service, or
-Cloudflare Worker custom domain. Do not point this host at GitHub Pages unless
-the OAuth proxy is actually running there.
+The proxy source lives here:
+
+```text
+https://github.com/newafro/decap-oauth
+```
+
+It includes a Render blueprint (`render.yaml`) and can also run on any Node 20
+host. For the current Namecheap DNS setup, Render is the lowest-friction path:
+
+1. Create a GitHub OAuth app:
+
+   ```text
+   Application name: New Afro Studio CMS
+   Homepage URL: https://newafro.com
+   Authorization callback URL: https://decap-oauth.newafro.com/callback
+   ```
+
+2. Store the GitHub OAuth values in the OAuth proxy host:
+
+   ```text
+   GITHUB_OAUTH_ID
+   GITHUB_OAUTH_SECRET
+   PUBLIC_URL=https://decap-oauth.newafro.com
+   GITHUB_REPO_PRIVATE=0
+   ```
+
+3. Deploy `newafro/decap-oauth` on Render as a web service or blueprint.
+4. Add `decap-oauth.newafro.com` as a Render custom domain.
+5. Add the exact CNAME target Render provides in Namecheap.
+
+Do not guess the `decap-oauth` CNAME value. It depends on the Render service.
+Do not point this host at GitHub Pages; the OAuth proxy needs server-side code
+and secrets.
 
 After DNS propagates, verify the custom domains in GitHub Pages settings for
 `newafro/website-preview` and `newafro/login`, then enable HTTPS enforcement.

@@ -37,7 +37,7 @@ The CMS uses GitHub login through the Decap OAuth proxy. Each person needs:
 
 1. A GitHub account.
 2. Access to `newafro/website` with write permission, ideally through a `website-editors` team in the `newafro` GitHub organization.
-3. Access to the New Afro OAuth proxy used by `public/admin/config.yml`.
+3. A working New Afro OAuth proxy at `https://decap-oauth.newafro.com`.
 4. A successful login test at `https://newafro.com/admin/`.
 
 Editors do not need direct write access to `newafro/website-preview`; the preview deploy token handles that.
@@ -65,6 +65,8 @@ New Afro Website Bot / GitHub token for issue and PR creation
 New Afro Website Preview Deploy / NEWAFRO_PREVIEW_DEPLOY_TOKEN
 New Afro Decap OAuth / decap-oauth.newafro.com client id and secret
 ```
+
+The OAuth proxy source is `https://github.com/newafro/decap-oauth`.
 
 The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
 
