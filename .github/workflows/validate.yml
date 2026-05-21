@@ -36,5 +36,8 @@ jobs:
       - name: Build
         env:
           DEPLOY_TARGET: apex
+          RELEASE_CHANNEL: validate
+          RELEASE_REF: ${{ github.ref_name }}
+          RELEASE_SHA: ${{ github.sha }}
           SITE_URL: https://newafro.com
         run: npm run build

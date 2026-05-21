@@ -9,6 +9,9 @@ import WebSocket from 'ws';
 const previewUrl = (process.env.PREVIEW_URL || 'https://preview.newafro.com').replace(/\/$/, '');
 const loginUrl = (process.env.LOGIN_URL || 'https://login.newafro.com').replace(/\/$/, '');
 const oauthHost = process.env.OAUTH_HOST || 'decap-oauth.newafro.com';
+const expectedReleaseSha = process.env.EXPECTED_RELEASE_SHA || '';
+const expectedReleaseRef = process.env.EXPECTED_RELEASE_REF || '';
+const expectedReleaseChannel = process.env.EXPECTED_RELEASE_CHANNEL || '';
 const cacheToken = Date.now();
 let oauthDnsReady = false;
 
@@ -149,6 +152,80 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function fetchJson(url) {
+  const response = await fetch(url, {
+    headers: {
+      'cache-control': 'no-store',
+      'user-agent': 'newafro-public-smoke',
+    },
+  });
+  const text = await response.text().catch(() => '');
+  return { response, text };
+}
+
+function validateReleaseMarker(marker) {
+  if (marker.app !== 'newafro-website') {
+    failures.push(`release marker app should be newafro-website, got ${JSON.stringify(marker.app)}`);
+  }
+
+  if (!marker.sha) {
+    failures.push('release marker is missing sha');
+  }
+
+  if (!marker.ref) {
+    failures.push('release marker is missing ref');
+  }
+
+  if (expectedReleaseSha && marker.sha !== expectedReleaseSha) {
+    failures.push(`release marker sha should be ${expectedReleaseSha}, got ${marker.sha || '(missing)'}`);
+  }
+
+  if (expectedReleaseRef && marker.ref !== expectedReleaseRef) {
+    failures.push(`release marker ref should be ${expectedReleaseRef}, got ${marker.ref || '(missing)'}`);
+  }
+
+  if (expectedReleaseChannel && marker.channel !== expectedReleaseChannel) {
+    failures.push(`release marker channel should be ${expectedReleaseChannel}, got ${marker.channel || '(missing)'}`);
+  }
+}
+
+async function checkReleaseMarker() {
+  const url = `${previewUrl}/release.json?smoke=${cacheToken}`;
+  const tries = expectedReleaseSha ? 30 : 1;
+  let lastStatus = '';
+  let lastText = '';
+
+  for (let attempt = 1; attempt <= tries; attempt += 1) {
+    try {
+      const { response, text } = await fetchJson(url);
+      lastStatus = `${response.status} ${response.url}`;
+      lastText = text;
+
+      if (response.ok) {
+        const marker = JSON.parse(text);
+        const shaMatches = !expectedReleaseSha || marker.sha === expectedReleaseSha;
+        if (shaMatches) {
+          console.log('\n== release marker ==');
+          console.log(lastStatus);
+          console.log(`sha: ${marker.sha}`);
+          console.log(`ref: ${marker.ref}`);
+          console.log(`channel: ${marker.channel}`);
+          validateReleaseMarker(marker);
+          return;
+        }
+      }
+    } catch (error) {
+      lastStatus = error.message || String(error);
+    }
+
+    if (attempt < tries) {
+      await sleep(3000);
+    }
+  }
+
+  failures.push(`release marker did not become ready at ${url}; last response: ${lastStatus} ${lastText.slice(0, 160)}`.trim());
+}
+
 async function stopChrome(chromeProcess) {
   if (chromeProcess.exitCode !== null || chromeProcess.killed) return;
 
@@ -229,6 +306,7 @@ async function main() {
   }
   oauthDnsReady = await hasDnsResult(oauthHost);
   console.log(`OAuth DNS ready: ${oauthDnsReady}`);
+  await checkReleaseMarker();
 
   const port = 10400 + Math.floor(Math.random() * 1000);
   const userDataDir = await mkdtemp(path.join(tmpdir(), 'newafro-public-smoke-'));

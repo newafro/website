@@ -88,6 +88,11 @@ videos are caught before review.
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and
 then checks the OAuth proxy DNS/HTTP path.
 
+`npm run smoke:public` also checks `https://preview.newafro.com/release.json`.
+In CI, the preview smoke check fails if that marker does not match the exact
+staging commit GitHub just deployed, so a green deploy proves the browser is
+testing the current release candidate.
+
 From the OAuth repo:
 
 ```bash

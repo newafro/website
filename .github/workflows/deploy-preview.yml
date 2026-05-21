@@ -34,6 +34,9 @@ jobs:
       - name: Build preview site
         env:
           DEPLOY_TARGET: apex
+          RELEASE_CHANNEL: preview
+          RELEASE_REF: ${{ github.ref_name }}
+          RELEASE_SHA: ${{ github.sha }}
           SITE_URL: https://preview.newafro.com
         run: npm run build
 
@@ -85,6 +88,10 @@ jobs:
           git push origin gh-pages
 
       - name: Smoke public preview
+        env:
+          EXPECTED_RELEASE_CHANNEL: preview
+          EXPECTED_RELEASE_REF: staging
+          EXPECTED_RELEASE_SHA: ${{ github.sha }}
         run: |
           sleep 20
           npm run smoke:public
