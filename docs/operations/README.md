@@ -19,6 +19,15 @@ OAuth:      https://decap-oauth.newafro.com
 - `decap-oauth.newafro.com` still needs the Render custom-domain CNAME in
   Namecheap before GitHub CMS login and saving can work.
 
+Latest OAuth operator evidence, checked on 2026-05-22 in Berlin:
+
+- `newafro/decap-oauth` validates at commit `f74c78d`.
+- The latest operator preflight still fails only on the external setup:
+  missing `decap-oauth.newafro.com` DNS and missing OAuth repo secrets.
+- The failing operator run now writes a GitHub Actions job summary with the
+  exact missing items and setup links:
+  `https://github.com/newafro/decap-oauth/actions/runs/26257887542`.
+
 ## Use The Right Checklist
 
 - [Release handoff](release-handoff.md): short operator summary for the current

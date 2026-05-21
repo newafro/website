@@ -14,6 +14,13 @@ CMS login:  https://login.newafro.com
 `preview.newafro.com` and `login.newafro.com` are live over HTTPS. The CMS
 screen loads, but saving content is blocked until the OAuth proxy DNS is live.
 
+Current evidence, checked on 2026-05-22 in Berlin: the latest OAuth operator
+preflight is
+`https://github.com/newafro/decap-oauth/actions/runs/26257887542`. It fails
+because `decap-oauth.newafro.com` has no DNS result and the OAuth repo does
+not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets. The workflow
+summary now lists the exact operator links and next actions.
+
 ## Track A: Designer Review Can Start Now
 
 The designer can review the preview site before CMS login is ready.
@@ -23,7 +30,7 @@ checklist.
 1. Open `https://preview.newafro.com` on desktop and phone.
 2. Review home, menu, archive, events, projects, community, and agency.
 3. Put screenshots into Figma with the date, for example
-   `2026-05-21 Preview Review`.
+   `2026-05-22 Preview Review`.
 4. Mark each comment as one of:
    - `Fix before launch`
    - `Nice to improve`
