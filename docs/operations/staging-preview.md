@@ -110,6 +110,22 @@ host. For the current Namecheap DNS setup, Render is the lowest-friction path:
 4. Add `decap-oauth.newafro.com` as a Render custom domain.
 5. Add the exact CNAME target Render provides in Namecheap.
 
+Before changing Namecheap, run the OAuth repo's deploy-config preflight with
+the exact Render target:
+
+```bash
+cd /path/to/newafro-decap-oauth
+GITHUB_OAUTH_ID=[from GitHub OAuth app] \
+GITHUB_OAUTH_SECRET=[from GitHub OAuth app] \
+PUBLIC_URL=https://decap-oauth.newafro.com \
+GITHUB_REPO_PRIVATE=0 \
+RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] \
+npm run check:deploy-config
+```
+
+This prints the exact Namecheap record and catches common wrong values such as
+`newafro.github.io`, a value with `https://`, or a mismatched `PUBLIC_URL`.
+
 The Namecheap record must look like this:
 
 ```text
