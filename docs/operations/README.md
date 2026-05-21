@@ -102,6 +102,11 @@ review an older deployed build.
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and
 then checks the OAuth proxy DNS/HTTP path.
 
+The public CMS readiness workflow writes a GitHub Actions job summary. Read
+that summary first when the scheduled monitor is red; it lists the current
+entry points, the exact remaining CMS login/save blockers, and the next
+operator action before the full check log.
+
 `npm run smoke:public` also checks `https://preview.newafro.com/release.json`.
 In CI, the preview smoke check fails if that marker does not match the exact
 staging commit GitHub just deployed, so a green deploy proves the browser is

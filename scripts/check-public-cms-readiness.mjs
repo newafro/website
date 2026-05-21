@@ -18,9 +18,50 @@ function log(line = '') {
 }
 
 function writeSummary() {
-  if (process.env.GITHUB_STEP_SUMMARY) {
-    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n'));
+  if (!process.env.GITHUB_STEP_SUMMARY) return;
+
+  const status = failures.length > 0 ? 'BLOCKED' : 'READY';
+  const summary = [
+    '# New Afro CMS Readiness',
+    '',
+    `Status: ${status}`,
+    '',
+    '## Public Entry Points',
+    '',
+    '- Production: https://newafro.com',
+    '- Preview: https://preview.newafro.com',
+    '- CMS login: https://login.newafro.com',
+    '- OAuth proxy: https://decap-oauth.newafro.com',
+    '',
+  ];
+
+  if (failures.length > 0) {
+    summary.push('## Required Before CMS Login/Save', '');
+    for (const failure of failures) summary.push(`- ${failure}`);
+    summary.push(
+      '',
+      '## Next Operator Action',
+      '',
+      '1. Add `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET` in `newafro/decap-oauth` repository secrets.',
+      '2. Deploy `newafro/decap-oauth` on Render and add `decap-oauth.newafro.com` as a custom domain.',
+      '3. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
+      `4. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
+      '',
+    );
+  } else {
+    summary.push('## Result', '', '- Public CMS readiness checks passed.', '');
   }
+
+  summary.push(
+    '## Full Check Log',
+    '',
+    '```text',
+    ...lines,
+    '```',
+    '',
+  );
+
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary.join('\n')}\n`);
 }
 
 function normalizeHost(value) {
