@@ -34,6 +34,9 @@ Start this flow only after `npm run check:cms-readiness` passes. If
 6. Review the result on `https://preview.newafro.com`.
 7. Share feedback in WhatsApp or mark it `Approved for production`.
 
+New CMS entries start as drafts by default. Keep `Draft` enabled until copy,
+image credits, dates, and preview layout are approved.
+
 The designer should not need to push Git commands manually. If a change needs
 code, layout work, or a new page type, ask the agent to implement it and deploy
 to preview.

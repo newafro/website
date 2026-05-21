@@ -51,6 +51,10 @@ function collectionByName(config, name) {
   return (config.collections || []).find((collection) => collection.name === name);
 }
 
+function fieldByName(collection, name) {
+  return (collection.fields || []).find((field) => field.name === name);
+}
+
 console.log('New Afro CMS config integrity');
 
 let config;
@@ -118,6 +122,18 @@ for (const [name, expected] of Object.entries(expectedCollections)) {
     } else {
       pass(`${name} field: ${fieldName}`);
     }
+  }
+
+  const draftField = fieldByName(collection, 'draft');
+  if (draftField) {
+    assertEqual(draftField.widget, 'boolean', `${name}.draft widget`);
+    assertEqual(draftField.default, true, `${name}.draft default`);
+  }
+
+  const galleryField = fieldByName(collection, 'gallery');
+  if (galleryField) {
+    assertEqual(galleryField.widget, 'list', `${name}.gallery widget`);
+    assertEqual(galleryField.field?.widget, 'image', `${name}.gallery scalar image field`);
   }
 
   for (const folder of collectMediaFolders(collection.fields)) {

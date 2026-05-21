@@ -100,7 +100,7 @@ https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 2. Sign in with GitHub.
 3. Open `Journal`, `Events`, and `Artists` once so the sections feel familiar.
 4. Create a test draft journal post named `CMS test - delete after onboarding`.
-5. Add one short sentence, set `Draft` to true, and save.
+5. Add one short sentence, confirm `Draft` is still enabled, and save.
 6. Confirm the change appears in the CMS list.
 7. Do not publish it to production.
 8. Delete the test draft or leave it clearly marked as a draft.
