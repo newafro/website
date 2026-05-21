@@ -44,9 +44,14 @@ done
 
 echo "== decap-oauth.newafro.com =="
 echo "DNS:"
-dig +short decap-oauth.newafro.com | sed 's/^/  /' || true
+oauth_dns="$(dig +short decap-oauth.newafro.com || true)"
+if [[ -n "$oauth_dns" ]]; then
+  sed 's/^/  /' <<<"$oauth_dns"
+else
+  echo "  missing"
+fi
 echo "HTTP:"
 curl -sSI --max-time 15 https://decap-oauth.newafro.com/ | sed -n '1,8p' | sed 's/^/  /' || true
 echo
-echo "Expected OAuth auth check after deployment:"
-echo "  curl -I 'https://decap-oauth.newafro.com/auth?provider=github'"
+echo "OAuth auth endpoint:"
+curl -sSI --max-time 15 'https://decap-oauth.newafro.com/auth?provider=github' | sed -n '1,10p' | sed 's/^/  /' || true
