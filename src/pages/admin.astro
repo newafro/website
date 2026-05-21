@@ -96,6 +96,37 @@ const favicon = u('/favicon.svg');
         display: none;
       }
 
+      .editor-status {
+        position: fixed;
+        left: clamp(16px, 3vw, 32px);
+        right: clamp(16px, 3vw, 32px);
+        bottom: clamp(16px, 3vw, 32px);
+        z-index: 2147483647;
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 14px 16px;
+        border: 1px solid rgba(90, 55, 11, 0.24);
+        background: rgba(251, 247, 237, 0.97);
+        box-shadow: 0 16px 48px rgba(50, 28, 1, 0.14);
+        color: var(--na-graphite);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .editor-status strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--na-ink);
+      }
+
+      .editor-status[data-state="ready"] {
+        display: none;
+      }
+
+      .editor-status[hidden] {
+        display: none;
+      }
+
       #nc-root {
         position: relative;
         z-index: 1;
@@ -131,10 +162,64 @@ const favicon = u('/favicon.svg');
         <code>newafro/website</code> and the New Afro OAuth proxy.
       </p>
     </section>
+    <section class="editor-status" id="editor-status" hidden aria-live="polite">
+      <strong>Website editing is waiting on login setup.</strong>
+      The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes.
+    </section>
 
     <script src="https://unpkg.com/decap-cms@3.12.2/dist/decap-cms.js"></script>
     <script is:inline>
       const fallback = document.getElementById('editor-fallback');
+      const statusPanel = document.getElementById('editor-status');
+      const oauthHost = 'decap-oauth.newafro.com';
+      const oauthHealthUrl = 'https://decap-oauth.newafro.com/healthz';
+      const oauthDnsUrl = `https://dns.google/resolve?name=${oauthHost}&type=A`;
+
+      const showOAuthPending = (message) => {
+        if (!statusPanel) return;
+
+        statusPanel.dataset.state = 'pending';
+        statusPanel.hidden = false;
+        const detail = statusPanel.querySelector('strong');
+        if (detail && message) {
+          detail.textContent = message;
+        }
+      };
+
+      const checkOAuthReadiness = async () => {
+        try {
+          const dnsResponse = await fetch(oauthDnsUrl, { cache: 'no-store' });
+          const dnsPayload = await dnsResponse.json();
+          const dnsReady =
+            dnsResponse.ok &&
+            dnsPayload &&
+            dnsPayload.Status === 0 &&
+            Array.isArray(dnsPayload.Answer) &&
+            dnsPayload.Answer.length > 0;
+
+          if (!dnsReady) {
+            showOAuthPending('Website editing is waiting on login setup.');
+            return;
+          }
+
+          const response = await fetch(oauthHealthUrl, {
+            cache: 'no-store',
+            mode: 'cors',
+          });
+          const payload = await response.json();
+
+          if (response.ok && payload && payload.ok === true) {
+            statusPanel.dataset.state = 'ready';
+            statusPanel.hidden = true;
+            return;
+          }
+
+          showOAuthPending('Website editing is waiting on login setup.');
+        } catch {
+          showOAuthPending('Website editing is waiting on login setup.');
+        }
+      };
+
       const hideFallbackWhenCmsLoads = () => {
         if (window.CMS && fallback) {
           fallback.hidden = true;
@@ -154,6 +239,7 @@ const favicon = u('/favicon.svg');
       window.addEventListener('load', () => {
         window.setTimeout(hideFallbackWhenCmsLoads, 500);
       });
+      checkOAuthReadiness();
     </script>
   </body>
 </html>
