@@ -111,6 +111,13 @@ and secrets.
 After DNS propagates, verify the custom domains in GitHub Pages settings for
 `newafro/website-preview` and `newafro/login`, then enable HTTPS enforcement.
 
+To check the current state and automatically enable HTTPS once GitHub Pages has
+approved the certificates, run:
+
+```bash
+./scripts/check-pages-readiness.sh
+```
+
 ## Release Flow
 
 1. A team member requests a website change in WhatsApp, Decap CMS, Figma, or GitHub.
