@@ -43,6 +43,10 @@ completed without `decap-oauth.newafro.com`.
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
 
+If that check reports `decap-oauth.newafro.com has no public DNS result`, the
+designer should wait. Fix the Namecheap/Render custom domain first; the CMS can
+load without it, but GitHub login and saving content cannot work.
+
 Run the browser smoke check as well from the website repo:
 
 ```bash

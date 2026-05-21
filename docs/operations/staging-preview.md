@@ -110,9 +110,24 @@ host. For the current Namecheap DNS setup, Render is the lowest-friction path:
 4. Add `decap-oauth.newafro.com` as a Render custom domain.
 5. Add the exact CNAME target Render provides in Namecheap.
 
+The Namecheap record must look like this:
+
+```text
+Type:  CNAME Record
+Host:  decap-oauth
+Value: [exact Render DNS target, no https://]
+TTL:   Automatic
+```
+
 Do not guess the `decap-oauth` CNAME value. It depends on the Render service.
 Do not point this host at GitHub Pages; the OAuth proxy needs server-side code
 and secrets.
+
+If `npm run check:cms-readiness` says `decap-oauth.newafro.com has no public
+DNS result`, the record is not published from Namecheap yet. Check that the
+record was added under the `newafro.com` Advanced DNS zone, not `newafro.net`,
+and that the host field is `decap-oauth`, not the full
+`decap-oauth.newafro.com` domain.
 
 After DNS propagates, verify the custom domains in GitHub Pages settings for
 `newafro/website-preview` and `newafro/login`, then enable HTTPS enforcement.
