@@ -7,6 +7,11 @@ repos=(
 )
 
 readiness_failed=0
+oauth_repo="newafro/decap-oauth"
+oauth_required_secrets=(
+  "GITHUB_OAUTH_ID"
+  "GITHUB_OAUTH_SECRET"
+)
 
 print_oauth_dns_instructions() {
   cat <<'EOF'
@@ -64,6 +69,23 @@ for entry in "${repos[@]}"; do
 
   echo
 done
+
+echo "== $oauth_repo GitHub Actions secrets =="
+if oauth_secret_names="$(gh secret list --repo "$oauth_repo" --json name --jq '.[].name' 2>/dev/null)"; then
+  for secret in "${oauth_required_secrets[@]}"; do
+    if grep -qx "$secret" <<<"$oauth_secret_names"; then
+      echo "  $secret: present"
+    else
+      echo "  $secret: missing"
+      readiness_failed=1
+    fi
+  done
+else
+  echo "  status: could not list repo secrets with gh"
+  echo "  action: confirm gh auth can inspect $oauth_repo or run the OAuth operator preflight"
+  readiness_failed=1
+fi
+echo
 
 echo "== decap-oauth.newafro.com =="
 echo "DNS:"

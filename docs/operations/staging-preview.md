@@ -175,8 +175,11 @@ approved the certificates, run:
 ./scripts/check-pages-readiness.sh
 ```
 
-The script exits non-zero until the full editor path is ready. That is expected
-while `decap-oauth.newafro.com` is not deployed yet.
+The script exits non-zero until the full editor path is ready. It checks the
+preview/login Pages certificates, HTTPS enforcement, the OAuth repo secret
+names, and the OAuth proxy DNS/HTTP endpoints. That is expected to fail while
+`decap-oauth.newafro.com` is not deployed yet or the OAuth repo secrets are
+missing.
 
 For a public check that can run without GitHub admin credentials, use:
 

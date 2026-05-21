@@ -72,6 +72,10 @@ npm run check:cms-readiness
 npm run smoke:public
 ```
 
+`./scripts/check-pages-readiness.sh` is the best operator-side first check: it
+confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and
+then checks the OAuth proxy DNS/HTTP path.
+
 From the OAuth repo:
 
 ```bash
