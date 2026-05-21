@@ -19,13 +19,17 @@ OAuth:      https://decap-oauth.newafro.com
 - `decap-oauth.newafro.com` still needs the Render custom-domain CNAME in
   Namecheap before GitHub CMS login and saving can work.
 
-Latest OAuth operator evidence, checked on 2026-05-22 in Berlin:
+Latest readiness evidence, checked on 2026-05-22 in Berlin:
 
-- `newafro/decap-oauth` validates at commit `f74c78d`.
-- The latest operator preflight still fails only on the external setup:
-  missing `decap-oauth.newafro.com` DNS and missing OAuth repo secrets.
-- The failing operator run now writes a GitHub Actions job summary with the
-  exact missing items and setup links:
+- `preview.newafro.com` is serving staging commit `2e4e213`.
+- The first-designer readiness workflow runs against `staging` and currently
+  reports `Preview-only review: READY` / `CMS login/save dry run: BLOCKED`:
+  `https://github.com/newafro/website/actions/runs/26259065240`.
+- `newafro/decap-oauth` validates at commit `d8c841f`.
+- The deploy-config preflight now writes a GitHub Actions job summary with the
+  exact OAuth callback and Namecheap CNAME generated from the Render target.
+- The OAuth operator preflight still fails on the external setup: missing
+  `decap-oauth.newafro.com` DNS and missing OAuth repo secrets:
   `https://github.com/newafro/decap-oauth/actions/runs/26257887542`.
 
 ## Use The Right Checklist
@@ -60,6 +64,10 @@ run the deploy-config preflight with the exact Render custom-domain DNS target:
 ```text
 https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
 ```
+
+Read the workflow summary before changing Namecheap. It repeats the GitHub
+OAuth callback and the exact `decap-oauth` CNAME value without printing OAuth
+secret values.
 
 After the Namecheap `decap-oauth` CNAME and OAuth repo secrets are in place,
 run:

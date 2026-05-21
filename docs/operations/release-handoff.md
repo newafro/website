@@ -14,12 +14,16 @@ CMS login:  https://login.newafro.com
 `preview.newafro.com` and `login.newafro.com` are live over HTTPS. The CMS
 screen loads, but saving content is blocked until the OAuth proxy DNS is live.
 
-Current evidence, checked on 2026-05-22 in Berlin: the latest OAuth operator
-preflight is
-`https://github.com/newafro/decap-oauth/actions/runs/26257887542`. It fails
-because `decap-oauth.newafro.com` has no DNS result and the OAuth repo does
-not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets. The workflow
-summary now lists the exact operator links and next actions.
+Current evidence, checked on 2026-05-22 in Berlin: `preview.newafro.com` is
+serving staging commit `2e4e213`. The first-designer readiness workflow runs
+against staging and reports that visual review is ready while CMS saving is
+blocked:
+`https://github.com/newafro/website/actions/runs/26259065240`.
+
+The OAuth repo validates at `d8c841f`, but the latest OAuth operator preflight
+still fails because `decap-oauth.newafro.com` has no DNS result and the OAuth
+repo does not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets:
+`https://github.com/newafro/decap-oauth/actions/runs/26257887542`.
 
 ## Track A: Designer Review Can Start Now
 
@@ -86,7 +90,9 @@ https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight
 ```
 
 That workflow prints the same Namecheap `decap-oauth` CNAME value without
-exposing the OAuth secret.
+exposing the OAuth secret. Read the workflow summary before changing
+Namecheap; it repeats the GitHub OAuth callback and the exact CNAME record
+generated from the Render target.
 
 After the OAuth repo secrets and Namecheap DNS are in place, run the operator
 access preflight from GitHub:
