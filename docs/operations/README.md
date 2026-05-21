@@ -68,6 +68,7 @@ From the website repo:
 
 ```bash
 npm run check:first-designer
+npm run check:content-assets
 ./scripts/check-pages-readiness.sh
 npm run check:cms-readiness
 npm run smoke:public
@@ -76,7 +77,12 @@ npm run smoke:public
 `npm run check:first-designer` is the best first command before onboarding. It
 separates `Preview-only review: READY` from `CMS login/save dry run: BLOCKED`,
 so the designer can start visual review without mistaking that for CMS save
-readiness.
+readiness. It also runs the local upload asset check so missing images or
+videos are caught before review.
+
+`npm run check:content-assets` scans the Astro, CMS, and content files for
+`/uploads/...` references and fails when a referenced file is missing from
+`public/uploads`.
 
 `./scripts/check-pages-readiness.sh` is the best operator-side first check: it
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and

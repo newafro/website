@@ -196,6 +196,18 @@ async function checkGithubPages(repo, host) {
   }
 }
 
+async function checkLocalContentAssets() {
+  const result = await run('node', ['scripts/check-content-assets.mjs']);
+  const output = `${result.stdout || ''}${result.stderr ? `\n${result.stderr}` : ''}`.trim();
+  if (output) console.log(output);
+
+  if (result.ok) {
+    pass('local upload references resolve under public/uploads');
+  } else {
+    failPreview('local upload reference check failed');
+  }
+}
+
 async function checkOauthSecrets() {
   const result = await run('gh', [
     'secret',
@@ -280,6 +292,7 @@ async function checkOauthProxy({ dnsReady }) {
 console.log('New Afro first designer readiness');
 
 section('Preview-Only Review');
+await checkLocalContentAssets();
 await checkDns('preview.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkDns('login.newafro.com', { expectedCname: 'newafro.github.io' });
 await checkGithubPages('newafro/website-preview', 'preview.newafro.com');

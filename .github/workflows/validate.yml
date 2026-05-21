@@ -30,6 +30,9 @@ jobs:
       - name: Check CMS config
         run: npm run check:cms-config
 
+      - name: Check content assets
+        run: npm run check:content-assets
+
       - name: Build
         env:
           DEPLOY_TARGET: apex
