@@ -12,6 +12,9 @@ Fallback login: https://preview.newafro.com/login/
 Production:     https://newafro.com
 ```
 
+`https://newafro.com/login/` is intentionally not part of the first designer
+test until the staging branch has been promoted to production and smoke-tested.
+
 If HTTPS is still pending for `preview.newafro.com` or `login.newafro.com`,
 wait for GitHub Pages certificate provisioning before onboarding. Do not ask a
 designer to ignore browser certificate warnings.
@@ -29,6 +32,10 @@ designer to ignore browser certificate warnings.
 
 OAuth deployment is tracked in
 `https://github.com/newafro/decap-oauth/issues/1`.
+
+The designer onboarding is blocked until the OAuth proxy is live. The visible
+preview and login pages can be reviewed before then, but GitHub login cannot be
+completed without `decap-oauth.newafro.com`.
 
 ## Session Script
 

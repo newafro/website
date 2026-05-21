@@ -124,6 +124,9 @@ approved the certificates, run:
 ./scripts/check-pages-readiness.sh
 ```
 
+The script exits non-zero until the full editor path is ready. That is expected
+while `decap-oauth.newafro.com` is not deployed yet.
+
 ## Release Flow
 
 1. A team member requests a website change in WhatsApp, Decap CMS, Figma, or GitHub.

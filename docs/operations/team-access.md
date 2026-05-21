@@ -4,13 +4,18 @@ Gus, Maria, Cheria, and Ken should be able to update the website through the CMS
 
 ## Access Model
 
-There are two team-facing entry points:
+There are two team-facing entry points today:
 
 ```text
-CMS editing:      https://login.newafro.com or https://newafro.com/login/
+CMS editing:      https://login.newafro.com
 Preview review:   WhatsApp group + https://preview.newafro.com
 Production site:  https://newafro.com
 ```
+
+After the staged CMS/login routes are promoted to production,
+`https://newafro.com/login/` can be used as a production-domain fallback. Do
+not use that URL for onboarding until the production release has been promoted
+and smoke-tested.
 
 The team should not need to understand Git branches for daily work. The system maps simple actions onto the release flow:
 
@@ -41,7 +46,7 @@ The CMS uses GitHub login through the Decap OAuth proxy. Each person needs:
 1. A GitHub account.
 2. Access to `newafro/website` with write permission, ideally through a `website-editors` team in the `newafro` GitHub organization.
 3. A working New Afro OAuth proxy at `https://decap-oauth.newafro.com`.
-4. A successful login test at `https://newafro.com/admin/`.
+4. A successful login test at `https://login.newafro.com`.
 
 Editors do not need direct write access to `newafro/website-preview`; the preview deploy token handles that.
 
@@ -103,7 +108,7 @@ or reply:
 - [ ] Maria has GitHub write access to `newafro/website`
 - [ ] Cheria has GitHub write access to `newafro/website`
 - [ ] Ken has GitHub write access to `newafro/website`
-- [ ] All four can log in at `https://newafro.com/admin/`
+- [ ] All four can log in at `https://login.newafro.com`
 - [ ] WhatsApp bot can read the approved New Afro group
 - [ ] WhatsApp bot can identify the four approved team members
 - [ ] Preview deploy succeeds at `https://preview.newafro.com`
