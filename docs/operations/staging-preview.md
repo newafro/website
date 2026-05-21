@@ -80,6 +80,12 @@ The proxy source lives here:
 https://github.com/newafro/decap-oauth
 ```
 
+Deployment is tracked here:
+
+```text
+https://github.com/newafro/decap-oauth/issues/1
+```
+
 It includes a Render blueprint (`render.yaml`) and can also run on any Node 20
 host. For the current Namecheap DNS setup, Render is the lowest-friction path:
 

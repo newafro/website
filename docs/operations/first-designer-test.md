@@ -27,6 +27,9 @@ designer to ignore browser certificate warnings.
 - The designer has write access to `newafro/website`.
 - The CMS still writes to `staging`, not `main`.
 
+OAuth deployment is tracked in
+`https://github.com/newafro/decap-oauth/issues/1`.
+
 ## Session Script
 
 1. Open `https://login.newafro.com`.
