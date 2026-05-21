@@ -67,10 +67,16 @@ Only start the first real CMS save test after that operator preflight and
 From the website repo:
 
 ```bash
+npm run check:first-designer
 ./scripts/check-pages-readiness.sh
 npm run check:cms-readiness
 npm run smoke:public
 ```
+
+`npm run check:first-designer` is the best first command before onboarding. It
+separates `Preview-only review: READY` from `CMS login/save dry run: BLOCKED`,
+so the designer can start visual review without mistaking that for CMS save
+readiness.
 
 `./scripts/check-pages-readiness.sh` is the best operator-side first check: it
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and

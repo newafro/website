@@ -68,6 +68,16 @@ Use `docs/operations/preview-only-review.md` for that no-login review.
 Run `npm run check:cms-readiness` before the session. Start onboarding only
 when that command passes.
 
+For the clearest session gate, run:
+
+```bash
+npm run check:first-designer
+```
+
+If it says `Preview-only review: READY` and `CMS login/save dry run: BLOCKED`,
+start only the preview review flow. Start this CMS save test only when it says
+`CMS login/save dry run: READY`.
+
 If that check reports `decap-oauth.newafro.com has no public DNS result`, the
 designer should wait. Fix the Namecheap/Render custom domain first; the CMS can
 load without it, but GitHub login and saving content cannot work.
