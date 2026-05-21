@@ -19,7 +19,7 @@ jobs:
 
       - name: Check public CMS readiness
         run: |
-          node <<'NODE'
+          node --input-type=commonjs <<'NODE'
           const { resolve4, resolveCname } = require('node:dns/promises');
           const fs = require('node:fs');
 
