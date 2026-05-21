@@ -5,6 +5,8 @@ new to websites and GitHub. The goal is to keep updates calm: edit safe content
 in the CMS, review layout changes on preview, and promote only approved work to
 production.
 
+For the short launch handoff, use [release-handoff.md](release-handoff.md).
+
 ## What To Use
 
 | Task | Best Tool | Notes |
