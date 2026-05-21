@@ -127,6 +127,17 @@ approved the certificates, run:
 The script exits non-zero until the full editor path is ready. That is expected
 while `decap-oauth.newafro.com` is not deployed yet.
 
+For a public check that can run without GitHub admin credentials, use:
+
+```bash
+npm run check:cms-readiness
+```
+
+The same check is wired into the `CMS Readiness` GitHub Actions workflow for
+manual and daily runs after this staging branch is promoted to the repository's
+default branch. It verifies the public preview, friendly login URL, CMS config,
+and OAuth proxy endpoints.
+
 ## Release Flow
 
 1. A team member requests a website change in WhatsApp, Decap CMS, Figma, or GitHub.

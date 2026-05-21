@@ -37,6 +37,9 @@ The designer onboarding is blocked until the OAuth proxy is live. The visible
 preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
 
+Run `npm run check:cms-readiness` before the session. Start onboarding only
+when that command passes.
+
 ## Session Script
 
 1. Open `https://login.newafro.com`.
