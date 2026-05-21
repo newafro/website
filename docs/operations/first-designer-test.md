@@ -79,6 +79,15 @@ For the clearest session gate, run:
 npm run check:first-designer
 ```
 
+Or run the same gate from GitHub Actions:
+
+```text
+https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml
+```
+
+Use the workflow summary first. It separates preview-only review from CMS
+login/save so the designer is not asked to test a blocked workflow.
+
 This includes a local upload asset scan. If it reports a missing
 `/uploads/...` file, fix the asset path or put the missing file in
 `public/uploads` before asking the designer to review the affected page.

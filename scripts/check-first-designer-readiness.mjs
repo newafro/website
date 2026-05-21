@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { execFile } from 'node:child_process';
 import { resolve4, resolveCname } from 'node:dns/promises';
+import fs from 'node:fs';
 import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
@@ -11,6 +12,10 @@ const OAUTH_HOST = 'decap-oauth.newafro.com';
 const OAUTH_URL = `https://${OAUTH_HOST}`;
 const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
 const OAUTH_REPO = 'newafro/decap-oauth';
+const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
+const FIRST_DESIGNER_WORKFLOW_URL = 'https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml';
+const FIRST_DESIGNER_DOC_URL = 'docs/operations/first-designer-test.md';
+const PREVIEW_REVIEW_DOC_URL = 'docs/operations/preview-only-review.md';
 const REQUIRED_OAUTH_SECRETS = ['GITHUB_OAUTH_ID', 'GITHUB_OAUTH_SECRET'];
 const REQUIRED_CONFIG_TEXT = [
   'repo: newafro/website',
@@ -24,6 +29,7 @@ const REQUIRED_CONFIG_TEXT = [
 
 const previewFailures = [];
 const cmsFailures = [];
+const cmsWarnings = [];
 
 function section(title) {
   console.log(`\n== ${title} ==`);
@@ -41,6 +47,76 @@ function failPreview(message) {
 function failCms(message) {
   cmsFailures.push(message);
   console.log(`FAIL ${message}`);
+}
+
+function warnCms(message) {
+  cmsWarnings.push(message);
+  console.log(`WARN ${message}`);
+}
+
+function writeStepSummary() {
+  if (!process.env.GITHUB_STEP_SUMMARY) return;
+
+  const previewReady = previewFailures.length === 0;
+  const cmsReady = cmsFailures.length === 0;
+  const summary = [
+    '# New Afro First Designer Readiness',
+    '',
+    `Preview-only review: ${previewReady ? 'READY' : 'BLOCKED'}`,
+    `CMS login/save dry run: ${cmsReady ? 'READY' : 'BLOCKED'}`,
+    '',
+    '## Entry Points',
+    '',
+    `- Preview: ${PREVIEW_URL}`,
+    `- CMS login: ${LOGIN_URL}`,
+    `- OAuth proxy: ${OAUTH_URL}`,
+    '',
+  ];
+
+  if (previewReady) {
+    summary.push(
+      '## Preview Review',
+      '',
+      '- The designer can review the preview site on desktop/mobile and send Figma or screenshot feedback.',
+      `- Use ${PREVIEW_REVIEW_DOC_URL} while CMS saving is still blocked.`,
+      '',
+    );
+  } else {
+    summary.push('## Preview Blockers', '');
+    for (const failure of previewFailures) summary.push(`- ${failure}`);
+    summary.push('');
+  }
+
+  if (cmsReady) {
+    summary.push(
+      '## CMS Login/Save',
+      '',
+      `- Start ${FIRST_DESIGNER_DOC_URL} with one safe draft entry.`,
+      '',
+    );
+  } else {
+    summary.push('## Required Before CMS Login/Save', '');
+    for (const failure of cmsFailures) summary.push(`- ${failure}`);
+    summary.push(
+      '',
+      '## Next Operator Action',
+      '',
+      '1. Add OAuth repo secrets if they are still missing.',
+      '2. Deploy the Render OAuth proxy and add `decap-oauth.newafro.com` as a custom domain.',
+      '3. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
+      `4. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
+      `5. Rerun this first-designer readiness workflow: ${FIRST_DESIGNER_WORKFLOW_URL}`,
+      '',
+    );
+  }
+
+  if (cmsWarnings.length) {
+    summary.push('## Warnings', '');
+    for (const warning of cmsWarnings) summary.push(`- ${warning}`);
+    summary.push('');
+  }
+
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary.join('\n')}\n`);
 }
 
 function normalizeHost(value) {
@@ -232,7 +308,12 @@ async function checkOauthSecrets() {
   ]);
 
   if (!result.ok) {
-    failCms(`could not list GitHub Actions secrets for ${OAUTH_REPO}`);
+    const message = `could not list GitHub Actions secrets for ${OAUTH_REPO}`;
+    if (process.env.GITHUB_ACTIONS === 'true') {
+      warnCms(`${message}; relying on OAuth DNS/HTTP checks and the OAuth operator workflow instead`);
+    } else {
+      failCms(message);
+    }
     return;
   }
 
@@ -339,12 +420,19 @@ if (previewFailures.length) {
 if (cmsFailures.length) {
   console.log('CMS login/save dry run: BLOCKED');
   for (const failure of cmsFailures) console.log(`- ${failure}`);
+  if (cmsWarnings.length) {
+    console.log('');
+    console.log('Warnings:');
+    for (const warning of cmsWarnings) console.log(`- ${warning}`);
+  }
   console.log('');
   console.log('Next operator action: add OAuth repo secrets, deploy the Render OAuth proxy, add Namecheap CNAME decap-oauth -> exact Render DNS target, then rerun this command.');
 } else {
   console.log('CMS login/save dry run: READY');
   console.log('- Start docs/operations/first-designer-test.md with one safe draft entry.');
 }
+
+writeStepSummary();
 
 if (previewFailures.length || cmsFailures.length) {
   process.exit(1);

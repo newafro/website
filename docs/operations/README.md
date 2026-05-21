@@ -90,6 +90,15 @@ so the designer can start visual review without mistaking that for CMS save
 readiness. It also runs the local upload asset check so missing images or
 videos are caught before review.
 
+The same gate can be run from GitHub Actions when nobody has a terminal open:
+
+```text
+https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml
+```
+
+That workflow writes a GitHub job summary with the two decisions that matter:
+whether preview-only review is ready and whether CMS login/save is ready.
+
 `npm run check:content-assets` scans the Astro, CMS, and content files for
 `/uploads/...` references and fails when a referenced file is missing from
 `public/uploads`.
