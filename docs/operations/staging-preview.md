@@ -164,8 +164,7 @@ The staging deploy workflow also runs this smoke check after publishing the
 preview site, so a green preview deploy means both the build and the public
 browser route check passed.
 
-The default branch also has a public monitor that can be run without checking
-out the repository:
+The default branch also has a GitHub Actions public readiness monitor:
 
 ```text
 https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
