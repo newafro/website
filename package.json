@@ -9,6 +9,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check:cms-config": "node scripts/check-cms-config.mjs",
     "check:cms-readiness": "node scripts/check-public-cms-readiness.mjs",
     "smoke:public": "node scripts/smoke-public-browser.mjs",
     "astro": "astro"
@@ -18,6 +19,7 @@
     "astro": "^4.16.18"
   },
   "devDependencies": {
+    "js-yaml": "^4.1.1",
     "ws": "^8.20.1"
   }
 }

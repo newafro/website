@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check CMS config
+        run: npm run check:cms-config
+
       - name: Build
         env:
           DEPLOY_TARGET: apex
