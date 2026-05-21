@@ -6,6 +6,8 @@ import { promisify } from 'node:util';
 
 const CHECK_TIMEOUT_MS = 15000;
 const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
+const OAUTH_URL = 'https://decap-oauth.newafro.com';
+const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
 const execFileAsync = promisify(execFile);
 const failures = [];
 const lines = [];
@@ -241,7 +243,7 @@ async function checkOauthProxy({ dnsReady }) {
   }
 
   try {
-    const health = await fetchText('https://decap-oauth.newafro.com/healthz');
+    const health = await fetchText(`${OAUTH_URL}/healthz`);
     log(`health ${health.response.status} ${health.response.url}`);
     if (!health.response.ok) {
       fail(`OAuth health returned HTTP ${health.response.status}`);
@@ -252,13 +254,25 @@ async function checkOauthProxy({ dnsReady }) {
       fail(`OAuth health is not ok: ${health.text}`);
       return;
     }
+    if (payload.publicUrl !== OAUTH_URL) {
+      fail(`OAuth health reports wrong PUBLIC_URL: ${payload.publicUrl || '(missing)'}`);
+      return;
+    }
+    if (payload.callbackUrl !== OAUTH_CALLBACK_URL) {
+      fail(`OAuth health reports wrong callback URL: ${payload.callbackUrl || '(missing)'}`);
+      return;
+    }
+    if (!String(payload.scope || '').split(',').includes('user')) {
+      fail(`OAuth health reports scope without user: ${payload.scope || '(missing)'}`);
+      return;
+    }
   } catch (error) {
     fail(`OAuth health failed: ${error.message}`);
     return;
   }
 
   try {
-    const auth = await fetchText('https://decap-oauth.newafro.com/auth?provider=github', {
+    const auth = await fetchText(`${OAUTH_URL}/auth?provider=github`, {
       redirect: 'manual',
     });
     const location = auth.response.headers.get('location') || '';
@@ -269,7 +283,7 @@ async function checkOauthProxy({ dnsReady }) {
     }
 
     const redirectUri = new URL(location).searchParams.get('redirect_uri');
-    if (redirectUri !== 'https://decap-oauth.newafro.com/callback?provider=github') {
+    if (redirectUri !== OAUTH_CALLBACK_URL) {
       fail(`OAuth auth endpoint has wrong GitHub callback URL: ${redirectUri || '(missing)'}`);
       return;
     }
@@ -278,7 +292,7 @@ async function checkOauthProxy({ dnsReady }) {
     return;
   }
 
-  pass('OAuth proxy is ready for Decap CMS login');
+  pass('OAuth proxy is ready for Decap CMS login and reports the expected callback');
 }
 
 log('New Afro public CMS readiness');

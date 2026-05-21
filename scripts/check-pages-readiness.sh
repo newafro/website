@@ -124,9 +124,16 @@ else
   sed -n '1,8p' <<<"$oauth_root_headers" | sed 's/^/  /'
   echo
   echo "Health endpoint:"
-  oauth_health_headers="$(curl -sSI --max-time 15 https://decap-oauth.newafro.com/healthz || true)"
-  oauth_health_status="$(awk 'NR == 1 { print $2 }' <<<"$oauth_health_headers")"
-  sed -n '1,8p' <<<"$oauth_health_headers" | sed 's/^/  /'
+  oauth_health_response="$(mktemp)"
+  oauth_health_body="$(mktemp)"
+  curl -sS --max-time 15 -D "$oauth_health_response" -o "$oauth_health_body" https://decap-oauth.newafro.com/healthz || true
+  oauth_health_status="$(awk 'NR == 1 { print $2 }' "$oauth_health_response")"
+  oauth_health_json="$(cat "$oauth_health_body")"
+  sed -n '1,8p' "$oauth_health_response" | sed 's/^/  /'
+  if [[ -n "$oauth_health_json" ]]; then
+    node -e 'const payload = JSON.parse(process.argv[1]); console.log(`  publicUrl: ${payload.publicUrl || ""}`); console.log(`  callbackUrl: ${payload.callbackUrl || ""}`); console.log(`  scope: ${payload.scope || ""}`);' "$oauth_health_json" || true
+  fi
+  rm -f "$oauth_health_response" "$oauth_health_body"
   echo
   echo "OAuth auth endpoint:"
   oauth_auth_headers="$(curl -sSI --max-time 15 'https://decap-oauth.newafro.com/auth?provider=github' || true)"
@@ -140,6 +147,14 @@ else
     readiness_failed=1
   elif [[ "$oauth_health_status" != "200" ]]; then
     echo "  status: blocked, health endpoint did not return 200"
+    readiness_failed=1
+  elif ! node -e '
+const payload = JSON.parse(process.argv[1] || "{}");
+if (payload.publicUrl !== "https://decap-oauth.newafro.com") process.exit(1);
+if (payload.callbackUrl !== "https://decap-oauth.newafro.com/callback?provider=github") process.exit(2);
+if (!String(payload.scope || "").split(",").includes("user")) process.exit(3);
+' "$oauth_health_json"; then
+    echo "  status: blocked, health endpoint reported the wrong public URL, callback URL, or scope"
     readiness_failed=1
   elif [[ "$oauth_auth_status" != "302" || "$oauth_auth_location" != *"github.com/login/oauth/authorize"* ]]; then
     echo "  status: blocked, auth endpoint did not redirect to GitHub OAuth"

@@ -9,6 +9,7 @@ const PREVIEW_URL = 'https://preview.newafro.com';
 const LOGIN_URL = 'https://login.newafro.com';
 const OAUTH_HOST = 'decap-oauth.newafro.com';
 const OAUTH_URL = `https://${OAUTH_HOST}`;
+const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
 const OAUTH_REPO = 'newafro/decap-oauth';
 const REQUIRED_OAUTH_SECRETS = ['GITHUB_OAUTH_ID', 'GITHUB_OAUTH_SECRET'];
 const REQUIRED_CONFIG_TEXT = [
@@ -272,8 +273,14 @@ async function checkOauthProxy({ dnsReady }) {
     const payload = JSON.parse(text);
     if (payload.ok !== true) {
       failCms(`OAuth health is not ok: ${text}`);
+    } else if (payload.publicUrl !== OAUTH_URL) {
+      failCms(`OAuth health reports wrong PUBLIC_URL: ${payload.publicUrl || '(missing)'}`);
+    } else if (payload.callbackUrl !== OAUTH_CALLBACK_URL) {
+      failCms(`OAuth health reports wrong callback URL: ${payload.callbackUrl || '(missing)'}`);
+    } else if (!String(payload.scope || '').split(',').includes('user')) {
+      failCms(`OAuth health reports scope without user: ${payload.scope || '(missing)'}`);
     } else {
-      pass('OAuth health endpoint is ready');
+      pass('OAuth health endpoint is ready and reports the expected callback');
     }
   } catch (error) {
     failCms(`OAuth health failed: ${error.message || error}`);
@@ -291,7 +298,7 @@ async function checkOauthProxy({ dnsReady }) {
     }
 
     const redirectUri = new URL(location).searchParams.get('redirect_uri');
-    if (redirectUri !== `${OAUTH_URL}/callback?provider=github`) {
+    if (redirectUri !== OAUTH_CALLBACK_URL) {
       failCms(`OAuth auth endpoint has wrong callback URL: ${redirectUri || '(missing)'}`);
     } else {
       pass('OAuth auth endpoint uses the New Afro callback URL');

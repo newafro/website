@@ -193,8 +193,10 @@ const favicon = u('/favicon.svg');
     <section class="editor-status" id="editor-status" hidden aria-live="polite">
       <div class="editor-status__card">
         <strong>Website editing is waiting on login setup.</strong>
-        The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes.
-        Design review can continue on preview now; only CMS saving should wait.
+        <span id="editor-status-detail">
+          The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes.
+          Design review can continue on preview now; only CMS saving should wait.
+        </span>
         <p class="editor-status__actions">
           Review site:
           <a href="https://preview.newafro.com">preview.newafro.com</a>
@@ -211,11 +213,16 @@ const favicon = u('/favicon.svg');
     <script is:inline>
       const fallback = document.getElementById('editor-fallback');
       const statusPanel = document.getElementById('editor-status');
+      const statusDetail = document.getElementById('editor-status-detail');
       const oauthHost = 'decap-oauth.newafro.com';
       const oauthHealthUrl = 'https://decap-oauth.newafro.com/healthz';
       const oauthDnsUrl = `https://dns.google/resolve?name=${oauthHost}&type=A`;
+      const expectedPublicUrl = 'https://decap-oauth.newafro.com';
+      const expectedCallbackUrl = `${expectedPublicUrl}/callback?provider=github`;
+      const defaultPendingDetail =
+        'The preview site is ready, but GitHub sign-in needs the New Afro OAuth proxy before the team can save CMS changes. Design review can continue on preview now; only CMS saving should wait.';
 
-      const showOAuthPending = (message) => {
+      const showOAuthPending = (message, detail = defaultPendingDetail) => {
         if (!statusPanel) return;
 
         statusPanel.dataset.state = 'pending';
@@ -225,6 +232,33 @@ const favicon = u('/favicon.svg');
         if (detail && message) {
           detail.textContent = message;
         }
+        if (statusDetail) {
+          statusDetail.textContent = detail;
+        }
+      };
+
+      const explainOAuthHealth = (response, payload) => {
+        if (payload?.publicUrl && payload.publicUrl !== expectedPublicUrl) {
+          return `The OAuth proxy is online, but Render is using ${payload.publicUrl}. Ask the operator to set PUBLIC_URL=${expectedPublicUrl}.`;
+        }
+
+        if (payload?.callbackUrl && payload.callbackUrl !== expectedCallbackUrl) {
+          return `The OAuth proxy is online, but GitHub callback setup is wrong. It must use ${expectedCallbackUrl}.`;
+        }
+
+        if (payload?.scope && !String(payload.scope).split(',').includes('user')) {
+          return 'The OAuth proxy is online, but the GitHub OAuth scope is missing user access. Ask the operator to rerun the OAuth preflight.';
+        }
+
+        if (Array.isArray(payload?.missing) && payload.missing.length > 0) {
+          return `The OAuth proxy is online, but missing server settings: ${payload.missing.join(', ')}.`;
+        }
+
+        if (!response.ok) {
+          return 'The OAuth proxy is online, but its health check is not ready. Ask the operator to rerun the OAuth preflight.';
+        }
+
+        return defaultPendingDetail;
       };
 
       const checkOAuthReadiness = async () => {
@@ -249,14 +283,22 @@ const favicon = u('/favicon.svg');
           });
           const payload = await response.json();
 
-          if (response.ok && payload && payload.ok === true) {
+          const healthReady =
+            response.ok &&
+            payload &&
+            payload.ok === true &&
+            payload.publicUrl === expectedPublicUrl &&
+            payload.callbackUrl === expectedCallbackUrl &&
+            String(payload.scope || '').split(',').includes('user');
+
+          if (healthReady) {
             statusPanel.dataset.state = 'ready';
             document.body.dataset.oauthState = 'ready';
             statusPanel.hidden = true;
             return;
           }
 
-          showOAuthPending('Website editing is waiting on login setup.');
+          showOAuthPending('Website login needs an OAuth configuration fix.', explainOAuthHealth(response, payload));
         } catch {
           showOAuthPending('Website editing is waiting on login setup.');
         }
