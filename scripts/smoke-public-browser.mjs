@@ -221,6 +221,8 @@ async function main() {
     '--headless=new',
     '--disable-gpu',
     '--disable-extensions',
+    '--disable-dev-shm-usage',
+    '--no-sandbox',
     '--autoplay-policy=no-user-gesture-required',
     '--no-first-run',
     '--no-default-browser-check',
@@ -232,8 +234,8 @@ async function main() {
 
   let cdp;
   try {
-    await waitForJson(`http://127.0.0.1:${port}/json/version`);
-    const tabs = await waitForJson(`http://127.0.0.1:${port}/json/list`);
+    await waitForJson(`http://127.0.0.1:${port}/json/version`, undefined, 300);
+    const tabs = await waitForJson(`http://127.0.0.1:${port}/json/list`, undefined, 300);
     const page = tabs.find((tab) => tab.type === 'page')
       || await waitForJson(`http://127.0.0.1:${port}/json/new?about:blank`, { method: 'PUT' });
 
