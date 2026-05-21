@@ -93,6 +93,16 @@ function assertBlockedEditorStatus(page, label) {
   );
   assertIncludes(
     page.statusText,
+    'Design review can continue on preview now',
+    `${label} OAuth pending review guidance`
+  );
+  assertIncludes(
+    page.statusText,
+    'preview.newafro.com',
+    `${label} OAuth pending preview link`
+  );
+  assertIncludes(
+    page.statusText,
     'OAuth operator preflight',
     `${label} OAuth operator preflight link`
   );
