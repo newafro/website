@@ -8,6 +8,19 @@ repos=(
 
 readiness_failed=0
 
+print_oauth_dns_instructions() {
+  cat <<'EOF'
+
+Required Namecheap record for the OAuth proxy:
+  Type:  CNAME Record
+  Host:  decap-oauth
+  Value: the exact Render custom-domain target, without https://
+  TTL:   Automatic
+
+The record must be in the newafro.com Advanced DNS zone and must not point to GitHub Pages.
+EOF
+}
+
 echo "New Afro Pages readiness"
 echo
 
@@ -68,6 +81,7 @@ if [[ -z "$oauth_dns" ]]; then
   echo "OAuth auth endpoint:"
   echo "  skipped, DNS is missing"
   echo "  status: blocked, DNS is missing"
+  print_oauth_dns_instructions
   readiness_failed=1
 else
   echo "HTTP:"
