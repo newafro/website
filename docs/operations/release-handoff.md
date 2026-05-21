@@ -96,6 +96,7 @@ Run these checks from the website repo:
 
 ```bash
 ./scripts/check-pages-readiness.sh
+npm run check:preview-release
 npm run check:cms-readiness
 npm run smoke:public
 ```

@@ -70,6 +70,15 @@ for entry in "${repos[@]}"; do
   echo
 done
 
+echo "== preview.newafro.com release marker =="
+if npm run check:preview-release; then
+  echo "  status: preview is serving the current staging branch"
+else
+  echo "  status: blocked, preview release marker does not match staging"
+  readiness_failed=1
+fi
+echo
+
 echo "== $oauth_repo GitHub Actions secrets =="
 if oauth_secret_names="$(gh secret list --repo "$oauth_repo" --json name --jq '.[].name' 2>/dev/null)"; then
   for secret in "${oauth_required_secrets[@]}"; do
