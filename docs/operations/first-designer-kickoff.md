@@ -56,21 +56,25 @@ Approved pages: [page names]
 
 ## Operator Gate Before CMS Testing
 
-CMS testing starts only when all of this is true:
+CMS testing starts only when the live editor path is true:
 
 - `decap-oauth.newafro.com` resolves publicly.
-- `newafro/decap-oauth` has `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET`
-  repository secrets.
 - The Render OAuth service is deployed and attached to
   `decap-oauth.newafro.com`.
 - OAuth live readiness passes:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
-- OAuth operator preflight passes:
-  `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 - Website public CMS readiness passes:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 
-If any item is red, keep the designer in preview-only review mode.
+The OAuth operator preflight should also pass for unattended monitoring:
+`https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
+It checks `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET` repository secrets. Once
+the live OAuth proxy is proven healthy, missing repository secrets should be
+treated as a monitoring warning, not as something the designer has to care
+about.
+
+If live OAuth readiness or website public CMS readiness is red, keep the
+designer in preview-only review mode.
 
 ## Session 1: Preview Review
 

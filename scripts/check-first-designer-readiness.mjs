@@ -297,7 +297,7 @@ async function checkPreviewRelease() {
   }
 }
 
-async function checkOauthSecrets() {
+async function checkOauthSecrets({ blockOnMissing = true } = {}) {
   const result = await run('gh', [
     'secret',
     'list',
@@ -309,7 +309,7 @@ async function checkOauthSecrets() {
 
   if (!result.ok) {
     const message = `could not list GitHub Actions secrets for ${OAUTH_REPO}`;
-    if (process.env.GITHUB_ACTIONS === 'true') {
+    if (!blockOnMissing || process.env.GITHUB_ACTIONS === 'true') {
       warnCms(`${message}; relying on OAuth DNS/HTTP checks and the OAuth operator workflow instead`);
     } else {
       failCms(message);
@@ -329,16 +329,20 @@ async function checkOauthSecrets() {
   for (const secret of REQUIRED_OAUTH_SECRETS) {
     if (names.has(secret)) {
       pass(`${OAUTH_REPO} secret ${secret} exists`);
-    } else {
+    } else if (blockOnMissing) {
       failCms(`${OAUTH_REPO} secret ${secret} is missing`);
+    } else {
+      warnCms(`${OAUTH_REPO} secret ${secret} is missing; live OAuth is healthy, so this is a monitoring/preflight warning rather than a designer blocker`);
     }
   }
 }
 
 async function checkOauthProxy({ dnsReady }) {
+  const failureCountAtStart = cmsFailures.length;
+
   if (!dnsReady) {
     console.log('skipping OAuth HTTP checks until DNS exists');
-    return;
+    return false;
   }
 
   await checkPage('OAuth root', `${OAUTH_URL}/`, [], { cmsRequired: true });
@@ -348,7 +352,7 @@ async function checkOauthProxy({ dnsReady }) {
     console.log(`health ${response.status} ${response.url}`);
     if (!response.ok) {
       failCms(`OAuth health returned HTTP ${response.status}`);
-      return;
+      return false;
     }
 
     const payload = JSON.parse(text);
@@ -365,6 +369,7 @@ async function checkOauthProxy({ dnsReady }) {
     }
   } catch (error) {
     failCms(`OAuth health failed: ${error.message || error}`);
+    return false;
   }
 
   try {
@@ -375,7 +380,7 @@ async function checkOauthProxy({ dnsReady }) {
     console.log(`auth ${response.status} ${location}`);
     if (response.status !== 302 || !location.startsWith('https://github.com/login/oauth/authorize')) {
       failCms('OAuth auth endpoint does not redirect to GitHub authorize');
-      return;
+      return false;
     }
 
     const redirectUri = new URL(location).searchParams.get('redirect_uri');
@@ -386,7 +391,10 @@ async function checkOauthProxy({ dnsReady }) {
     }
   } catch (error) {
     failCms(`OAuth auth failed: ${error.message || error}`);
+    return false;
   }
+
+  return cmsFailures.length === failureCountAtStart;
 }
 
 console.log('New Afro first designer readiness');
@@ -406,8 +414,8 @@ await checkLiveCmsConfig();
 
 section('CMS Login And Save Dry Run');
 const oauthDnsReady = await checkDns(OAUTH_HOST, { cmsRequired: true });
-await checkOauthSecrets();
-await checkOauthProxy({ dnsReady: oauthDnsReady });
+const oauthProxyReady = await checkOauthProxy({ dnsReady: oauthDnsReady });
+await checkOauthSecrets({ blockOnMissing: !oauthProxyReady });
 
 section('Summary');
 if (previewFailures.length) {
@@ -431,6 +439,11 @@ if (cmsFailures.length) {
 } else {
   console.log('CMS login/save dry run: READY');
   console.log('- Start docs/operations/first-designer-test.md with one safe draft entry.');
+  if (cmsWarnings.length) {
+    console.log('');
+    console.log('Warnings:');
+    for (const warning of cmsWarnings) console.log(`- ${warning}`);
+  }
 }
 
 writeStepSummary();

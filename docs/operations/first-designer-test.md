@@ -49,7 +49,13 @@ readiness and the operator access preflight from GitHub:
 
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
-Both should pass before scheduling the designer CMS login/save dry run.
+Both should pass before scheduling the designer CMS login/save dry run whenever
+possible.
+
+The OAuth repository secrets power the no-local-secrets GitHub preflight and
+daily monitor. If the live OAuth proxy itself passes DNS, `/healthz`, and
+`/auth?provider=github` checks, missing OAuth repository secrets are a
+monitoring warning rather than a designer-facing blocker.
 
 The first designer dry run is tracked in
 `https://github.com/newafro/website/issues/2`.
