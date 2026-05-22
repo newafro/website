@@ -28,4 +28,12 @@ jobs:
         run: npm ci
 
       - name: Check public CMS readiness
+        env:
+          GH_TOKEN: ${{ secrets.NEWAFRO_OPERATOR_TOKEN || github.token }}
         run: npm run check:cms-readiness
+
+      - name: Check Pages, login, and OAuth readiness
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.NEWAFRO_OPERATOR_TOKEN || github.token }}
+        run: npm run check:pages-readiness
