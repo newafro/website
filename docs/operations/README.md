@@ -45,6 +45,8 @@ Readiness evidence to check before onboarding:
 
 - [Release handoff](release-handoff.md): short operator summary for the current
   launch state and CMS blocker.
+- [First designer kickoff](first-designer-kickoff.md): the short checklist to
+  send to the first designer now.
 - [Preview-only review](preview-only-review.md): use this now with the designer
   before CMS login is ready.
 - [First designer test](first-designer-test.md): use this after OAuth passes,

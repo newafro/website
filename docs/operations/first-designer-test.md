@@ -2,6 +2,8 @@
 
 Use this checklist for the first New Afro designer onboarding session. The
 goal is to prove the workflow with one person before inviting the full team.
+For the short designer-facing checklist, use
+[first-designer-kickoff.md](first-designer-kickoff.md).
 
 ## Current Entry Points
 

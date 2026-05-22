@@ -6,6 +6,8 @@ in the CMS, review layout changes on preview, and promote only approved work to
 production.
 
 For the short launch handoff, use [release-handoff.md](release-handoff.md).
+For the first designer session, use
+[first-designer-kickoff.md](first-designer-kickoff.md).
 For the no-login review that can start before OAuth is ready, use
 [preview-only-review.md](preview-only-review.md).
 
