@@ -121,9 +121,9 @@ if oauth_secret_names="$(gh secret list --repo "$oauth_repo" --json name --jq '.
     fi
   done
 else
-  echo "  status: could not list repo secrets with gh"
-  echo "  action: confirm gh auth can inspect $oauth_repo or run the OAuth operator preflight"
-  readiness_failed=1
+  echo "  status: skipped, this token cannot list $oauth_repo secrets"
+  echo "  action: use the OAuth operator preflight for secret checks"
+  echo "  workflow: https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml"
 fi
 echo
 
