@@ -379,6 +379,11 @@ async function main() {
             currentTime: video.currentTime,
             paused: video.paused,
           })),
+          overflowX:
+            Math.max(
+              document.documentElement?.scrollWidth || 0,
+              document.body?.scrollWidth || 0
+            ) > (document.documentElement?.clientWidth || window.innerWidth) + 2,
         }))()`,
         returnByValue: true,
       });
@@ -408,6 +413,7 @@ async function main() {
       if (exceptions.length) {
         failures.push(`${check.name} JS exceptions: ${exceptions.join('; ')}`);
       }
+      assertEqual(pageState.overflowX, false, `${check.name} has no horizontal overflow`);
 
       check.assert(pageState);
     }
