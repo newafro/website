@@ -20,6 +20,36 @@ OAuth proxy is live:
 OAuth proxy: https://decap-oauth.newafro.com
 ```
 
+## Send This To The Designer
+
+Use this message for the first preview-only review:
+
+```text
+Hi [name], the New Afro preview is ready for a visual review.
+
+Open https://preview.newafro.com on desktop and phone.
+Please do not use the CMS/login yet. It is still waiting on the login setup.
+
+In Figma, create a page named:
+2026-05-22 Preview Review
+
+Please review:
+Home, Menu overlay, Archive, Events, Projects, Community, The Agency, Contact.
+
+Use these labels in comments:
+Fix before launch:
+Nice to improve:
+Missing asset:
+Copy correction:
+Approved:
+
+When ready, send:
+Preview review ready.
+Fix before launch: [number]
+Missing asset: [number]
+Approved pages: [page names]
+```
+
 ## Session 1: Preview Review
 
 Goal: collect useful design and content feedback without asking the designer to
