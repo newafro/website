@@ -28,7 +28,7 @@ src/styles/        design tokens + global styles
 ## Edit content
 
 - Editors: open `/admin/` (after OAuth proxy is configured) and edit through the CMS UI. CMS publishes to the `staging` branch first, so changes appear on `https://preview.newafro.com` before production.
-- Developers: edit markdown under `src/content/` and push to `main`.
+- Developers: edit markdown under `src/content/` or implementation files in a branch, then open a pull request into `staging`. Promote approved preview changes from `staging` to `main` only after team review.
 
 ## Operations
 
