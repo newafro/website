@@ -78,9 +78,15 @@ Use these direct operator links when finishing the setup:
 GitHub OAuth app: https://github.com/settings/applications/new
 OAuth repo secrets: https://github.com/newafro/decap-oauth/settings/secrets/actions
 Render deploy: https://render.com/deploy?repo=https://github.com/newafro/decap-oauth
+OAuth setup status: https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
 Deploy-config preflight: https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
 Render/Namecheap runbook: https://github.com/newafro/decap-oauth/blob/main/docs/render-namecheap-runbook.md
 ```
+
+Use the setup status first when coordinating with someone logged in to Render
+or Namecheap. It is informational and can be green while still listing current
+blockers. Use live readiness and operator access as the strict gates before
+CMS login/save.
 
 Preferred guided command from the OAuth repo:
 

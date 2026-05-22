@@ -43,6 +43,10 @@ Readiness evidence to check before onboarding:
   before auto-deploying.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
+- The OAuth setup status workflow is informational and green; it gives the
+  Render/Namecheap operator a single screen with the current DNS, secrets, and
+  Render blockers:
+  `https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml`.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
 - The OAuth operator preflight runs daily after the live readiness monitor and
@@ -84,6 +88,7 @@ Direct operator links:
 GitHub OAuth app: https://github.com/settings/applications/new
 OAuth repo secrets: https://github.com/newafro/decap-oauth/settings/secrets/actions
 Render deploy: https://render.com/deploy?repo=https://github.com/newafro/decap-oauth
+OAuth setup status: https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
 Deploy-config preflight: https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
 Render/Namecheap runbook: https://github.com/newafro/decap-oauth/blob/main/docs/render-namecheap-runbook.md
 ```

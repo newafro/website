@@ -97,6 +97,12 @@ The OAuth operator preflight is:
 https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 ```
 
+The softer operator status screen is:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
+```
+
 Use the OAuth operator preflight first after adding OAuth secrets or
 `decap-oauth` DNS. Then use the website public readiness monitor to confirm
 whether editor login is ready end to end.
