@@ -20,10 +20,10 @@ Do not use this flow to save content. It is visual/content feedback only.
 1. Open `https://preview.newafro.com` on desktop.
 2. Open `https://preview.newafro.com` on a phone, or use a mobile browser
    viewport.
-3. Create a Figma page named with the review date, for example:
+3. Create a Figma page named with the review date:
 
    ```text
-   2026-05-21 Preview Review
+   [date] Preview Review
    ```
 
 4. Add one desktop screenshot and one mobile screenshot for each page reviewed.

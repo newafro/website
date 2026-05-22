@@ -31,7 +31,7 @@ Open https://preview.newafro.com on desktop and phone.
 Please do not use the CMS/login yet. It is still waiting on the login setup.
 
 In Figma, create a page named:
-2026-05-22 Preview Review
+[date] Preview Review
 
 Please review:
 Home, Menu overlay, Archive, Events, Projects, Community, The Agency, Contact.
@@ -57,10 +57,10 @@ touch GitHub, Render, Namecheap, or CMS saving.
 
 1. Open `https://preview.newafro.com` on desktop.
 2. Open the same URL on a phone or mobile viewport.
-3. Create a Figma page named with the date, for example:
+3. Create a Figma page named with the review date:
 
    ```text
-   2026-05-22 Preview Review
+   [date] Preview Review
    ```
 
 4. Capture desktop and mobile screenshots for:

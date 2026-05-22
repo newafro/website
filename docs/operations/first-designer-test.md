@@ -64,12 +64,12 @@ Practical split for the first session:
 - Wait for CMS login/save until OAuth live readiness and operator preflight are
   both green.
 
-Current state on 2026-05-22: `preview.newafro.com` and `login.newafro.com`
-load over HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the
-public browser smoke check passes, and the CMS shows a clear pending-login
-screen. The remaining blocker is `decap-oauth.newafro.com`, which still needs
-the Render custom-domain CNAME in Namecheap before the designer can sign in or
-save CMS changes.
+Current public state: `preview.newafro.com` and `login.newafro.com` load over
+HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the public
+browser smoke check passes, and the CMS shows a clear pending-login screen. The
+remaining blocker is `decap-oauth.newafro.com`, which still needs the Render
+service, OAuth repo secrets, and custom-domain CNAME in Namecheap before the
+designer can sign in or save CMS changes.
 
 First-designer readiness workflow:
 `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.

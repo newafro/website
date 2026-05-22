@@ -32,13 +32,15 @@ Readiness evidence to check before onboarding:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.
-- `newafro/decap-oauth` validates at commit `4441300`.
+- `newafro/decap-oauth` validates at commit `4a23650`.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
-- The OAuth operator preflight still fails on the external setup: missing
-  `decap-oauth.newafro.com` DNS and missing OAuth repo secrets:
+- The OAuth operator preflight runs daily after the live readiness monitor and
+  still fails on the external setup: missing `decap-oauth.newafro.com` DNS,
+  missing OAuth repo secrets, and Render reporting `x-render-routing:
+  no-server` on the likely default service URL:
   `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Use The Right Checklist
@@ -128,8 +130,9 @@ against the current `staging` branch head, so onboarding does not accidentally
 review an older deployed build.
 
 `./scripts/check-pages-readiness.sh` is the best operator-side first check: it
-confirms preview/login HTTPS, reports whether the OAuth repo secrets exist, and
-then checks the OAuth proxy DNS/HTTP path.
+confirms preview/login HTTPS, reports whether the OAuth repo secrets exist when
+the token can inspect `newafro/decap-oauth`, and then checks the OAuth proxy
+DNS/HTTP path.
 
 The public CMS readiness workflow writes a GitHub Actions job summary. Read
 that summary first when the scheduled monitor is red; it lists the current

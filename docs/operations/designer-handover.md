@@ -71,8 +71,8 @@ preview screenshots.
 Use Figma for visual direction, not as a separate source of website truth.
 
 1. Take screenshots from `preview.newafro.com`.
-2. Place screenshots in a Figma page named with the date, for example
-   `2026-05-21 Preview Review`.
+2. Place screenshots in a Figma page named with the review date, for example
+   `[date] Preview Review`.
 3. Comment directly on text size, spacing, image crop, missing assets, or page
    order.
 4. Mark comments as one of:
