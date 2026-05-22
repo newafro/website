@@ -18,8 +18,12 @@ live.
 
 Current evidence to verify before onboarding: the preview release marker must
 match `staging`, browser smoke must pass for preview/admin/login, and the
-first-designer readiness workflow should report that visual review is ready
+Preview Review Readiness workflow should report that visual review is ready
 while CMS saving is blocked:
+`https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml`.
+
+The stricter CMS Onboarding Readiness workflow should remain blocked until
+OAuth login/save is actually ready:
 `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 
 The OAuth repo should have a green latest Validate OAuth Proxy run on `main`:

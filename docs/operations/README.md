@@ -25,9 +25,11 @@ Readiness evidence to check before onboarding:
 - The preview-review readiness workflow should pass when the designer can start
   visual review even if CMS saving is still blocked:
   `https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml`.
-- The first-designer readiness workflow should report
+- The stricter CMS Onboarding Readiness workflow should report
   `Preview-only review: READY` and `CMS login/save dry run: BLOCKED` until the
-  OAuth proxy is live. It runs daily after the public CMS readiness monitor:
+  OAuth proxy is live. It runs daily after the public CMS readiness monitor.
+  The workflow file is still named `first-designer-readiness.yml` for link
+  stability:
   `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 - The public CMS readiness workflow should pass preview, login, CMS config, and
   release-marker checks, then block only on OAuth DNS until the OAuth proxy is
@@ -179,7 +181,9 @@ terminal open:
 https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml
 ```
 
-The stricter CMS-onboarding gate can also be run from GitHub Actions:
+The stricter CMS-onboarding gate can also be run from GitHub Actions. The
+workflow file is still named `first-designer-readiness.yml` for link stability,
+but the workflow title is `CMS Onboarding Readiness`:
 
 ```text
 https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml

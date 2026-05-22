@@ -63,7 +63,7 @@ function writeStepSummary() {
   const summary = [
     PREVIEW_REVIEW_ONLY
       ? '# New Afro Preview Review Readiness'
-      : '# New Afro First Designer Readiness',
+      : '# New Afro CMS Onboarding Readiness',
     '',
     `Preview-only review: ${previewReady ? 'READY' : 'BLOCKED'}`,
     `CMS login/save dry run: ${cmsReady ? 'READY' : 'BLOCKED'}`,
@@ -102,7 +102,7 @@ function writeStepSummary() {
       '## CMS Login/Save',
       '',
       '- Not required for this preview-only check.',
-      '- Keep using preview-only review until the OAuth proxy is live and the full first-designer readiness check passes.',
+      '- Keep using preview-only review until the OAuth proxy is live and the full CMS onboarding readiness check passes.',
       '',
     );
   } else {
@@ -117,7 +117,7 @@ function writeStepSummary() {
       '3. Rerun `RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator` to validate the Namecheap record.',
       '4. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
       `5. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
-      `6. Rerun this first-designer readiness workflow: ${FIRST_DESIGNER_WORKFLOW_URL}`,
+      `6. Rerun this CMS onboarding readiness workflow: ${FIRST_DESIGNER_WORKFLOW_URL}`,
       '',
     );
   }
@@ -409,7 +409,7 @@ async function checkOauthProxy({ dnsReady }) {
   return cmsFailures.length === failureCountAtStart;
 }
 
-console.log(PREVIEW_REVIEW_ONLY ? 'New Afro preview review readiness' : 'New Afro first designer readiness');
+console.log(PREVIEW_REVIEW_ONLY ? 'New Afro preview review readiness' : 'New Afro CMS onboarding readiness');
 
 section('Preview-Only Review');
 await checkLocalContentAssets();

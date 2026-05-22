@@ -25,8 +25,8 @@ If `https://login.newafro.com` shows `Website editing is waiting on login
 setup`, that is expected. It is not a designer error and it does not block the
 visual review.
 
-Do not ask the designer to test GitHub login or save content until the
-first-designer readiness workflow says `CMS login/save dry run: READY`.
+Do not ask the designer to test GitHub login or save content until the CMS
+Onboarding Readiness workflow says `CMS login/save dry run: READY`.
 
 For the first visual review, use the lighter preview-review readiness check.
 It should be green even while CMS saving is blocked:
@@ -182,7 +182,7 @@ https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
 ```
 
-The first-designer readiness workflow also runs daily, so this status should
+The CMS Onboarding Readiness workflow also runs daily, so this status should
 refresh automatically after the operator finishes the OAuth setup.
 
 Then run this short CMS test:

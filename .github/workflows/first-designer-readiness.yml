@@ -1,4 +1,4 @@
-name: First Designer Readiness
+name: CMS Onboarding Readiness
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  first-designer-readiness:
+  cms-onboarding-readiness:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check first designer readiness
+      - name: Check CMS onboarding readiness
         env:
           GH_TOKEN: ${{ secrets.NEWAFRO_OPERATOR_TOKEN || github.token }}
         run: npm run check:first-designer
