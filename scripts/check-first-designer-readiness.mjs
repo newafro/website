@@ -14,6 +14,7 @@ const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
 const OAUTH_REPO = 'newafro/decap-oauth';
 const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
 const FIRST_DESIGNER_WORKFLOW_URL = 'https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml';
+const PREVIEW_REVIEW_ONLY = process.env.PREVIEW_REVIEW_ONLY === '1';
 const FIRST_DESIGNER_DOC_URL = 'docs/operations/first-designer-test.md';
 const PREVIEW_REVIEW_DOC_URL = 'docs/operations/preview-only-review.md';
 const REQUIRED_OAUTH_SECRETS = ['GITHUB_OAUTH_ID', 'GITHUB_OAUTH_SECRET'];
@@ -46,7 +47,7 @@ function failPreview(message) {
 
 function failCms(message) {
   cmsFailures.push(message);
-  console.log(`FAIL ${message}`);
+  console.log(`${PREVIEW_REVIEW_ONLY ? 'BLOCKED' : 'FAIL'} ${message}`);
 }
 
 function warnCms(message) {
@@ -60,7 +61,9 @@ function writeStepSummary() {
   const previewReady = previewFailures.length === 0;
   const cmsReady = cmsFailures.length === 0;
   const summary = [
-    '# New Afro First Designer Readiness',
+    PREVIEW_REVIEW_ONLY
+      ? '# New Afro Preview Review Readiness'
+      : '# New Afro First Designer Readiness',
     '',
     `Preview-only review: ${previewReady ? 'READY' : 'BLOCKED'}`,
     `CMS login/save dry run: ${cmsReady ? 'READY' : 'BLOCKED'}`,
@@ -92,6 +95,14 @@ function writeStepSummary() {
       '## CMS Login/Save',
       '',
       `- Start ${FIRST_DESIGNER_DOC_URL} with one safe draft entry.`,
+      '',
+    );
+  } else if (PREVIEW_REVIEW_ONLY) {
+    summary.push(
+      '## CMS Login/Save',
+      '',
+      '- Not required for this preview-only check.',
+      '- Keep using preview-only review until the OAuth proxy is live and the full first-designer readiness check passes.',
       '',
     );
   } else {
@@ -398,7 +409,7 @@ async function checkOauthProxy({ dnsReady }) {
   return cmsFailures.length === failureCountAtStart;
 }
 
-console.log('New Afro first designer readiness');
+console.log(PREVIEW_REVIEW_ONLY ? 'New Afro preview review readiness' : 'New Afro first designer readiness');
 
 section('Preview-Only Review');
 await checkLocalContentAssets();
@@ -449,6 +460,6 @@ if (cmsFailures.length) {
 
 writeStepSummary();
 
-if (previewFailures.length || cmsFailures.length) {
+if (previewFailures.length || (!PREVIEW_REVIEW_ONLY && cmsFailures.length)) {
   process.exit(1);
 }

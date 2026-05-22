@@ -22,6 +22,9 @@ OAuth:      https://decap-oauth.newafro.com
 Readiness evidence to check before onboarding:
 
 - `preview.newafro.com/release.json` must match the current `staging` branch.
+- The preview-review readiness workflow should pass when the designer can start
+  visual review even if CMS saving is still blocked:
+  `https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml`.
 - The first-designer readiness workflow should report
   `Preview-only review: READY` and `CMS login/save dry run: BLOCKED` until the
   OAuth proxy is live. It runs daily after the public CMS readiness monitor:
@@ -133,6 +136,7 @@ live OAuth readiness, and `npm run check:cms-readiness` pass.
 From the website repo:
 
 ```bash
+npm run check:preview-review
 npm run check:first-designer
 npm run check:content-assets
 npm run check:preview-release
@@ -141,13 +145,25 @@ npm run check:cms-readiness
 npm run smoke:public
 ```
 
-`npm run check:first-designer` is the best first command before onboarding. It
-separates `Preview-only review: READY` from `CMS login/save dry run: BLOCKED`,
-so the designer can start visual review without mistaking that for CMS save
-readiness. It also runs the local upload asset check so missing images or
-videos are caught before review.
+`npm run check:preview-review` is the best first command before the visual
+review. It checks the same preview, login, asset, CMS config, and GitHub Pages
+evidence, but exits green when preview-only review is ready even if the OAuth
+proxy is still blocking CMS save.
 
-The same gate can be run from GitHub Actions when nobody has a terminal open:
+`npm run check:first-designer` is the stricter command before CMS onboarding.
+It separates `Preview-only review: READY` from `CMS login/save dry run:
+BLOCKED`, then exits red until CMS login/save is actually ready. It also runs
+the local upload asset check so missing images or videos are caught before
+review.
+
+The green preview-only gate can be run from GitHub Actions when nobody has a
+terminal open:
+
+```text
+https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml
+```
+
+The stricter CMS-onboarding gate can also be run from GitHub Actions:
 
 ```text
 https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml

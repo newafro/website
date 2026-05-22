@@ -1,0 +1,35 @@
+name: Preview Review Readiness
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "47 8 * * *"
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  preview-review-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: staging
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check preview review readiness
+        env:
+          GH_TOKEN: ${{ secrets.NEWAFRO_OPERATOR_TOKEN || github.token }}
+        run: npm run check:preview-review

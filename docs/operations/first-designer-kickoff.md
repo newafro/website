@@ -24,6 +24,13 @@ OAuth proxy: https://decap-oauth.newafro.com
 Do not ask the designer to test GitHub login or save content until the
 first-designer readiness workflow says `CMS login/save dry run: READY`.
 
+For the first visual review, use the lighter preview-review readiness check.
+It should be green even while CMS saving is blocked:
+
+```text
+https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml
+```
+
 ## Send This To The Designer
 
 Use this message for the first preview-only review:
