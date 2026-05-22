@@ -157,9 +157,9 @@ npm run smoke:public
 
 `npm run status:release` is the best one-command handoff view. It runs the
 preview release marker, preview-only designer gate, browser smoke, public CMS
-readiness, and first-designer gate. It exits green when preview/design review is
-ready, while still printing `CMS login/save: BLOCKED` until the OAuth proxy,
-repo secrets, and Render custom domain are finished. Use
+readiness, and CMS onboarding login/save gate. It exits green when
+preview/design review is ready, while still printing `CMS login/save: BLOCKED`
+until the OAuth proxy, repo secrets, and Render custom domain are finished. Use
 `STRICT_RELEASE=1 npm run status:release` when the command should fail unless
 CMS login/save is also ready.
 

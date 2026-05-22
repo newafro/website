@@ -52,7 +52,7 @@ const checks = [
   },
   {
     key: 'firstDesigner',
-    label: 'First-designer CMS login/save gate',
+    label: 'CMS onboarding login/save gate',
     command: 'node',
     args: ['scripts/check-first-designer-readiness.mjs'],
     requiredForPreview: false,
