@@ -203,6 +203,13 @@ the `newafro/decap-oauth` operator preflight.
 against the current `staging` branch head, so onboarding does not accidentally
 review an older deployed build.
 
+When the readiness workflows are started manually from GitHub Actions, the run
+list can show the workflow file's branch SHA, usually `main`. Do not use that
+top-level run SHA as proof of what preview is serving. The workflow logs and
+job summary print the checked `staging` SHA, and
+`preview.newafro.com/release.json` is the source of truth for the deployed
+preview candidate.
+
 `./scripts/check-pages-readiness.sh` is the best operator-side first check: it
 confirms preview/login HTTPS, reports whether the OAuth repo secrets exist when
 the token can inspect `newafro/decap-oauth`, and then checks the OAuth proxy
