@@ -113,6 +113,10 @@ hidden, draft, or minimal until the team provides the missing material.
 
 ## First Onboarding Session
 
+Start this only after `npm run check:cms-readiness` passes and
+`https://login.newafro.com` signs in cleanly with GitHub. If OAuth is still
+blocked, use [preview-only-review.md](preview-only-review.md) instead.
+
 In a 30-minute onboarding session, have the designer do this once:
 
 1. Log in at `https://login.newafro.com`.

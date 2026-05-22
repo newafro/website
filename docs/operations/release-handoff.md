@@ -17,6 +17,41 @@ The CMS screen loads, but saving content is blocked until the OAuth proxy is
 deployed on Render, its GitHub OAuth secrets exist, and
 `decap-oauth.newafro.com` DNS is live.
 
+## Current Verification Checklist
+
+Use this as the handoff snapshot checklist. The exact staging SHA is not
+hard-coded here because this document itself can be updated on `staging`; use
+`npm run check:preview-release` or `https://preview.newafro.com/release.json`
+as the source of truth for the currently deployed candidate.
+
+Ready-now evidence:
+
+- `preview.newafro.com/release.json` matches the current `staging` branch.
+- GitHub Pages HTTPS is enforced for `preview.newafro.com` and
+  `login.newafro.com`.
+- The latest `staging` Preview deploy and website validation are green:
+  `https://github.com/newafro/website/actions/workflows/deploy-preview.yml`
+  `https://github.com/newafro/website/actions/workflows/validate.yml`.
+- Release Status and Preview Review Readiness are green:
+  `https://github.com/newafro/website/actions/workflows/release-status.yml`
+  `https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml`.
+- The public browser smoke check passes on desktop and mobile; the CMS route
+  shows the friendly pending-login screen instead of a broken editor.
+
+Expected blockers before CMS login/save:
+
+- `decap-oauth.newafro.com` has no public DNS result.
+- `https://newafro-decap-oauth.onrender.com` returns Render
+  `x-render-routing: no-server`.
+- `newafro/decap-oauth` still needs `GITHUB_OAUTH_ID` and
+  `GITHUB_OAUTH_SECRET` repository secrets.
+- The strict CMS/OAuth readiness workflows are expected-red until the OAuth
+  service, secrets, and Namecheap CNAME are finished:
+  `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`
+  `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`
+  `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`
+  `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
+
 Current evidence to verify before onboarding: the preview release marker must
 match `staging`, browser smoke must pass for preview/admin/login, and the
 Preview Review Readiness workflow should report that visual review is ready
