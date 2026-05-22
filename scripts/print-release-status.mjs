@@ -5,6 +5,15 @@ import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
 const STRICT_RELEASE = process.env.STRICT_RELEASE === '1';
+const OAUTH_REPO = 'newafro/decap-oauth';
+const OAUTH_CALLBACK_URL = 'https://decap-oauth.newafro.com/callback?provider=github';
+const GITHUB_OAUTH_APP_URL = 'https://github.com/settings/applications/new';
+const OAUTH_SECRETS_URL = `https://github.com/${OAUTH_REPO}/settings/secrets/actions`;
+const RENDER_DEPLOY_URL = `https://render.com/deploy?repo=https://github.com/${OAUTH_REPO}`;
+const OAUTH_SETUP_STATUS_URL = `https://github.com/${OAUTH_REPO}/actions/workflows/setup-status.yml`;
+const OAUTH_LIVE_READINESS_URL = `https://github.com/${OAUTH_REPO}/actions/workflows/live-readiness.yml`;
+const OAUTH_OPERATOR_PREFLIGHT_URL = `https://github.com/${OAUTH_REPO}/actions/workflows/operator-access.yml`;
+const OAUTH_RUNBOOK_URL = `https://github.com/${OAUTH_REPO}/blob/main/docs/render-namecheap-runbook.md`;
 
 const checks = [
   {
@@ -145,6 +154,21 @@ function writeStepSummary(results, previewReady, cmsReady) {
     '',
   );
 
+  if (!cmsReady) {
+    summary.push(
+      '## OAuth Operator Links',
+      '',
+      `- GitHub OAuth app setup: ${GITHUB_OAUTH_APP_URL}`,
+      `- OAuth repo secrets: ${OAUTH_SECRETS_URL}`,
+      `- Render deploy from repo: ${RENDER_DEPLOY_URL}`,
+      `- OAuth setup status: ${OAUTH_SETUP_STATUS_URL}`,
+      `- OAuth live readiness: ${OAUTH_LIVE_READINESS_URL}`,
+      `- OAuth operator preflight: ${OAUTH_OPERATOR_PREFLIGHT_URL}`,
+      `- Render/Namecheap runbook: ${OAUTH_RUNBOOK_URL}`,
+      '',
+    );
+  }
+
   fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary.join('\n')}\n`);
 }
 
@@ -181,11 +205,19 @@ console.log(`Production promotion: ${cmsReady ? 'READY FOR FINAL HUMAN APPROVAL'
 if (previewReady && !cmsReady) {
   section('Next Operator Action');
   console.log('Finish the OAuth proxy setup before CMS onboarding:');
-  console.log('1. Create/verify the GitHub OAuth app callback: https://decap-oauth.newafro.com/callback?provider=github');
-  console.log('2. Add GITHUB_OAUTH_ID and GITHUB_OAUTH_SECRET to newafro/decap-oauth.');
+  console.log(`1. Create/verify the GitHub OAuth app callback: ${OAUTH_CALLBACK_URL}`);
+  console.log(`   ${GITHUB_OAUTH_APP_URL}`);
+  console.log(`2. Add GITHUB_OAUTH_ID and GITHUB_OAUTH_SECRET to ${OAUTH_SECRETS_URL}`);
   console.log('3. Deploy newafro/decap-oauth on Render and attach decap-oauth.newafro.com.');
+  console.log(`   ${RENDER_DEPLOY_URL}`);
   console.log('4. Add Namecheap CNAME: Host decap-oauth -> exact Render custom-domain target.');
   console.log('5. Rerun npm run status:release.');
+  console.log('');
+  console.log('Operator links:');
+  console.log(`- OAuth setup status: ${OAUTH_SETUP_STATUS_URL}`);
+  console.log(`- OAuth live readiness: ${OAUTH_LIVE_READINESS_URL}`);
+  console.log(`- OAuth operator preflight: ${OAUTH_OPERATOR_PREFLIGHT_URL}`);
+  console.log(`- Render/Namecheap runbook: ${OAUTH_RUNBOOK_URL}`);
 }
 
 writeStepSummary(results, previewReady, cmsReady);
