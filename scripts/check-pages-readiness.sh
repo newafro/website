@@ -30,6 +30,14 @@ After adding OAuth repo secrets and DNS, run the OAuth operator preflight:
 Preferred OAuth repo command before changing DNS:
   GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator
   npm run check:render-blueprint
+
+Render service env vars to enter during deploy:
+  GITHUB_OAUTH_ID=[from GitHub OAuth app]
+  GITHUB_OAUTH_SECRET=[from GitHub OAuth app]
+  PUBLIC_URL=https://decap-oauth.newafro.com
+  GITHUB_REPO_PRIVATE=0
+
+After Render shows the exact custom-domain DNS target:
   RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator
 EOF
 }

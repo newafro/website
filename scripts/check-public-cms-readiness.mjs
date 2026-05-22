@@ -45,9 +45,10 @@ function writeSummary() {
       '',
       '1. In `newafro/decap-oauth`, run `GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator` after the GitHub OAuth app exists.',
       '2. Deploy the `newafro/decap-oauth` Render Blueprint; it declares `decap-oauth.newafro.com` and `/healthz` already.',
-      '3. Rerun `RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator` to validate the Namecheap record.',
-      '4. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
-      `5. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
+      '3. In Render, set service env vars: `GITHUB_OAUTH_ID`, `GITHUB_OAUTH_SECRET`, `PUBLIC_URL=https://decap-oauth.newafro.com`, `GITHUB_REPO_PRIVATE=0`.',
+      '4. Rerun `RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator` to validate the Namecheap record.',
+      '5. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
+      `6. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
       '',
     );
   } else {
@@ -95,6 +96,14 @@ function printOauthDnsInstructions() {
   log('Preferred OAuth repo command before the DNS change:');
   log('  GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator');
   log('  npm run check:render-blueprint');
+  log('');
+  log('Render service env vars to enter during deploy:');
+  log('  GITHUB_OAUTH_ID=[from GitHub OAuth app]');
+  log('  GITHUB_OAUTH_SECRET=[from GitHub OAuth app]');
+  log('  PUBLIC_URL=https://decap-oauth.newafro.com');
+  log('  GITHUB_REPO_PRIVATE=0');
+  log('');
+  log('After Render shows the exact custom-domain DNS target:');
   log('  RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator');
 }
 

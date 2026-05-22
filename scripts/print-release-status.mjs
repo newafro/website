@@ -213,8 +213,9 @@ if (previewReady && !cmsReady) {
   console.log(`2. Add GITHUB_OAUTH_ID and GITHUB_OAUTH_SECRET to ${OAUTH_SECRETS_URL}`);
   console.log('3. Deploy newafro/decap-oauth on Render and attach decap-oauth.newafro.com.');
   console.log(`   ${RENDER_DEPLOY_URL}`);
-  console.log('4. Add Namecheap CNAME: Host decap-oauth -> exact Render custom-domain target.');
-  console.log('5. Rerun npm run status:release.');
+  console.log('4. In Render, set service env vars: GITHUB_OAUTH_ID, GITHUB_OAUTH_SECRET, PUBLIC_URL=https://decap-oauth.newafro.com, GITHUB_REPO_PRIVATE=0.');
+  console.log('5. Add Namecheap CNAME: Host decap-oauth -> exact Render custom-domain target.');
+  console.log('6. Rerun npm run status:release.');
   console.log('');
   console.log('Operator links:');
   console.log(`- Website quickstart: ${OAUTH_QUICKSTART_DOC}`);
