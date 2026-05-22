@@ -22,11 +22,13 @@ first-designer readiness workflow should report that visual review is ready
 while CMS saving is blocked:
 `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 
-The OAuth repo validates at `9741642`, but the OAuth live-readiness and
-operator preflight still fail because `decap-oauth.newafro.com` has no DNS,
-the OAuth repo does not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET`
-secrets, and Render reports `x-render-routing: no-server` on the likely default
-service URL:
+The OAuth repo should have a green latest Validate OAuth Proxy run on `main`:
+`https://github.com/newafro/decap-oauth/actions/workflows/validate.yml`.
+
+The OAuth live-readiness and operator preflight still fail because
+`decap-oauth.newafro.com` has no DNS, the OAuth repo does not yet have
+`GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets, and Render reports
+`x-render-routing: no-server` on the likely default service URL:
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Track A: Designer Review Can Start Now
