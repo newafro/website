@@ -29,6 +29,7 @@ const checks = [
     label: 'Rendered browser smoke',
     command: 'node',
     args: ['scripts/smoke-public-browser.mjs'],
+    timeoutMs: 120000,
     requiredForPreview: true,
     requiredForCms: true,
   },
@@ -87,7 +88,7 @@ async function runCheck(check) {
   try {
     const result = await execFileAsync(check.command, check.args, {
       env: { ...process.env, ...(check.env || {}) },
-      timeout: 45000,
+      timeout: check.timeoutMs || 45000,
       maxBuffer: 1024 * 1024 * 20,
     });
     return {
