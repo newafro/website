@@ -29,6 +29,7 @@ After adding OAuth repo secrets and DNS, run the OAuth operator preflight:
 
 Preferred OAuth repo command before changing DNS:
   GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator
+  npm run check:render-blueprint
   RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator
 EOF
 }

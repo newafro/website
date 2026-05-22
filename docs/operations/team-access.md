@@ -82,6 +82,8 @@ New Afro Decap OAuth / decap-oauth.newafro.com client id and secret
 ```
 
 The OAuth proxy source is `https://github.com/newafro/decap-oauth`.
+Its Render Blueprint declares `decap-oauth.newafro.com` and `/healthz`; the
+OAuth repo validation workflow checks that contract before deploy.
 
 The public readiness monitor is:
 

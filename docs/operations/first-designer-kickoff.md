@@ -59,8 +59,8 @@ Approved pages: [page names]
 CMS testing starts only when the live editor path is true:
 
 - `decap-oauth.newafro.com` resolves publicly.
-- The Render OAuth service is deployed and attached to
-  `decap-oauth.newafro.com`.
+- The Render OAuth Blueprint is deployed and its `decap-oauth.newafro.com`
+  custom domain is attached.
 - OAuth live readiness passes:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
 - Website public CMS readiness passes:
@@ -173,5 +173,6 @@ CMS login/save remains blocked until:
 - `decap-oauth.newafro.com` resolves publicly.
 - `newafro/decap-oauth` has `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET`
   repository secrets.
+- `newafro/decap-oauth` Render Blueprint validation passes.
 - The OAuth live-readiness and operator preflight workflows pass.
 - Website public CMS readiness passes.

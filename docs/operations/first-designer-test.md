@@ -28,6 +28,7 @@ designer to ignore browser certificate warnings.
 - `login.newafro.com/admin/` resolves and redirects to the CMS.
 - GitHub Pages HTTPS enforcement is enabled for both `preview` and `login`.
 - The OAuth deploy-config preflight has passed with the exact Render target.
+- The OAuth Render Blueprint validation passes.
 - `decap-oauth.newafro.com` is deployed and reachable.
 - `https://decap-oauth.newafro.com/auth?provider=github` redirects to GitHub.
 - The designer has a GitHub account.
@@ -74,7 +75,7 @@ Current public state: `preview.newafro.com` and `login.newafro.com` load over
 HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the public
 browser smoke check passes, and the CMS shows a clear pending-login screen. The
 remaining blocker is `decap-oauth.newafro.com`, which still needs the Render
-service, OAuth repo secrets, and custom-domain CNAME in Namecheap before the
+Blueprint deployment, OAuth repo secrets, and custom-domain CNAME in Namecheap before the
 designer can sign in or save CMS changes.
 
 First-designer readiness workflow:

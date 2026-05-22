@@ -86,8 +86,10 @@ Deployment is tracked here:
 https://github.com/newafro/decap-oauth/issues/1
 ```
 
-It includes a Render blueprint (`render.yaml`) and can also run on any Node 20
-host. For the current Namecheap DNS setup, Render is the lowest-friction path:
+It includes a Render Blueprint (`render.yaml`) and can also run on any Node 20
+host. The Blueprint declares `decap-oauth.newafro.com`, uses `/healthz` as the
+health check, and waits for checks to pass before auto-deploying. For the
+current Namecheap DNS setup, Render is the lowest-friction path:
 
 1. Create a GitHub OAuth app:
 
@@ -106,8 +108,8 @@ host. For the current Namecheap DNS setup, Render is the lowest-friction path:
    GITHUB_REPO_PRIVATE=0
    ```
 
-3. Deploy `newafro/decap-oauth` on Render as a web service or blueprint.
-4. Add `decap-oauth.newafro.com` as a Render custom domain.
+3. Deploy `newafro/decap-oauth` on Render from the Blueprint.
+4. Confirm Render shows `decap-oauth.newafro.com` as the custom domain.
 5. Add the exact CNAME target Render provides in Namecheap.
 
 The preferred guided command from the OAuth repo is:
@@ -122,6 +124,8 @@ npm run setup:operator
 After Render shows the exact custom-domain target, rerun:
 
 ```bash
+cd /path/to/newafro-decap-oauth
+npm run check:render-blueprint
 RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
 ```
 

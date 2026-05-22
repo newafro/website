@@ -24,6 +24,8 @@ while CMS saving is blocked:
 
 The OAuth repo should have a green latest Validate OAuth Proxy run on `main`:
 `https://github.com/newafro/decap-oauth/actions/workflows/validate.yml`.
+That validation now includes the Render Blueprint contract: `decap-oauth.newafro.com`
+custom domain, `/healthz` health check, and deploys only after checks pass.
 
 The OAuth live-readiness and operator preflight still fail because
 `decap-oauth.newafro.com` has no DNS, the OAuth repo does not yet have
@@ -81,12 +83,14 @@ npm run setup:operator
 After Render shows the exact custom-domain target, rerun:
 
 ```bash
+npm run check:render-blueprint
 RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
 ```
 
 The command creates or reads the exact `New Afro Decap OAuth` 1Password item,
 syncs the OAuth repo GitHub Actions secrets, and validates the Namecheap record
-when the Render target is available. It does not deploy Render or edit DNS.
+when the Render target is available. It does not deploy Render or edit
+Namecheap DNS.
 
 Then add the printed Namecheap record in the `newafro.com` Advanced DNS zone.
 The host must be `decap-oauth`. The value must be the exact Render target. It

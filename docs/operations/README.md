@@ -35,6 +35,9 @@ Readiness evidence to check before onboarding:
 - `newafro/decap-oauth` should have a green latest Validate OAuth Proxy run on
   `main`:
   `https://github.com/newafro/decap-oauth/actions/workflows/validate.yml`.
+- The OAuth Render Blueprint should pass `npm run check:render-blueprint`; it
+  declares `decap-oauth.newafro.com`, uses `/healthz`, and waits for checks
+  before auto-deploying.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
@@ -83,6 +86,7 @@ npm run setup:operator
 After Render shows the custom-domain DNS target, rerun:
 
 ```bash
+npm run check:render-blueprint
 RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
 ```
 
