@@ -21,6 +21,10 @@ OAuth proxy is live:
 OAuth proxy: https://decap-oauth.newafro.com
 ```
 
+If `https://login.newafro.com` shows `Website editing is waiting on login
+setup`, that is expected. It is not a designer error and it does not block the
+visual review.
+
 Do not ask the designer to test GitHub login or save content until the
 first-designer readiness workflow says `CMS login/save dry run: READY`.
 
@@ -82,6 +86,22 @@ about.
 
 If live OAuth readiness or website public CMS readiness is red, keep the
 designer in preview-only review mode.
+
+The current external blockers should be checked in the OAuth setup status:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
+```
+
+At this handoff stage, the expected blockers are:
+
+- `decap-oauth.newafro.com` has no public DNS result.
+- `newafro/decap-oauth` is missing `GITHUB_OAUTH_ID` and
+  `GITHUB_OAUTH_SECRET` repository secrets.
+- Render still needs a live service/custom-domain attach for
+  `decap-oauth.newafro.com`.
+- If 1Password is not signed in for the operator, set the OAuth values
+  manually in GitHub/Render. The designer does not need 1Password access.
 
 For a single terminal status before inviting the designer, run:
 
@@ -190,6 +210,7 @@ CMS login/save remains blocked until:
 - `decap-oauth.newafro.com` resolves publicly.
 - `newafro/decap-oauth` has `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET`
   repository secrets.
-- `newafro/decap-oauth` Render Blueprint validation passes.
+- `newafro/decap-oauth` Render Blueprint validation passes and the service is
+  actually attached to the `decap-oauth.newafro.com` custom domain.
 - The OAuth live-readiness and operator preflight workflows pass.
 - Website public CMS readiness passes.

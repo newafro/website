@@ -47,6 +47,8 @@ Readiness evidence to check before onboarding:
   Render/Namecheap operator a single screen with the current DNS, secrets, and
   Render blockers:
   `https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml`.
+  It now checks real 1Password sign-in with `op whoami`, so a locked or
+  unsigned-in 1Password CLI is reported as a warning instead of a false pass.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
 - The OAuth operator preflight runs daily after the live readiness monitor and

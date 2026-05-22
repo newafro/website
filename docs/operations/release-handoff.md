@@ -33,6 +33,11 @@ The OAuth live-readiness and operator preflight still fail because
 `x-render-routing: no-server` on the likely default service URL:
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
+The OAuth setup/status tooling checks real 1Password sign-in with `op whoami`.
+If it says 1Password is not signed in, that is an operator setup detail, not a
+designer blocker. OAuth values can also be set directly as GitHub/Render
+secrets.
+
 ## Track A: Designer Review Can Start Now
 
 The designer can review the preview site before CMS login is ready.
@@ -86,7 +91,8 @@ Render/Namecheap runbook: https://github.com/newafro/decap-oauth/blob/main/docs/
 Use the setup status first when coordinating with someone logged in to Render
 or Namecheap. It is informational and can be green while still listing current
 blockers. Use live readiness and operator access as the strict gates before
-CMS login/save.
+CMS login/save. If the setup status says 1Password is not signed in, sign in
+with `op signin` or use the manual GitHub/Render secret path.
 
 Preferred guided command from the OAuth repo:
 
