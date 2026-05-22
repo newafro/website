@@ -101,11 +101,12 @@ function writeStepSummary() {
       '',
       '## Next Operator Action',
       '',
-      '1. Add OAuth repo secrets if they are still missing.',
+      '1. In `newafro/decap-oauth`, run `GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator` after the GitHub OAuth app exists.',
       '2. Deploy the Render OAuth proxy and add `decap-oauth.newafro.com` as a custom domain.',
-      '3. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
-      `4. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
-      `5. Rerun this first-designer readiness workflow: ${FIRST_DESIGNER_WORKFLOW_URL}`,
+      '3. Rerun `RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator` to validate the Namecheap record.',
+      '4. Add Namecheap `CNAME` record `decap-oauth` -> exact Render custom-domain DNS target.',
+      `5. Rerun the OAuth operator preflight: ${OAUTH_OPERATOR_WORKFLOW_URL}`,
+      `6. Rerun this first-designer readiness workflow: ${FIRST_DESIGNER_WORKFLOW_URL}`,
       '',
     );
   }
@@ -435,7 +436,7 @@ if (cmsFailures.length) {
     for (const warning of cmsWarnings) console.log(`- ${warning}`);
   }
   console.log('');
-  console.log('Next operator action: add OAuth repo secrets, deploy the Render OAuth proxy, add Namecheap CNAME decap-oauth -> exact Render DNS target, then rerun this command.');
+  console.log('Next operator action: in newafro/decap-oauth run setup:operator with the GitHub OAuth values, deploy Render, rerun setup:operator with the exact Render target, add Namecheap CNAME decap-oauth -> exact Render target, then rerun this command.');
 } else {
   console.log('CMS login/save dry run: READY');
   console.log('- Start docs/operations/first-designer-test.md with one safe draft entry.');

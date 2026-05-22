@@ -70,17 +70,23 @@ The OAuth proxy repo is:
 https://github.com/newafro/decap-oauth
 ```
 
-Before changing Namecheap, the person with Render access should run this in the
-OAuth repo with the exact custom-domain target shown by Render:
+Preferred guided command from the OAuth repo:
 
 ```bash
 GITHUB_OAUTH_ID=[from GitHub OAuth app] \
 GITHUB_OAUTH_SECRET=[from GitHub OAuth app] \
-PUBLIC_URL=https://decap-oauth.newafro.com \
-GITHUB_REPO_PRIVATE=0 \
-RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] \
-npm run check:deploy-config
+npm run setup:operator
 ```
+
+After Render shows the exact custom-domain target, rerun:
+
+```bash
+RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
+```
+
+The command creates or reads the exact `New Afro Decap OAuth` 1Password item,
+syncs the OAuth repo GitHub Actions secrets, and validates the Namecheap record
+when the Render target is available. It does not deploy Render or edit DNS.
 
 Then add the printed Namecheap record in the `newafro.com` Advanced DNS zone.
 The host must be `decap-oauth`. The value must be the exact Render target. It

@@ -72,6 +72,25 @@ Finish the OAuth proxy setup in `newafro/decap-oauth`:
 https://github.com/newafro/decap-oauth/issues/1
 ```
 
+Preferred guided command from the OAuth repo:
+
+```bash
+GITHUB_OAUTH_ID=[from GitHub OAuth app] \
+GITHUB_OAUTH_SECRET=[from GitHub OAuth app] \
+npm run setup:operator
+```
+
+After Render shows the custom-domain DNS target, rerun:
+
+```bash
+RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
+```
+
+This creates or reads the exact `New Afro Decap OAuth` 1Password item, syncs
+the OAuth repo GitHub Actions secrets, and validates the Render/Namecheap
+target when the target is available. It does not deploy Render or edit
+Namecheap DNS.
+
 If OAuth secrets should stay out of local shells, add `GITHUB_OAUTH_ID` and
 `GITHUB_OAUTH_SECRET` as GitHub Actions secrets in `newafro/decap-oauth`, then
 run the deploy-config preflight with the exact Render custom-domain DNS target:

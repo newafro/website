@@ -26,6 +26,10 @@ The record must be in the newafro.com Advanced DNS zone and must not point to Gi
 
 After adding OAuth repo secrets and DNS, run the OAuth operator preflight:
   https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
+
+Preferred OAuth repo command before changing DNS:
+  GITHUB_OAUTH_ID=... GITHUB_OAUTH_SECRET=... npm run setup:operator
+  RENDER_CUSTOM_DOMAIN_TARGET=[exact Render target] npm run setup:operator
 EOF
 }
 
