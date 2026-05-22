@@ -182,8 +182,10 @@ https://github.com/newafro/website/actions/workflows/preview-review-readiness.ym
 ```
 
 The stricter CMS-onboarding gate can also be run from GitHub Actions. The
-workflow file is still named `first-designer-readiness.yml` for link stability,
-but the workflow title is `CMS Onboarding Readiness`:
+workflow file is still named `first-designer-readiness.yml` for link stability.
+The job summary and job name call this the CMS onboarding readiness gate; older
+manual runs may still show the previous workflow title until the workflow-file
+change is on the default branch:
 
 ```text
 https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml
