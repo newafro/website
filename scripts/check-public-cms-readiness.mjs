@@ -8,6 +8,7 @@ const CHECK_TIMEOUT_MS = 15000;
 const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
 const OAUTH_URL = 'https://decap-oauth.newafro.com';
 const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
+const RENDER_SERVICE_URL = process.env.RENDER_SERVICE_URL || 'https://newafro-decap-oauth.onrender.com';
 const execFileAsync = promisify(execFile);
 const failures = [];
 const lines = [];
@@ -342,6 +343,32 @@ async function checkOauthProxy({ dnsReady }) {
   pass('OAuth proxy is ready for Decap CMS login and reports the expected callback');
 }
 
+async function checkRenderServiceProbe() {
+  if (!failures.length) return;
+
+  log('\n== Render Service Probe ==');
+  log(`Probe URL: ${RENDER_SERVICE_URL}`);
+  try {
+    const { response } = await fetchText(RENDER_SERVICE_URL, {
+      method: 'HEAD',
+      redirect: 'manual',
+    });
+    const renderRouting = response.headers.get('x-render-routing') || '';
+    log(`HTTP ${response.status}`);
+    if (renderRouting) log(`x-render-routing: ${renderRouting}`);
+
+    if (response.status === 404 && renderRouting === 'no-server') {
+      fail(`${RENDER_SERVICE_URL} is not attached to a Render service yet`);
+    } else if (response.ok) {
+      log(`${RENDER_SERVICE_URL} responds, but OAuth custom-domain readiness is still blocked above.`);
+    } else {
+      log(`${RENDER_SERVICE_URL} returned HTTP ${response.status}; confirm the Render service and custom-domain attachment.`);
+    }
+  } catch (error) {
+    log(`WARN Render service probe failed for ${RENDER_SERVICE_URL}: ${error.message || error}`);
+  }
+}
+
 log('New Afro public CMS readiness');
 
 await checkDns('preview.newafro.com', { expectedCname: 'newafro.github.io' });
@@ -355,6 +382,7 @@ await checkPage('Friendly login page', 'https://login.newafro.com/', ['https://p
 await checkPage('Friendly login admin path', 'https://login.newafro.com/admin/', ['https://preview.newafro.com/admin/']);
 await checkCmsConfig();
 await checkOauthProxy({ dnsReady: oauthDnsReady });
+await checkRenderServiceProbe();
 
 log('\n== Summary ==');
 if (failures.length > 0) {

@@ -84,6 +84,7 @@ function summarizeBlockers(output) {
       line.includes('GITHUB_OAUTH_ID is missing') ||
       line.includes('GITHUB_OAUTH_SECRET is missing') ||
       line.includes('x-render-routing: no-server') ||
+      line.includes('is not attached to a Render service yet') ||
       line.includes('CMS login/save dry run:') ||
       line.includes('Preview-only review:')
     ) {

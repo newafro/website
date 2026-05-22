@@ -11,6 +11,7 @@ const LOGIN_URL = 'https://login.newafro.com';
 const OAUTH_HOST = 'decap-oauth.newafro.com';
 const OAUTH_URL = `https://${OAUTH_HOST}`;
 const OAUTH_CALLBACK_URL = `${OAUTH_URL}/callback?provider=github`;
+const RENDER_SERVICE_URL = process.env.RENDER_SERVICE_URL || 'https://newafro-decap-oauth.onrender.com';
 const OAUTH_REPO = 'newafro/decap-oauth';
 const OAUTH_OPERATOR_WORKFLOW_URL = 'https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml';
 const FIRST_DESIGNER_WORKFLOW_URL = 'https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml';
@@ -157,6 +158,7 @@ async function fetchText(url, options = {}) {
   try {
     const response = await fetch(url, {
       redirect: options.redirect || 'follow',
+      method: options.method || 'GET',
       signal: controller.signal,
       headers: {
         'User-Agent': 'newafro-first-designer-readiness',
@@ -409,6 +411,34 @@ async function checkOauthProxy({ dnsReady }) {
   return cmsFailures.length === failureCountAtStart;
 }
 
+async function checkRenderServiceProbe({ oauthProxyReady }) {
+  if (oauthProxyReady) {
+    pass('OAuth custom domain proves the Render-backed proxy is reachable');
+    return;
+  }
+
+  console.log(`Render service probe: ${RENDER_SERVICE_URL}`);
+  try {
+    const { response } = await fetchText(RENDER_SERVICE_URL, {
+      method: 'HEAD',
+      redirect: 'manual',
+    });
+    const renderRouting = response.headers.get('x-render-routing') || '';
+    console.log(`${response.status} ${RENDER_SERVICE_URL}`);
+    if (renderRouting) console.log(`x-render-routing: ${renderRouting}`);
+
+    if (response.status === 404 && renderRouting === 'no-server') {
+      failCms(`${RENDER_SERVICE_URL} is not attached to a Render service yet`);
+    } else if (response.ok) {
+      warnCms(`${RENDER_SERVICE_URL} responds, but the OAuth custom domain still needs DNS and live OAuth verification`);
+    } else {
+      warnCms(`${RENDER_SERVICE_URL} returned HTTP ${response.status}; confirm the Render service and custom-domain attachment`);
+    }
+  } catch (error) {
+    warnCms(`Render service probe failed for ${RENDER_SERVICE_URL}: ${error.message || error}`);
+  }
+}
+
 console.log(PREVIEW_REVIEW_ONLY ? 'New Afro preview review readiness' : 'New Afro CMS onboarding readiness');
 
 section('Preview-Only Review');
@@ -427,6 +457,7 @@ await checkLiveCmsConfig();
 section('CMS Login And Save Dry Run');
 const oauthDnsReady = await checkDns(OAUTH_HOST, { cmsRequired: true });
 const oauthProxyReady = await checkOauthProxy({ dnsReady: oauthDnsReady });
+await checkRenderServiceProbe({ oauthProxyReady });
 await checkOauthSecrets({ blockOnMissing: !oauthProxyReady });
 
 section('Summary');
