@@ -14,6 +14,7 @@ const OAUTH_SETUP_STATUS_URL = `https://github.com/${OAUTH_REPO}/actions/workflo
 const OAUTH_LIVE_READINESS_URL = `https://github.com/${OAUTH_REPO}/actions/workflows/live-readiness.yml`;
 const OAUTH_OPERATOR_PREFLIGHT_URL = `https://github.com/${OAUTH_REPO}/actions/workflows/operator-access.yml`;
 const OAUTH_RUNBOOK_URL = `https://github.com/${OAUTH_REPO}/blob/main/docs/render-namecheap-runbook.md`;
+const OAUTH_QUICKSTART_DOC = 'docs/operations/oauth-operator-quickstart.md';
 
 const checks = [
   {
@@ -158,6 +159,7 @@ function writeStepSummary(results, previewReady, cmsReady) {
     summary.push(
       '## OAuth Operator Links',
       '',
+      `- Website quickstart: ${OAUTH_QUICKSTART_DOC}`,
       `- GitHub OAuth app setup: ${GITHUB_OAUTH_APP_URL}`,
       `- OAuth repo secrets: ${OAUTH_SECRETS_URL}`,
       `- Render deploy from repo: ${RENDER_DEPLOY_URL}`,
@@ -214,6 +216,7 @@ if (previewReady && !cmsReady) {
   console.log('5. Rerun npm run status:release.');
   console.log('');
   console.log('Operator links:');
+  console.log(`- Website quickstart: ${OAUTH_QUICKSTART_DOC}`);
   console.log(`- OAuth setup status: ${OAUTH_SETUP_STATUS_URL}`);
   console.log(`- OAuth live readiness: ${OAUTH_LIVE_READINESS_URL}`);
   console.log(`- OAuth operator preflight: ${OAUTH_OPERATOR_PREFLIGHT_URL}`);
