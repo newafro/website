@@ -75,6 +75,16 @@ Finish the OAuth proxy setup in `newafro/decap-oauth`:
 https://github.com/newafro/decap-oauth/issues/1
 ```
 
+Direct operator links:
+
+```text
+GitHub OAuth app: https://github.com/settings/applications/new
+OAuth repo secrets: https://github.com/newafro/decap-oauth/settings/secrets/actions
+Render deploy: https://render.com/deploy?repo=https://github.com/newafro/decap-oauth
+Deploy-config preflight: https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
+Render/Namecheap runbook: https://github.com/newafro/decap-oauth/blob/main/docs/render-namecheap-runbook.md
+```
+
 Preferred guided command from the OAuth repo:
 
 ```bash
