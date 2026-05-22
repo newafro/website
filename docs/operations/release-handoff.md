@@ -141,11 +141,18 @@ Both should pass before attempting the first real CMS login/save test.
 Run these checks from the website repo:
 
 ```bash
+npm run status:release
 ./scripts/check-pages-readiness.sh
 npm run check:preview-release
 npm run check:cms-readiness
 npm run smoke:public
 ```
+
+`npm run status:release` is the quickest whole-handoff status command. Before
+OAuth is live, it should say `Preview/design review: READY` and
+`CMS login/save: BLOCKED`. After OAuth is live, rerun it with
+`STRICT_RELEASE=1 npm run status:release` before moving this staging candidate
+out of draft.
 
 Run this from the OAuth repo:
 

@@ -141,6 +141,7 @@ live OAuth readiness, and `npm run check:cms-readiness` pass.
 From the website repo:
 
 ```bash
+npm run status:release
 npm run check:preview-review
 npm run check:first-designer
 npm run check:content-assets
@@ -149,6 +150,14 @@ npm run check:preview-release
 npm run check:cms-readiness
 npm run smoke:public
 ```
+
+`npm run status:release` is the best one-command handoff view. It runs the
+preview release marker, preview-only designer gate, browser smoke, public CMS
+readiness, and first-designer gate. It exits green when preview/design review is
+ready, while still printing `CMS login/save: BLOCKED` until the OAuth proxy,
+repo secrets, and Render custom domain are finished. Use
+`STRICT_RELEASE=1 npm run status:release` when the command should fail unless
+CMS login/save is also ready.
 
 `npm run check:preview-review` is the best first command before the visual
 review. It checks the same preview, login, asset, CMS config, and GitHub Pages

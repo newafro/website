@@ -83,6 +83,16 @@ about.
 If live OAuth readiness or website public CMS readiness is red, keep the
 designer in preview-only review mode.
 
+For a single terminal status before inviting the designer, run:
+
+```bash
+npm run status:release
+```
+
+It should say `Preview/design review: READY`. If it also says
+`CMS login/save: BLOCKED`, use Session 1 only and do not ask the designer to
+log in yet.
+
 ## Session 1: Preview Review
 
 Goal: collect useful design and content feedback without asking the designer to

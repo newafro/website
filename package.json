@@ -16,6 +16,7 @@
     "check:pages-readiness": "./scripts/check-pages-readiness.sh",
     "check:preview-review": "PREVIEW_REVIEW_ONLY=1 node scripts/check-first-designer-readiness.mjs",
     "check:first-designer": "node scripts/check-first-designer-readiness.mjs",
+    "status:release": "node scripts/print-release-status.mjs",
     "smoke:public": "node scripts/smoke-public-browser.mjs",
     "astro": "astro"
   },
