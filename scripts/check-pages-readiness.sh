@@ -29,6 +29,33 @@ After adding OAuth repo secrets and DNS, run the OAuth operator preflight:
 EOF
 }
 
+check_public_route() {
+  local label="$1"
+  local url="$2"
+  local expected_text="$3"
+  local body
+
+  echo "== $label =="
+  echo "URL:"
+  echo "  $url"
+
+  if ! body="$(curl -fsSL --max-time 15 "$url")"; then
+    echo "  status: blocked, route did not return HTTP 200"
+    readiness_failed=1
+    echo
+    return
+  fi
+
+  if grep -Fq "$expected_text" <<<"$body"; then
+    echo "  status: reachable"
+  else
+    echo "  status: blocked, expected text not found: $expected_text"
+    readiness_failed=1
+  fi
+
+  echo
+}
+
 echo "New Afro Pages readiness"
 echo
 
@@ -78,6 +105,10 @@ else
   readiness_failed=1
 fi
 echo
+
+check_public_route "preview CMS route" "https://preview.newafro.com/admin/" "New Afro Studio"
+check_public_route "friendly login root" "https://login.newafro.com/" "https://preview.newafro.com/admin/"
+check_public_route "friendly login admin path" "https://login.newafro.com/admin/" "https://preview.newafro.com/admin/"
 
 echo "== $oauth_repo GitHub Actions secrets =="
 if oauth_secret_names="$(gh secret list --repo "$oauth_repo" --json name --jq '.[].name' 2>/dev/null)"; then

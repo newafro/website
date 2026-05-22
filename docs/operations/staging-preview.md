@@ -178,9 +178,10 @@ approved the certificates, run:
 The script exits non-zero until the full editor path is ready. It checks the
 preview/login Pages certificates, HTTPS enforcement, whether
 `preview.newafro.com/release.json` matches the current `staging` branch, the
-OAuth repo secret names, and the OAuth proxy DNS/HTTP endpoints. That is
-expected to fail while `decap-oauth.newafro.com` is not deployed yet or the
-OAuth repo secrets are missing.
+preview CMS route, both friendly login entry points, the OAuth repo secret
+names, and the OAuth proxy DNS/HTTP endpoints. That is expected to fail while
+`decap-oauth.newafro.com` is not deployed yet or the OAuth repo secrets are
+missing.
 
 For a public check that can run without GitHub admin credentials, use:
 
