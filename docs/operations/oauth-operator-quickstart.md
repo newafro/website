@@ -70,6 +70,18 @@ Health check: /healthz
 Node: 20
 ```
 
+When Render asks for environment variables, set:
+
+```text
+GITHUB_OAUTH_ID=[from GitHub OAuth app]
+GITHUB_OAUTH_SECRET=[from GitHub OAuth app]
+PUBLIC_URL=https://decap-oauth.newafro.com
+GITHUB_REPO_PRIVATE=0
+```
+
+These are Render service environment variables. They are separate from the
+GitHub Actions repository secrets above, even when the values are the same.
+
 Copy Render's exact custom-domain DNS target for
 `decap-oauth.newafro.com`. Do not guess it.
 
