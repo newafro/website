@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const execFileAsync = promisify(execFile);
 
 const previewUrl = (process.env.PREVIEW_URL || 'https://preview.newafro.com').replace(/\/$/, '');
 const websiteRepo = process.env.WEBSITE_REPO || 'newafro/website';
@@ -30,8 +34,8 @@ async function fetchText(url, options = {}) {
       signal: controller.signal,
       headers: {
         'User-Agent': 'newafro-preview-release-check',
-        ...(process.env.GITHUB_TOKEN && url.startsWith('https://api.github.com/')
-          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+        ...((process.env.GITHUB_TOKEN || process.env.GH_TOKEN) && url.startsWith('https://api.github.com/')
+          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN || process.env.GH_TOKEN}` }
           : {}),
         ...(options.headers || {}),
       },
@@ -41,6 +45,20 @@ async function fetchText(url, options = {}) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+async function readExpectedShaWithGh() {
+  const result = await execFileAsync('gh', ['api', `repos/${websiteRepo}/git/ref/heads/${expectedBranch}`], {
+    timeout: timeoutMs,
+    maxBuffer: 1024 * 1024,
+  });
+
+  const payload = JSON.parse(result.stdout || '{}');
+  const sha = payload?.object?.sha;
+  if (!sha) {
+    throw new Error(`gh api response for ${websiteRepo}@${expectedBranch} did not include object.sha`);
+  }
+  return sha;
 }
 
 async function fetchJson(url, options = {}) {
@@ -58,6 +76,12 @@ async function fetchJson(url, options = {}) {
 
 async function readExpectedSha() {
   if (expectedShaOverride) return expectedShaOverride;
+
+  try {
+    return await readExpectedShaWithGh();
+  } catch (error) {
+    console.log(`gh api fallback unavailable: ${error.message || error}`);
+  }
 
   const apiUrl = `https://api.github.com/repos/${websiteRepo}/git/ref/heads/${expectedBranch}`;
   const payload = await fetchJson(apiUrl, {
