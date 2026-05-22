@@ -40,10 +40,14 @@ The no-local-secrets OAuth preflight is:
 Use it with the exact Render custom-domain DNS target before changing
 Namecheap.
 
-After the GitHub OAuth secrets and Namecheap DNS are added, run the operator
-access preflight from GitHub:
+After the GitHub OAuth secrets and Namecheap DNS are added, run live OAuth
+readiness and the operator access preflight from GitHub:
+
+`https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
+
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
-It should pass before scheduling the designer CMS login/save dry run.
+
+Both should pass before scheduling the designer CMS login/save dry run.
 
 The first designer dry run is tracked in
 `https://github.com/newafro/website/issues/2`.
@@ -51,6 +55,12 @@ The first designer dry run is tracked in
 The designer onboarding is blocked until the OAuth proxy is live. The visible
 preview and login pages can be reviewed before then, but GitHub login cannot be
 completed without `decap-oauth.newafro.com`.
+
+Practical split for the first session:
+
+- Start preview-only review now if the designer is ready.
+- Wait for CMS login/save until OAuth live readiness and operator preflight are
+  both green.
 
 Current state on 2026-05-22: `preview.newafro.com` and `login.newafro.com`
 load over HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the

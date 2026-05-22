@@ -22,9 +22,10 @@ first-designer readiness workflow should report that visual review is ready
 while CMS saving is blocked:
 `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 
-The OAuth repo validates at `d8c841f`, but the latest OAuth operator preflight
-still fails because `decap-oauth.newafro.com` has no DNS result and the OAuth
-repo does not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets:
+The OAuth repo validates at `4441300`, but the OAuth live-readiness and
+operator preflight still fail because `decap-oauth.newafro.com` has no DNS
+result and the OAuth repo does not yet have `GITHUB_OAUTH_ID` /
+`GITHUB_OAUTH_SECRET` secrets:
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Track A: Designer Review Can Start Now
@@ -96,14 +97,15 @@ exposing the OAuth secret. Read the workflow summary before changing
 Namecheap; it repeats the GitHub OAuth callback and the exact CNAME record
 generated from the Render target.
 
-After the OAuth repo secrets and Namecheap DNS are in place, run the operator
-access preflight from GitHub:
+After the OAuth repo secrets and Namecheap DNS are in place, run the live OAuth
+readiness and operator access preflight from GitHub:
 
 ```text
+https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml
 https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 ```
 
-It should pass before attempting the first real CMS login/save test.
+Both should pass before attempting the first real CMS login/save test.
 
 ## After DNS Is Added
 

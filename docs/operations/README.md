@@ -32,9 +32,11 @@ Readiness evidence to check before onboarding:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.
-- `newafro/decap-oauth` validates at commit `d8c841f`.
+- `newafro/decap-oauth` validates at commit `4441300`.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
+- The live OAuth readiness monitor is pinned to Node 20 and runs from:
+  `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
 - The OAuth operator preflight still fails on the external setup: missing
   `decap-oauth.newafro.com` DNS and missing OAuth repo secrets:
   `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
@@ -83,8 +85,9 @@ run:
 https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 ```
 
-Only start the first real CMS save test after that operator preflight and
-`npm run check:cms-readiness` pass.
+The first designer can start [Preview-only review](preview-only-review.md)
+now. Only start the first real CMS save test after that operator preflight,
+live OAuth readiness, and `npm run check:cms-readiness` pass.
 
 ## Verification Commands
 
@@ -142,4 +145,10 @@ From the OAuth repo:
 
 ```bash
 npm run check:live
+```
+
+Or from GitHub Actions:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml
 ```
