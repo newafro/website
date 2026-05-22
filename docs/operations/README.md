@@ -32,7 +32,7 @@ Readiness evidence to check before onboarding:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.
-- `newafro/decap-oauth` validates at commit `4ec4369`.
+- `newafro/decap-oauth` validates at commit `7c860ae`.
 - The deploy-config preflight now writes a GitHub Actions job summary with the
   exact OAuth callback and Namecheap CNAME generated from the Render target.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
