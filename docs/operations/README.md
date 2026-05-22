@@ -67,6 +67,9 @@ Readiness evidence to check before onboarding:
   send to the first designer now.
 - [Preview-only review](preview-only-review.md): use this now with the designer
   before CMS login is ready.
+- [OAuth operator quickstart](oauth-operator-quickstart.md): the short
+  copy-paste checklist for the person finishing Render, Namecheap, and OAuth
+  secrets.
 - [First designer test](first-designer-test.md): use this after OAuth passes,
   to prove login and one safe draft save.
 - [Designer handover](designer-handover.md): explains the Figma, CMS, preview,
@@ -84,6 +87,12 @@ Finish the OAuth proxy setup in `newafro/decap-oauth`:
 
 ```text
 https://github.com/newafro/decap-oauth/issues/1
+```
+
+Use the short local checklist first:
+
+```text
+docs/operations/oauth-operator-quickstart.md
 ```
 
 Direct operator links:
