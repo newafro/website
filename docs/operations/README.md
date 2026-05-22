@@ -24,7 +24,7 @@ Readiness evidence to check before onboarding:
 - `preview.newafro.com/release.json` must match the current `staging` branch.
 - The first-designer readiness workflow should report
   `Preview-only review: READY` and `CMS login/save dry run: BLOCKED` until the
-  OAuth proxy is live:
+  OAuth proxy is live. It runs daily after the public CMS readiness monitor:
   `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 - The public CMS readiness workflow should pass preview, login, CMS config, and
   release-marker checks, then block only on OAuth DNS until the OAuth proxy is

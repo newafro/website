@@ -114,6 +114,9 @@ https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
 https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
 ```
 
+The first-designer readiness workflow also runs daily, so this status should
+refresh automatically after the operator finishes the OAuth setup.
+
 Then run this short CMS test:
 
 1. Open `https://login.newafro.com`.
