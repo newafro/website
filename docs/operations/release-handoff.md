@@ -16,16 +16,16 @@ CMS login:  https://login.newafro.com
 The CMS screen loads, but saving content is blocked until the OAuth proxy DNS is
 live.
 
-Current evidence, checked on 2026-05-22 in Berlin: the preview release marker
-matches `staging`, browser smoke passes for preview/admin/login, and the
-first-designer readiness workflow reports that visual review is ready while CMS
-saving is blocked:
-`https://github.com/newafro/website/actions/runs/26259933522`.
+Current evidence to verify before onboarding: the preview release marker must
+match `staging`, browser smoke must pass for preview/admin/login, and the
+first-designer readiness workflow should report that visual review is ready
+while CMS saving is blocked:
+`https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 
 The OAuth repo validates at `d8c841f`, but the latest OAuth operator preflight
 still fails because `decap-oauth.newafro.com` has no DNS result and the OAuth
 repo does not yet have `GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` secrets:
-`https://github.com/newafro/decap-oauth/actions/runs/26259933488`.
+`https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Track A: Designer Review Can Start Now
 

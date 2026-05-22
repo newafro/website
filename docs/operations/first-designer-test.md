@@ -59,19 +59,21 @@ screen. The remaining blocker is `decap-oauth.newafro.com`, which still needs
 the Render custom-domain CNAME in Namecheap before the designer can sign in or
 save CMS changes.
 
-Latest first-designer readiness workflow:
-`https://github.com/newafro/website/actions/runs/26259933522`. It checks
-`staging`, reports `Preview-only review: READY`, and keeps CMS login/save
-blocked until OAuth is live.
+First-designer readiness workflow:
+`https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
+Use the latest run summary. It checks `staging`, should report
+`Preview-only review: READY`, and should keep CMS login/save blocked until
+OAuth is live.
 
-Latest OAuth operator preflight:
-`https://github.com/newafro/decap-oauth/actions/runs/26259933488`. It should
-be red until the DNS record and OAuth repo secrets are added; its GitHub job
-summary now lists the missing setup items without exposing secrets.
+OAuth operator preflight:
+`https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
+Use the latest run summary. It should be red until the DNS record and OAuth
+repo secrets are added; its GitHub job summary lists the missing setup items
+without exposing secrets.
 
-Latest OAuth deploy-config validation:
-`https://github.com/newafro/decap-oauth/actions/runs/26259390950`. The
-deploy-config workflow summary should be read before changing Namecheap,
+OAuth deploy-config validation:
+`https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml`.
+The deploy-config workflow summary should be read before changing Namecheap,
 because it repeats the exact OAuth callback and `decap-oauth` CNAME generated
 from the Render target.
 

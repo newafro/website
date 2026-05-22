@@ -19,16 +19,17 @@ OAuth:      https://decap-oauth.newafro.com
 - `decap-oauth.newafro.com` still needs the Render custom-domain CNAME in
   Namecheap before GitHub CMS login and saving can work.
 
-Latest readiness evidence, checked on 2026-05-22 in Berlin:
+Readiness evidence to check before onboarding:
 
-- `preview.newafro.com/release.json` matches the current `staging` branch when
-  the readiness gates run.
-- The first-designer readiness workflow runs against `staging` and currently
-  reports `Preview-only review: READY` / `CMS login/save dry run: BLOCKED`:
-  `https://github.com/newafro/website/actions/runs/26259933522`.
-- The public CMS readiness workflow currently passes preview, login, CMS
-  config, and release-marker checks, then blocks on OAuth DNS:
-  `https://github.com/newafro/website/actions/runs/26259933520`.
+- `preview.newafro.com/release.json` must match the current `staging` branch.
+- The first-designer readiness workflow should report
+  `Preview-only review: READY` and `CMS login/save dry run: BLOCKED` until the
+  OAuth proxy is live:
+  `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
+- The public CMS readiness workflow should pass preview, login, CMS config, and
+  release-marker checks, then block only on OAuth DNS until the OAuth proxy is
+  live:
+  `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.
 - `newafro/decap-oauth` validates at commit `d8c841f`.
@@ -36,7 +37,7 @@ Latest readiness evidence, checked on 2026-05-22 in Berlin:
   exact OAuth callback and Namecheap CNAME generated from the Render target.
 - The OAuth operator preflight still fails on the external setup: missing
   `decap-oauth.newafro.com` DNS and missing OAuth repo secrets:
-  `https://github.com/newafro/decap-oauth/actions/runs/26259933488`.
+  `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Use The Right Checklist
 
