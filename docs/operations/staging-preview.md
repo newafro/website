@@ -188,8 +188,8 @@ preview/login Pages certificates, HTTPS enforcement, whether
 `preview.newafro.com/release.json` matches the current `staging` branch, the
 preview CMS route, both friendly login entry points, the OAuth repo secret
 names, and the OAuth proxy DNS/HTTP endpoints. That is expected to fail while
-`decap-oauth.newafro.com` is not deployed yet or the OAuth repo secrets are
-missing.
+`decap-oauth.newafro.com` DNS is missing, the Render service is not attached, or
+the OAuth repo secrets are missing.
 
 For a public check that can run without GitHub admin credentials, use:
 
@@ -221,8 +221,8 @@ https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
 
 That `Public CMS Readiness` workflow runs manually and daily. It verifies the
 public preview, friendly login URL, CMS config, and OAuth proxy endpoints. It
-is expected to fail until `decap-oauth.newafro.com` is deployed and DNS is
-added.
+is expected to fail until `decap-oauth.newafro.com` is deployed, attached in
+Render, and published in DNS.
 
 ## Release Flow
 

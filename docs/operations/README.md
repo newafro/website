@@ -16,7 +16,8 @@ OAuth:      https://decap-oauth.newafro.com
 - `newafro.com`, `preview.newafro.com`, and `login.newafro.com` are on GitHub
   Pages with approved HTTPS certificates and HTTPS enforcement.
 - `login.newafro.com` and `login.newafro.com/admin/` open the preview CMS route.
-- `decap-oauth.newafro.com` still needs the Render custom-domain CNAME in
+- `decap-oauth.newafro.com` still needs the Render service attached, OAuth
+  repository secrets added, and the Render custom-domain CNAME published in
   Namecheap before GitHub CMS login and saving can work.
 
 Readiness evidence to check before onboarding:
@@ -32,8 +33,8 @@ Readiness evidence to check before onboarding:
   stability:
   `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 - The public CMS readiness workflow should pass preview, login, CMS config, and
-  release-marker checks, then block only on OAuth DNS until the OAuth proxy is
-  live:
+  release-marker checks, then block on OAuth DNS, Render service attachment, or
+  OAuth secrets until the OAuth proxy is live:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.

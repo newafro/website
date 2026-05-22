@@ -13,8 +13,9 @@ CMS login:  https://login.newafro.com
 
 `preview.newafro.com` and `login.newafro.com` are live over HTTPS. Both
 `login.newafro.com/` and `login.newafro.com/admin/` open the preview CMS route.
-The CMS screen loads, but saving content is blocked until the OAuth proxy DNS is
-live.
+The CMS screen loads, but saving content is blocked until the OAuth proxy is
+deployed on Render, its GitHub OAuth secrets exist, and
+`decap-oauth.newafro.com` DNS is live.
 
 Current evidence to verify before onboarding: the preview release marker must
 match `staging`, browser smoke must pass for preview/admin/login, and the

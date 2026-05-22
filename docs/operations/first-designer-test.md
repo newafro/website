@@ -75,8 +75,9 @@ Current public state: `preview.newafro.com` and `login.newafro.com` load over
 HTTPS, `login.newafro.com/admin/` is a valid editor entry point, the public
 browser smoke check passes, and the CMS shows a clear pending-login screen. The
 remaining blocker is `decap-oauth.newafro.com`, which still needs the Render
-Blueprint deployment, OAuth repo secrets, and custom-domain CNAME in Namecheap before the
-designer can sign in or save CMS changes.
+Blueprint deployment, Render service attachment, OAuth repo secrets, and
+custom-domain CNAME in Namecheap before the designer can sign in or save CMS
+changes.
 
 First-designer readiness workflow:
 `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
@@ -86,9 +87,9 @@ OAuth is live.
 
 OAuth operator preflight:
 `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
-Use the latest run summary. It should be red until the DNS record and OAuth
-repo secrets are added; its GitHub job summary lists the missing setup items
-without exposing secrets.
+Use the latest run summary. It should be red until the DNS record, Render
+service attachment, and OAuth repo secrets are added; its GitHub job summary
+lists the missing setup items without exposing secrets.
 
 OAuth deploy-config validation:
 `https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml`.
@@ -132,9 +133,10 @@ If it says `Preview-only review: READY` and `CMS login/save dry run: BLOCKED`,
 start only the preview review flow. Start this CMS save test only when it says
 `CMS login/save dry run: READY`.
 
-If that check reports `decap-oauth.newafro.com has no public DNS result`, the
-designer should wait. Fix the Namecheap/Render custom domain first; the CMS can
-load without it, but GitHub login and saving content cannot work.
+If that check reports `decap-oauth.newafro.com has no public DNS result` or
+Render `x-render-routing: no-server`, the designer should wait. Fix the
+Namecheap/Render custom domain first; the CMS can load without it, but GitHub
+login and saving content cannot work.
 
 Run the browser smoke check as well from the website repo:
 
