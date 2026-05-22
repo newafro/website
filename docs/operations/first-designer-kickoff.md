@@ -6,7 +6,8 @@ before.
 
 ## Current Status
 
-The designer can start visual review now:
+The designer can start visual review now. This is the right first session
+while login/save is still being finished:
 
 ```text
 Preview site: https://preview.newafro.com
@@ -19,6 +20,9 @@ OAuth proxy is live:
 ```text
 OAuth proxy: https://decap-oauth.newafro.com
 ```
+
+Do not ask the designer to test GitHub login or save content until the
+first-designer readiness workflow says `CMS login/save dry run: READY`.
 
 ## Send This To The Designer
 
@@ -49,6 +53,24 @@ Fix before launch: [number]
 Missing asset: [number]
 Approved pages: [page names]
 ```
+
+## Operator Gate Before CMS Testing
+
+CMS testing starts only when all of this is true:
+
+- `decap-oauth.newafro.com` resolves publicly.
+- `newafro/decap-oauth` has `GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET`
+  repository secrets.
+- The Render OAuth service is deployed and attached to
+  `decap-oauth.newafro.com`.
+- OAuth live readiness passes:
+  `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
+- OAuth operator preflight passes:
+  `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
+- Website public CMS readiness passes:
+  `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
+
+If any item is red, keep the designer in preview-only review mode.
 
 ## Session 1: Preview Review
 

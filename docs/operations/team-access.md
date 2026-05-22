@@ -4,13 +4,17 @@ Gus, Maria, Cheria, and Ken should be able to update the website through the CMS
 
 ## Access Model
 
-There are two team-facing entry points today:
+There are two team-facing entry points during staging:
 
 ```text
-CMS editing:      https://login.newafro.com
-Preview review:   WhatsApp group + https://preview.newafro.com
-Production site:  https://newafro.com
+Preview review now:             https://preview.newafro.com
+CMS editing after OAuth is live: https://login.newafro.com
+Production site:                 https://newafro.com
 ```
+
+Until OAuth readiness is green, `login.newafro.com` can show the CMS screen but
+cannot complete GitHub login or save changes. That is expected; do preview
+review first and CMS editing second.
 
 After the staged CMS/login routes are promoted to production,
 `https://newafro.com/login/` can be used as a production-domain fallback. Do
@@ -49,6 +53,9 @@ The CMS uses GitHub login through the Decap OAuth proxy. Each person needs:
 4. A successful login test at `https://login.newafro.com`.
 
 Editors do not need direct write access to `newafro/website-preview`; the preview deploy token handles that.
+
+Do not invite the full team to CMS editing until the first designer has passed
+one safe draft save. Use preview-only review for everyone before that point.
 
 ## WhatsApp Setup
 
