@@ -188,6 +188,13 @@ https://github.com/newafro/website/actions/workflows/first-designer-readiness.ym
 That workflow writes a GitHub job summary with the two decisions that matter:
 whether preview-only review is ready and whether CMS login/save is ready.
 
+The website workflows use `secrets.NEWAFRO_OPERATOR_TOKEN` when present and
+fall back to the default `github.token`. The default token cannot inspect
+secrets in `newafro/decap-oauth`, so the website workflow may print a warning
+that OAuth secrets could not be listed. Treat that as a monitoring-access
+warning, not a designer-facing blocker. The authoritative OAuth secret check is
+the `newafro/decap-oauth` operator preflight.
+
 `npm run check:content-assets` scans the Astro, CMS, and content files for
 `/uploads/...` references and fails when a referenced file is missing from
 `public/uploads`.

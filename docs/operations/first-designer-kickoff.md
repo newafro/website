@@ -84,6 +84,11 @@ the live OAuth proxy is proven healthy, missing repository secrets should be
 treated as a monitoring warning, not as something the designer has to care
 about.
 
+If a website readiness workflow says it could not list `newafro/decap-oauth`
+secrets, that means the website workflow token does not have cross-repo secret
+inspection access. Use the OAuth operator preflight as the source of truth for
+OAuth secrets. Do not ask the designer to troubleshoot that warning.
+
 If live OAuth readiness or website public CMS readiness is red, keep the
 designer in preview-only review mode.
 
