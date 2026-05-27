@@ -15,7 +15,7 @@ publish_mode: editorial_workflow
 
 site_url: https://preview.newafro.com
 display_url: https://preview.newafro.com
-logo_url: https://preview.newafro.com/favicon.svg
+logo_url: https://preview.newafro.com/apple-touch-icon.png?v=20260527
 
 collections:
   - name: "blog"
