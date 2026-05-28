@@ -1,8 +1,8 @@
 # New Afro Operations Index
 
 Start here when handing the site to a designer, operator, or implementation
-agent. The preview site is ready for visual review; CMS saving is still blocked
-until the Decap OAuth proxy is deployed and DNS is published.
+agent. The production site, preview site, CMS login, and Decap OAuth proxy are
+live.
 
 ## Current Status
 
@@ -16,25 +16,25 @@ OAuth:      https://decap-oauth.newafro.com
 - `newafro.com`, `preview.newafro.com`, and `login.newafro.com` are on GitHub
   Pages with approved HTTPS certificates and HTTPS enforcement.
 - `login.newafro.com` and `login.newafro.com/admin/` open the preview CMS route.
-- `decap-oauth.newafro.com` still needs the Render service attached, OAuth
-  repository secrets added, and the Render custom-domain CNAME published in
-  Namecheap before GitHub CMS login and saving can work.
+- `decap-oauth.newafro.com` is deployed on Render, has a Namecheap CNAME, and
+  passes `/healthz` and GitHub OAuth redirect checks.
+- CMS login/save is ready for GitHub users with write access to
+  `newafro/website`.
 
 Readiness evidence to check before onboarding:
 
 - `preview.newafro.com/release.json` must match the current `staging` branch.
 - The preview-review readiness workflow should pass when the designer can start
-  visual review even if CMS saving is still blocked:
+  visual review before or alongside CMS editing:
   `https://github.com/newafro/website/actions/workflows/preview-review-readiness.yml`.
 - The stricter CMS Onboarding Readiness workflow should report
-  `Preview-only review: READY` and `CMS login/save dry run: BLOCKED` until the
-  OAuth proxy is live. It runs daily after the public CMS readiness monitor.
+  `Preview-only review: READY` and `CMS login/save dry run: READY`. It runs
+  daily after the public CMS readiness monitor.
   The workflow file is still named `first-designer-readiness.yml` for link
   stability:
   `https://github.com/newafro/website/actions/workflows/first-designer-readiness.yml`.
 - The public CMS readiness workflow should pass preview, login, CMS config, and
-  release-marker checks, then block on OAuth DNS, Render service attachment, or
-  OAuth secrets until the OAuth proxy is live:
+  release-marker checks, plus the OAuth DNS/HTTP path:
   `https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml`.
 - The friendly login redirect repo is deployed at commit `9fd5134`, so both
   `/` and `/admin/` are valid entry points for non-technical editors.
@@ -54,10 +54,8 @@ Readiness evidence to check before onboarding:
   unsigned-in 1Password CLI is reported as a warning instead of a false pass.
 - The live OAuth readiness monitor is pinned to Node 20 and runs from:
   `https://github.com/newafro/decap-oauth/actions/workflows/live-readiness.yml`.
-- The OAuth operator preflight runs daily after the live readiness monitor and
-  still fails on the external setup: missing `decap-oauth.newafro.com` DNS,
-  missing OAuth repo secrets, and Render reporting `x-render-routing:
-  no-server` on the likely default service URL:
+- The OAuth operator preflight runs daily after the live readiness monitor. Use
+  it as the deeper infrastructure monitor for OAuth secrets and Render/DNS:
   `https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml`.
 
 ## Use The Right Checklist
@@ -75,6 +73,10 @@ Readiness evidence to check before onboarding:
   to prove login and one safe draft save.
 - [Designer handover](designer-handover.md): explains the Figma, CMS, preview,
   and production approval workflow.
+- [Design system](../design-system.md): maps Figma components to Astro files,
+  CMS fields, tokens, and review constraints.
+- [Figma to preview workflow](../figma-to-preview-workflow.md): the process for
+  turning a Figma request into a staged preview and approved production release.
 - [Staging preview](staging-preview.md): technical setup for preview, login,
   OAuth, DNS, and release flow.
 - [Team access](team-access.md): access checklist for Gus, Maria, Cheria, Ken,
@@ -84,71 +86,20 @@ Readiness evidence to check before onboarding:
 
 ## Next Operator Step
 
-Finish the OAuth proxy setup in `newafro/decap-oauth`:
+Onboard people in this order:
 
-```text
-https://github.com/newafro/decap-oauth/issues/1
-```
+1. Add the person's GitHub username with write access to `newafro/website`.
+2. Ask them to accept the GitHub invitation.
+3. Ask them to log in at `https://login.newafro.com`.
+4. Ask them to create one harmless draft.
+5. Confirm the draft appears in the CMS and on preview where expected.
 
-Use the short local checklist first:
+The first designer can use [First designer test](first-designer-test.md) for
+the CMS dry run and [Designer handover](designer-handover.md) for the daily
+workflow.
 
-```text
-docs/operations/oauth-operator-quickstart.md
-```
-
-Direct operator links:
-
-```text
-GitHub OAuth app: https://github.com/settings/applications/new
-OAuth repo secrets: https://github.com/newafro/decap-oauth/settings/secrets/actions
-Render deploy: https://render.com/deploy?repo=https://github.com/newafro/decap-oauth
-OAuth setup status: https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
-Deploy-config preflight: https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
-Render/Namecheap runbook: https://github.com/newafro/decap-oauth/blob/main/docs/render-namecheap-runbook.md
-```
-
-Preferred guided command from the OAuth repo:
-
-```bash
-GITHUB_OAUTH_ID=[from GitHub OAuth app] \
-GITHUB_OAUTH_SECRET=[from GitHub OAuth app] \
-npm run setup:operator
-```
-
-After Render shows the custom-domain DNS target, rerun:
-
-```bash
-npm run check:render-blueprint
-RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
-```
-
-This creates or reads the exact `New Afro Decap OAuth` 1Password item, syncs
-the OAuth repo GitHub Actions secrets, and validates the Render/Namecheap
-target when the target is available. It does not deploy Render or edit
-Namecheap DNS.
-
-If OAuth secrets should stay out of local shells, add `GITHUB_OAUTH_ID` and
-`GITHUB_OAUTH_SECRET` as GitHub Actions secrets in `newafro/decap-oauth`, then
-run the deploy-config preflight with the exact Render custom-domain DNS target:
-
-```text
-https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
-```
-
-Read the workflow summary before changing Namecheap. It repeats the GitHub
-OAuth callback and the exact `decap-oauth` CNAME value without printing OAuth
-secret values.
-
-After the Namecheap `decap-oauth` CNAME and OAuth repo secrets are in place,
-run:
-
-```text
-https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
-```
-
-The first designer can start [Preview-only review](preview-only-review.md)
-now. Only start the first real CMS save test after that operator preflight,
-live OAuth readiness, and `npm run check:cms-readiness` pass.
+For Figma-led design changes, use [../design-system.md](../design-system.md)
+and [../figma-to-preview-workflow.md](../figma-to-preview-workflow.md).
 
 ## Verification Commands
 
@@ -167,20 +118,17 @@ npm run smoke:public
 
 `npm run status:release` is the best one-command handoff view. It runs the
 preview release marker, preview-only designer gate, browser smoke, public CMS
-readiness, and CMS onboarding login/save gate. It exits green when
-preview/design review is ready, while still printing `CMS login/save: BLOCKED`
-until the OAuth proxy, repo secrets, and Render custom domain are finished. Use
-`STRICT_RELEASE=1 npm run status:release` when the command should fail unless
-CMS login/save is also ready.
+readiness, and CMS onboarding login/save gate. It should exit green before
+team onboarding. Use `STRICT_RELEASE=1 npm run status:release` when the command
+should fail unless CMS login/save is also ready.
 
 `npm run check:preview-review` is the best first command before the visual
 review. It checks the same preview, login, asset, CMS config, and GitHub Pages
-evidence, but exits green when preview-only review is ready even if the OAuth
-proxy is still blocking CMS save.
+evidence, and exits green when preview-only review is ready.
 
 `npm run check:first-designer` is the stricter command before CMS onboarding.
 It separates `Preview-only review: READY` from `CMS login/save dry run:
-BLOCKED`, then exits red until CMS login/save is actually ready. It also runs
+READY`, then exits red if CMS login/save is not ready. It also runs
 the local upload asset check so missing images or videos are caught before
 review.
 

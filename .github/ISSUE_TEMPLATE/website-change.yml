@@ -8,6 +8,8 @@ body:
     attributes:
       value: |
         Use this for changes that should go to preview before production.
+        For design/layout work, include the Figma link and the component name
+        from `docs/design-system.md`.
   - type: textarea
     id: request
     attributes:
@@ -23,6 +25,50 @@ body:
       placeholder: Events, Archive, Contact, Home, Artist profile...
     validations:
       required: false
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: Change type
+      options:
+        - CMS content
+        - Visual layout
+        - New component
+        - Asset replacement
+        - Bug/fix
+        - Release/publish
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Astro component or page
+      description: Use docs/design-system.md when this is a design/layout request.
+      placeholder: ArchiveTimeline, EventCard, ArtistGrid, Header/MenuOverlay...
+    validations:
+      required: false
+  - type: input
+    id: figma
+    attributes:
+      label: Figma link
+      placeholder: https://figma.com/...
+    validations:
+      required: false
+  - type: textarea
+    id: viewport
+    attributes:
+      label: Viewport / frames
+      description: Include desktop and mobile frame names or screenshots when relevant.
+      placeholder: Desktop 1440 frame + mobile 390 frame included.
+    validations:
+      required: false
+  - type: textarea
+    id: cms_fields
+    attributes:
+      label: CMS fields affected
+      description: List content fields that should remain editable in New Afro Studio.
+      placeholder: Event title, date_label, location, hero_image must stay CMS-editable.
+    validations:
+      required: false
   - type: textarea
     id: assets
     attributes:
@@ -36,6 +82,7 @@ body:
       label: Target
       options:
         - Preview first
+        - Staging only
         - Production hotfix
         - Design exploration
     validations:
