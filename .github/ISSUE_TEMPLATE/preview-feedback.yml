@@ -48,6 +48,21 @@ body:
       placeholder: "On mobile, the menu text is too large and the Archive first image is cropped too hard. Figma comment: ..."
     validations:
       required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component or template
+      description: Use docs/design-system.md if known.
+      placeholder: MenuOverlay, ArchiveTimeline, EventCard, ArtistGrid...
+    validations:
+      required: false
+  - type: input
+    id: figma
+    attributes:
+      label: Figma link
+      placeholder: https://figma.com/...
+    validations:
+      required: false
   - type: dropdown
     id: decision
     attributes:

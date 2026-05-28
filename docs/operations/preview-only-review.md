@@ -1,17 +1,16 @@
 # Preview-Only Review
 
-Use this when the designer is ready to review the website but CMS login is
-still blocked by the OAuth proxy setup. This review is useful now and does not
-require GitHub, Decap CMS, Render, Namecheap, or production access.
+Use this when the designer is ready to review the website visually but does not
+yet need CMS access. This review does not require GitHub, Decap CMS, Render,
+Namecheap, or production access.
 
 ## When To Use
 
 Use this flow while any of these are still true:
 
-- `decap-oauth.newafro.com` has no DNS result.
-- The OAuth operator preflight is failing.
-- `https://login.newafro.com` shows `Website editing is waiting on login setup`.
 - The designer does not yet have GitHub write access to `newafro/website`.
+- The designer is only reviewing visual direction, not saving content.
+- The team wants comments before opening CMS editing to another person.
 
 Do not use this flow to save content. It is visual/content feedback only.
 
@@ -106,5 +105,5 @@ Stop the review and report the blocker if:
 - Browser security warnings appear.
 - The designer is asked to log in to CMS, GitHub, Render, or Namecheap.
 
-CMS save testing starts later, after the OAuth operator preflight and public CMS
-readiness checks pass.
+CMS save testing is covered in [first-designer-test.md](first-designer-test.md)
+and starts only after the person has accepted write access to `newafro/website`.

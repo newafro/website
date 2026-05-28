@@ -4,22 +4,17 @@ Gus, Maria, Cheria, and Ken should be able to update the website through the CMS
 
 ## Access Model
 
-There are two team-facing entry points during staging:
+There are three team-facing entry points:
 
 ```text
-Preview review now:             https://preview.newafro.com
-CMS editing after OAuth is live: https://login.newafro.com
-Production site:                 https://newafro.com
+Preview review:  https://preview.newafro.com
+CMS editing:     https://login.newafro.com
+Production site: https://newafro.com
 ```
 
-Until OAuth readiness is green, `login.newafro.com` can show the CMS screen but
-cannot complete GitHub login or save changes. That is expected; do preview
-review first and CMS editing second.
-
-After the staged CMS/login routes are promoted to production,
-`https://newafro.com/login/` can be used as a production-domain fallback. Do
-not use that URL for onboarding until the production release has been promoted
-and smoke-tested.
+`https://newafro.com/login/` is also available as a production-domain fallback,
+but use `https://login.newafro.com` for normal onboarding because it clearly
+signals the team editor entry point.
 
 The team should not need to understand Git branches for daily work. The system maps simple actions onto the release flow:
 
@@ -54,8 +49,9 @@ The CMS uses GitHub login through the Decap OAuth proxy. Each person needs:
 
 Editors do not need direct write access to `newafro/website-preview`; the preview deploy token handles that.
 
-Do not invite the full team to CMS editing until the first designer has passed
-one safe draft save. Use preview-only review for everyone before that point.
+Invite new editors one at a time. Ask each person to accept the GitHub
+invitation before testing CMS login. A GitHub user can authenticate but still
+fail to save if they only have read access.
 
 ## WhatsApp Setup
 
@@ -103,9 +99,9 @@ The softer operator status screen is:
 https://github.com/newafro/decap-oauth/actions/workflows/setup-status.yml
 ```
 
-Use the OAuth operator preflight first after adding OAuth secrets or
-`decap-oauth` DNS. Then use the website public readiness monitor to confirm
-whether editor login is ready end to end.
+Use the website public readiness monitor to confirm editor login is ready end
+to end. Use the OAuth operator preflight when debugging Render, DNS, or OAuth
+secrets.
 
 The bot should accept feedback from the group, create or update GitHub issues, and post only useful summaries back to WhatsApp.
 

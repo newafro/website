@@ -36,6 +36,15 @@ Use [docs/operations/README.md](docs/operations/README.md) as the launch and
 handoff index. It links the preview-only designer review, first CMS login test,
 team access checklist, staging DNS notes, and OAuth proxy blocker.
 
+Designer handoff:
+
+- [docs/design-system.md](docs/design-system.md): Figma components mapped to
+  Astro pages/components and CMS fields.
+- [docs/figma-to-preview-workflow.md](docs/figma-to-preview-workflow.md): how a
+  Figma request becomes a staged preview and then a production release.
+- [docs/operations/designer-handover.md](docs/operations/designer-handover.md):
+  short non-technical CMS/Figma workflow for the team.
+
 ## Deploy
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds Astro for `https://newafro.com` and publishes to GitHub Pages.

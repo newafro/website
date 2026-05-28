@@ -11,6 +11,11 @@ For the first designer session, use
 For the no-login review that can start before OAuth is ready, use
 [preview-only-review.md](preview-only-review.md).
 
+For the design-system bridge between Figma and Astro, use
+[../design-system.md](../design-system.md). For the operational path from
+Figma to `preview.newafro.com`, use
+[../figma-to-preview-workflow.md](../figma-to-preview-workflow.md).
+
 ## What To Use
 
 | Task | Best Tool | Notes |
@@ -21,6 +26,15 @@ For the no-login review that can start before OAuth is ready, use
 | Review page layout, spacing, typography, image crop | Figma or screenshot comments | Send comments against `preview.newafro.com`. |
 | Request structural page changes | WhatsApp or GitHub issue | Agent implements and opens preview. |
 | Approve production | WhatsApp/GitHub approval text | Use `Approved for production`. |
+
+## First Rule For Designers
+
+Start with CMS and Figma. Do not start with SSH, terminal, or production
+deployments.
+
+Daily content work belongs in New Afro Studio. Visual direction belongs in
+Figma. Astro/code changes are implemented by an agent or developer and reviewed
+on preview.
 
 ## Daily Editing Flow
 
@@ -39,14 +53,14 @@ Start this flow only after `npm run check:cms-readiness` passes. If
 New CMS entries start as drafts by default. Keep `Draft` enabled until copy,
 image credits, dates, and preview layout are approved.
 
-The designer should not need to push Git commands manually. If a change needs
-code, layout work, or a new page type, ask the agent to implement it and deploy
-to preview.
+The designer should not need to push Git commands manually in the first phase.
+If a change needs code, layout work, or a new page type, ask the agent to
+implement it and deploy to preview.
 
 ## Preview-Only Review
 
-Use this while CMS login is still blocked or before the designer has GitHub
-access. It lets the designer contribute without touching deployment.
+Use this before the designer has GitHub access or when the team only wants
+visual feedback. It lets the designer contribute without touching deployment.
 
 For the detailed checklist, use [preview-only-review.md](preview-only-review.md).
 
@@ -82,6 +96,20 @@ Use Figma for visual direction, not as a separate source of website truth.
    - `Approved`
 5. Send the Figma link to the website agent or in the team WhatsApp group.
 
+Every Figma request should name the affected website component when possible.
+Use the mapping in [../design-system.md](../design-system.md), for example:
+
+```text
+Page: Archive
+Component: ArchiveTimeline / ArchiveProject
+Viewport: desktop 1440 and mobile 390
+Target: staging only
+```
+
+If the designer invents a new visual block, name it in Figma and say where it
+should be used. That keeps artistic freedom while preventing the code from
+drifting into a one-off layout that cannot be reused.
+
 ## Preview And Production
 
 - Preview: `https://preview.newafro.com`
@@ -114,8 +142,8 @@ hidden, draft, or minimal until the team provides the missing material.
 ## First Onboarding Session
 
 Start this only after `npm run check:cms-readiness` passes and
-`https://login.newafro.com` signs in cleanly with GitHub. If OAuth is still
-blocked, use [preview-only-review.md](preview-only-review.md) instead.
+`https://login.newafro.com` signs in cleanly with GitHub for a user with write
+access.
 
 In a 30-minute onboarding session, have the designer do this once:
 
@@ -128,3 +156,21 @@ In a 30-minute onboarding session, have the designer do this once:
 7. Comment on one preview screenshot in Figma.
 
 That is enough to understand the full loop without needing GitHub internals.
+
+## Later: Designer-To-Preview
+
+After the designer is comfortable with CMS and preview review, she can drive
+larger layout changes through the Figma-to-preview workflow:
+
+```text
+Figma proposal
+-> GitHub issue or WhatsApp request
+-> implementation agent updates Astro
+-> push to staging
+-> review on preview.newafro.com
+-> Approved for production
+-> merge to main
+```
+
+See [../figma-to-preview-workflow.md](../figma-to-preview-workflow.md) before
+giving a designer Codex, Claude, GitHub Desktop, SSH, or release permissions.
