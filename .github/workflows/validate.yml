@@ -1,0 +1,43 @@
+name: Validate Website
+
+on:
+  pull_request:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check CMS config
+        run: npm run check:cms-config
+
+      - name: Check content assets
+        run: npm run check:content-assets
+
+      - name: Build
+        env:
+          DEPLOY_TARGET: apex
+          RELEASE_CHANNEL: validate
+          RELEASE_REF: ${{ github.ref_name }}
+          RELEASE_SHA: ${{ github.sha }}
+          SITE_URL: https://newafro.com
+        run: npm run build

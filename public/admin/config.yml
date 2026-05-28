@@ -5,8 +5,10 @@ backend:
   name: github
   repo: newafro/website
   branch: staging
-  base_url: https://decap-oauth.newafro.net
+  base_url: https://decap-oauth.newafro.com
   auth_endpoint: /auth
+
+local_backend: true
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
@@ -21,6 +23,7 @@ collections:
   - name: "blog"
     label: "Journal"
     label_singular: "Journal Post"
+    description: "Draft or publish journal stories once copy and image credits are verified."
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
@@ -52,12 +55,13 @@ collections:
       - { label: "Hero Alt Text", name: "hero_alt", widget: "string", required: false }
       - { label: "Gallery", name: "gallery", widget: "list", required: false,
           field: { label: "Image", name: "image", widget: "image" } }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true, required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "events"
     label: "Events"
     label_singular: "Event"
+    description: "Create and update exhibitions, pop-ups, talks, and event detail pages."
     folder: "src/content/events"
     create: true
     slug: "{{slug}}"
@@ -89,12 +93,13 @@ collections:
           field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Full Event Copy Ready", name: "body_ready", widget: "boolean", default: false, required: false }
       - { label: "Sort Order", name: "order", widget: "number", default: 0, required: false }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true, required: false }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "artists"
     label: "Artists"
     label_singular: "Artist"
+    description: "Manage artist profiles shown on the Community page."
     folder: "src/content/artists"
     create: true
     slug: "{{slug}}"
@@ -121,5 +126,5 @@ collections:
       - { label: "Instagram", name: "instagram", widget: "string", required: false }
       - { label: "Featured", name: "featured", widget: "boolean", default: true, required: false }
       - { label: "Sort Order", name: "order", widget: "number", default: 0, required: false }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "Draft", name: "draft", widget: "boolean", default: true, required: false }
       - { label: "Long Bio", name: "body", widget: "markdown", required: false }

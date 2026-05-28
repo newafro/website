@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // Default builds serve the production custom domain from the root path.
 // Use DEPLOY_TARGET=subpath only for the legacy https://newafro.github.io/website/ preview.
@@ -11,6 +12,7 @@ export default defineConfig({
   site: siteUrl,
   base: isApex ? '/' : '/website/',
   trailingSlash: 'ignore',
+  integrations: [sitemap()],
   build: {
     format: 'directory',
   },

@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { u } from '../lib/url';
 
-// The strategic agency pitch follows the live Wix slug at /general-1.
+// Keep About close to the public Wix narrative while the team section gives
+// editors a structured place for the current organisation.
 const heroLeft  = u('/uploads/about/01-IMG_6772.jpeg');
 const heroRight = u('/uploads/about/02-2fbda9_32a2c7a9b85a4d4f8cbd647a8fe33219-mv2_png.avif');
 
@@ -23,7 +24,7 @@ const team = [
   },
   {
     name: 'Ken Samb',
-    role: 'Assistant of Creative Direction',
+    role: 'Creative Direction Assistant',
     image: u('/uploads/about/05-Hair-20Story-20Mockup_edited.jpg'),
     fallback: u('/uploads/about/ken-samb.jpg'),
     email: 'ken.samb@newafro.net',
@@ -40,7 +41,7 @@ const team = [
 
 <BaseLayout
   title="About / Team — New Afro"
-  description="The people behind New Afro: a small team of curators, designers, and operators connecting African and European creative ecosystems."
+  description="New Afro is a cultural platform dedicated to showcasing African contemporary art and making it accessible to wider audiences."
 >
   <article class="team-page">
     <header class="page-header">
@@ -57,8 +58,8 @@ const team = [
         />
         <h1 class="display-page">ABOUT</h1>
         <p class="page-deck">
-          New Afro is a cultural platform and creative agency connecting
-          African and European creative ecosystems.
+          New Afro is a cultural platform dedicated to showcasing African
+          contemporary art and making it accessible to wider audiences.
         </p>
       </div>
     </header>
@@ -67,12 +68,11 @@ const team = [
       <div class="container team-intro__grid">
         <div class="team-intro__copy">
           <p>
-            We work with artists, cultural institutions, creative entrepreneurs,
-            and brands who want to build meaningful, sustainable connections
-            across continents. We believe contemporary African creativity is
-            essential to today's cultural landscape. Yet representation, market
-            understanding, remain unequal. New Afro exists to address these
-            gaps, both culturally and economically.
+            Built on art curation and the Art.store, New Afro creates
+            opportunities for artists with African backgrounds to share their
+            work internationally. We work with artists, cultural institutions,
+            creative entrepreneurs, and brands who want to build meaningful,
+            sustainable connections across continents.
           </p>
         </div>
         <figure class="team-intro__media">
@@ -85,11 +85,11 @@ const team = [
       <h2 class="display practice__title">Cultural &amp; Curatorial Practice</h2>
       <div class="practice__grid">
         <p>
-          Our projects challenge dominant narratives and move beyond tokenism.
-          We create thoughtful, critical, and emotionally engaging cultural
-          experiences that question recognitions and expand perspectives. We do
-          not curate for representation alone. We curate to reshape how art,
-          identity, and society are understood.
+          Through curated exhibitions with international cultural institutions,
+          we provide a platform for emerging and established artists to explore
+          identity, heritage, and social change. Our work bridges cultural art
+          scenes, amplifies diverse voices and artistic narratives, and
+          challenges barriers in the art world.
         </p>
         <figure class="practice__media">
           <img src={heroRight} alt="New Afro curatorial work" loading="lazy" decoding="async" />
@@ -98,15 +98,14 @@ const team = [
     </section>
 
     <section class="practice practice--alt container">
-      <h2 class="display practice__title">Creative Agency</h2>
+      <h2 class="display practice__title">Art.Store &amp; Creative Agency</h2>
       <div class="practice__grid practice__grid--reverse">
         <p>
-          We support artists, creative entrepreneurs, and cultural brands
-          expanding between Africa and European markets. Through strategy
-          consulting, positioning, management guidance, and network development,
-          we help our clients navigate new ecosystems with clarity and
-          confidence. We understand markets, but also mentalities. We translate
-          cultural complexity into sustainable opportunity.
+          Through the New Afro Art.Store, we offer a selection of prints and
+          original artworks that make African contemporary art easier to access.
+          Our agency work supports artists, creative entrepreneurs, and cultural
+          brands expanding between African and European markets with strategy,
+          positioning, and trusted creative networks.
         </p>
       </div>
     </section>

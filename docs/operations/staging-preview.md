@@ -2,6 +2,8 @@
 
 Production is `https://newafro.com`.
 Staging is `https://preview.newafro.com`.
+CMS login is `https://login.newafro.com`, which redirects to
+`https://preview.newafro.com/admin/`.
 
 The preview site is for design review, WhatsApp feedback, and team approval before a change reaches production.
 
@@ -51,7 +53,176 @@ TTL:   Automatic
 
 Do not add `A` or `AAAA` records for `preview`.
 
-After DNS propagates, verify the custom domain in the `newafro/website-preview` GitHub Pages settings and enable HTTPS enforcement.
+For the friendly CMS login URL, add this record too:
+
+```text
+Type:  CNAME Record
+Host:  login
+Value: newafro.github.io.
+TTL:   Automatic
+```
+
+The `newafro/login` GitHub Pages repository serves only a tiny redirect page
+from `login.newafro.com` to `https://preview.newafro.com/admin/`. The CMS
+targets `staging`, so this keeps editors inside the review workflow by default.
+
+The CMS also needs an OAuth proxy because Decap CMS cannot complete GitHub
+login from a static GitHub Pages site without a small server-side callback.
+Use this domain for that service:
+
+```text
+decap-oauth.newafro.com
+```
+
+The proxy source lives here:
+
+```text
+https://github.com/newafro/decap-oauth
+```
+
+Deployment is tracked here:
+
+```text
+https://github.com/newafro/decap-oauth/issues/1
+```
+
+It includes a Render Blueprint (`render.yaml`) and can also run on any Node 20
+host. The Blueprint declares `decap-oauth.newafro.com`, uses `/healthz` as the
+health check, and waits for checks to pass before auto-deploying. For the
+current Namecheap DNS setup, Render is the lowest-friction path:
+
+1. Create a GitHub OAuth app:
+
+   ```text
+   Application name: New Afro Studio CMS
+   Homepage URL: https://newafro.com
+   Authorization callback URL: https://decap-oauth.newafro.com/callback?provider=github
+   ```
+
+2. Store the GitHub OAuth values in the OAuth proxy host:
+
+   ```text
+   GITHUB_OAUTH_ID
+   GITHUB_OAUTH_SECRET
+   PUBLIC_URL=https://decap-oauth.newafro.com
+   GITHUB_REPO_PRIVATE=0
+   ```
+
+3. Deploy `newafro/decap-oauth` on Render from the Blueprint.
+4. Confirm Render shows `decap-oauth.newafro.com` as the custom domain.
+5. Add the exact CNAME target Render provides in Namecheap.
+
+The preferred guided command from the OAuth repo is:
+
+```bash
+cd /path/to/newafro-decap-oauth
+GITHUB_OAUTH_ID=[from GitHub OAuth app] \
+GITHUB_OAUTH_SECRET=[from GitHub OAuth app] \
+npm run setup:operator
+```
+
+After Render shows the exact custom-domain target, rerun:
+
+```bash
+cd /path/to/newafro-decap-oauth
+npm run check:render-blueprint
+RENDER_CUSTOM_DOMAIN_TARGET=[exact Render DNS target] npm run setup:operator
+```
+
+This creates or reads the exact `New Afro Decap OAuth` 1Password item, syncs
+the OAuth repo GitHub Actions secrets, prints the exact Namecheap record when
+the Render target is present, and catches common wrong values such as
+`newafro.github.io`, a value with `https://`, or a mismatched `PUBLIC_URL`.
+
+If the OAuth credentials should stay out of the local shell, store
+`GITHUB_OAUTH_ID` and `GITHUB_OAUTH_SECRET` as secrets in
+`newafro/decap-oauth`, then run the same check from GitHub Actions:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/deploy-config-preflight.yml
+```
+
+Use the exact Render custom-domain DNS target as the workflow input.
+
+After the GitHub OAuth secrets and Namecheap DNS are added, verify the operator
+path from GitHub Actions:
+
+```text
+https://github.com/newafro/decap-oauth/actions/workflows/operator-access.yml
+```
+
+That workflow checks `decap-oauth.newafro.com` DNS and whether the OAuth repo
+secrets are available to GitHub Actions without printing their values.
+
+The Namecheap record must look like this:
+
+```text
+Type:  CNAME Record
+Host:  decap-oauth
+Value: [exact Render DNS target, no https://]
+TTL:   Automatic
+```
+
+Do not guess the `decap-oauth` CNAME value. It depends on the Render service.
+Do not point this host at GitHub Pages; the OAuth proxy needs server-side code
+and secrets.
+
+If `npm run check:cms-readiness` says `decap-oauth.newafro.com has no public
+DNS result`, the record is not published from Namecheap yet. Check that the
+record was added under the `newafro.com` Advanced DNS zone, not `newafro.net`,
+and that the host field is `decap-oauth`, not the full
+`decap-oauth.newafro.com` domain.
+
+After DNS propagates, verify the custom domains in GitHub Pages settings for
+`newafro/website-preview` and `newafro/login`, then enable HTTPS enforcement.
+
+To check the current state and automatically enable HTTPS once GitHub Pages has
+approved the certificates, run:
+
+```bash
+./scripts/check-pages-readiness.sh
+```
+
+The script exits non-zero until the full editor path is ready. It checks the
+preview/login Pages certificates, HTTPS enforcement, whether
+`preview.newafro.com/release.json` matches the current `staging` branch, the
+preview CMS route, both friendly login entry points, the OAuth repo secret
+names, and the OAuth proxy DNS/HTTP endpoints. That is expected to fail while
+`decap-oauth.newafro.com` DNS is missing, the Render service is not attached, or
+the OAuth repo secrets are missing.
+
+For a public check that can run without GitHub admin credentials, use:
+
+```bash
+npm run check:cms-readiness
+```
+
+For a rendered browser smoke check of the public preview and CMS login flow,
+use:
+
+```bash
+npm run smoke:public
+```
+
+This command starts headless Chrome locally and verifies
+`preview.newafro.com`, `preview.newafro.com/admin/`, and `login.newafro.com`
+with desktop/mobile viewports. Set `CHROME_BIN` if Chrome is installed in a
+non-standard path.
+
+The staging deploy workflow also runs this smoke check after publishing the
+preview site, so a green preview deploy means both the build and the public
+browser route check passed.
+
+The default branch also has a GitHub Actions public readiness monitor:
+
+```text
+https://github.com/newafro/website/actions/workflows/cms-readiness-public.yml
+```
+
+That `Public CMS Readiness` workflow runs manually and daily. It verifies the
+public preview, friendly login URL, CMS config, and OAuth proxy endpoints. It
+is expected to fail until `decap-oauth.newafro.com` is deployed, attached in
+Render, and published in DNS.
 
 ## Release Flow
 

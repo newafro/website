@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: preview-pages
   cancel-in-progress: true
@@ -17,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: npm
@@ -31,6 +34,9 @@ jobs:
       - name: Build preview site
         env:
           DEPLOY_TARGET: apex
+          RELEASE_CHANNEL: preview
+          RELEASE_REF: ${{ github.ref_name }}
+          RELEASE_SHA: ${{ github.sha }}
           SITE_URL: https://preview.newafro.com
         run: npm run build
 
@@ -40,11 +46,52 @@ jobs:
           touch dist/.nojekyll
 
       - name: Publish preview site
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          personal_token: ${{ secrets.NEWAFRO_PREVIEW_DEPLOY_TOKEN }}
-          external_repository: newafro/website-preview
-          publish_branch: gh-pages
-          publish_dir: ./dist
-          cname: preview.newafro.com
-          commit_message: "Deploy preview from newafro/website@${{ github.sha }}"
+        env:
+          PREVIEW_DEPLOY_TOKEN: ${{ secrets.NEWAFRO_PREVIEW_DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          deploy_dir="$(mktemp -d)"
+          trap 'rm -rf "$deploy_dir"' EXIT
+
+          git init "$deploy_dir"
+          cd "$deploy_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://x-access-token:${PREVIEW_DEPLOY_TOKEN}@github.com/newafro/website-preview.git"
+
+          set +e
+          git ls-remote --exit-code --heads origin gh-pages >/dev/null
+          remote_branch_status=$?
+          set -e
+
+          if [ "$remote_branch_status" -eq 0 ]; then
+            git fetch --depth=1 origin gh-pages
+            git checkout -B gh-pages FETCH_HEAD
+          elif [ "$remote_branch_status" -eq 2 ]; then
+            git checkout --orphan gh-pages
+          else
+            echo "Could not access newafro/website-preview gh-pages branch."
+            exit "$remote_branch_status"
+          fi
+
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R "$GITHUB_WORKSPACE/dist/." "$deploy_dir/"
+          git add --all
+
+          if git diff --cached --quiet; then
+            echo "Preview site is already up to date."
+            exit 0
+          fi
+
+          git commit -m "Deploy preview from newafro/website@${GITHUB_SHA}"
+          git push origin gh-pages
+
+      - name: Smoke public preview
+        env:
+          EXPECTED_RELEASE_CHANNEL: preview
+          EXPECTED_RELEASE_REF: staging
+          EXPECTED_RELEASE_SHA: ${{ github.sha }}
+        run: |
+          sleep 20
+          npm run smoke:public

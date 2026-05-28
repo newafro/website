@@ -85,6 +85,7 @@ h1 { font-size: clamp(2.6rem, 7.6vw, 110px); line-height: 1.1; }
   line-height: 1.05;
   letter-spacing: -0.01em;
   margin: 0;
+  overflow-wrap: normal;
 }
 h2 { font-size: clamp(1.8rem, 3.6vw, 2.8rem); }   /* ~29–45px */
 h3 { font-size: clamp(1.3rem, 2vw, 1.65rem); }    /* ~21–26px */
@@ -288,6 +289,8 @@ main {
   font-size: var(--na-fs-page-display);
   color: var(--na-ink);
   margin: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 /* Centred Bildmarke that sits above .display-page on every non-home page. */
@@ -297,6 +300,7 @@ main {
   width: clamp(40px, 5vw, 60px);
   height: auto;
   object-fit: contain;
+  filter: brightness(0);
 }
 
 /* Video-backed page header (community / archive / events).
@@ -348,6 +352,25 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .page-header__video {
     display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  h1 {
+    font-size: clamp(2.45rem, 12vw, 4.2rem);
+    overflow-wrap: break-word;
+  }
+
+  .hero-display {
+    font-size: clamp(62px, 17vw, 80px);
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .display-page {
+    font-size: clamp(42px, 13vw, 58px);
+    line-height: 1.02;
+    letter-spacing: 0.01em;
   }
 }
 
