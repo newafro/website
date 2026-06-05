@@ -43,6 +43,10 @@ export async function writeReport(outDir, run, prev) {
   await writeFile(path.join(outDir, 'page-map.json'), JSON.stringify(run.pageMap, null, 2));
   await writeFile(path.join(outDir, 'text-diffs.json'), JSON.stringify(run.pages.map((p) => ({ page: p.key, ...p.text })), null, 2));
   await writeFile(path.join(outDir, 'structure-diffs.json'), JSON.stringify(run.pages.map((p) => ({ page: p.key, ...p.structure })), null, 2));
+  await writeFile(path.join(outDir, 'media-diffs.json'), JSON.stringify(run.pages.map((p) => ({
+    page: p.key, netUrl: p.netUrl, comUrl: p.comUrl, error: p.error || null,
+    assetRows: p.assetRows || [],
+  })), null, 2));
 
   const summary = renderSummary(run, prev);
   await writeFile(path.join(outDir, 'summary.md'), summary);
