@@ -194,10 +194,13 @@ async function discover(browser) {
 async function main() {
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const base = path.join(ROOT, 'reports', 'wix-parity');
-  const outDir = path.join(base, stamp);
+  // AUDIT_OUT_SUBDIR keeps viewport passes separate: latest/desktop, latest/mobile.
+  const subdir = (process.env.AUDIT_OUT_SUBDIR || '').replace(/[^a-z0-9_-]/gi, '');
+  const outDir = subdir ? path.join(base, stamp, subdir) : path.join(base, stamp);
+  const latestDir = subdir ? path.join(base, 'latest', subdir) : path.join(base, 'latest');
   await mkdir(path.join(outDir, 'screenshots'), { recursive: true });
 
-  const prev = await loadPrevRun(path.join(base, 'latest'));
+  const prev = await loadPrevRun(latestDir);
   const browser = await launch();
   const pages = [];
   try {
@@ -214,12 +217,13 @@ async function main() {
   const run = { at: stamp, net: NET, com: COM, pages, pageMap };
   const { assetCount } = await writeReport(outDir, run, prev);
 
-  // refresh latest/
-  await cp(outDir, path.join(base, 'latest'), { recursive: true });
+  // refresh latest/ (or latest/<subdir> for a viewport-scoped pass)
+  await mkdir(latestDir, { recursive: true });
+  await cp(outDir, latestDir, { recursive: true });
 
-  process.stderr.write(`\n[audit] done. ${pages.length} pages, ${assetCount} asset rows.\n`);
+  process.stderr.write(`\n[audit] done${subdir ? ` (${subdir})` : ''}. ${pages.length} pages, ${assetCount} asset rows.\n`);
   for (const p of pages) process.stderr.write(`  ${pageStatus(p).padEnd(20)} ${p.key}\n`);
-  process.stderr.write(`\nReport: ${path.relative(ROOT, outDir)}/index.html  (also reports/wix-parity/latest/)\n`);
+  process.stderr.write(`\nReport: ${path.relative(ROOT, outDir)}/index.html  (also ${path.relative(ROOT, latestDir)}/)\n`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
