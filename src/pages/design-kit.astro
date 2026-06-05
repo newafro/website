@@ -1,0 +1,850 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArchiveTimeline from '../components/ArchiveTimeline.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { u } from '../lib/url';
+
+const events = (await getCollection('events', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const artists = (await getCollection('artists', ({ data }) => !data.draft && data.featured))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const featuredEvent = events.find(event => event.slug === 'heritage-memoires-en-mouvements') ?? events[0];
+const secondaryEvent = events.find(event => event.slug === 'nazo-po-tozali-on-the-way-to-find-myself') ?? events[1] ?? featuredEvent;
+const eventSamples = [featuredEvent, secondaryEvent].filter(Boolean);
+
+const eventLabel = (event) => event.data.cta_label ?? (
+  event.data.status === 'closed' ? 'Closed' :
+  event.data.status === 'sold_out' ? 'Sold out' :
+  event.data.status === 'cancelled' ? 'Cancelled' :
+  'Learn more'
+);
+
+const eventIsClosed = (event) => ['closed', 'sold_out', 'cancelled'].includes(event.data.status);
+const asset = (path?: string) => path && (path.startsWith('/') ? u(path) : path);
+
+const colors = [
+  { name: 'Ink', token: '--na-ink', value: '#000000' },
+  { name: 'Paper', token: '--na-paper', value: '#ffffff' },
+  { name: 'Cream', token: '--na-cream', value: '#FBF7ED' },
+  { name: 'Warm Cream', token: '--na-cream-warm', value: '#FFF9EB' },
+  { name: 'Sand', token: '--na-sand', value: '#DED9C7' },
+  { name: 'Bronze', token: '--na-bronze', value: '#774A11' },
+  { name: 'Deep Bronze', token: '--na-bronze-deep', value: '#573811' },
+  { name: 'Graphite', token: '--na-graphite', value: '#404040' },
+];
+
+const navItems = ['HOME', 'THE AGENCY', 'COMMUNITY', 'THE ARCHIVE', 'PROJECTS', 'EVENTS'];
+const heroImage = u('/uploads/home/01-d5693e_d5b6e3b365ec452f9f9b7066fbc14491f000.jpg');
+const brandMark = u('/uploads/home/02-2022-02-20_NA_NewAfro_RZ_Bildmarke-10.png');
+const pageHeroImage = u('/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg');
+---
+
+<BaseLayout
+  title="Design Kit — New Afro"
+  description="Reusable New Afro website sections, tokens, and component specimens for Figma imports."
+  noIndex
+>
+  <article class="design-kit-page">
+    <section class="kit-intro" data-figma-section="DesignKitIntro">
+      <div class="kit-intro__inner">
+        <p class="kit-label">New Afro Design Kit</p>
+        <h1>Current website components for Figma remixing.</h1>
+        <p>
+          Import this page into Figma at desktop 1440px and mobile 390px. Duplicate the imported
+          frames before changing them, then hand proposed changes back by page, component, and viewport.
+        </p>
+      </div>
+    </section>
+
+    <section class="kit-section kit-section--paper" data-figma-section="Tokens">
+      <header class="kit-heading">
+        <p class="kit-label">Tokens</p>
+        <h2>Color, type, buttons.</h2>
+      </header>
+
+      <div class="swatch-grid" aria-label="New Afro color tokens">
+        {colors.map(color => (
+          <div class="swatch" data-token={color.token}>
+            <span class="swatch__chip" style={`--swatch: ${color.value}`}></span>
+            <span class="swatch__name">{color.name}</span>
+            <span class="swatch__meta">{color.token}</span>
+            <span class="swatch__meta">{color.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="type-specimens" data-figma-component="Typography">
+        <div class="type-row">
+          <span>Display Serif</span>
+          <strong class="type-display">New Afro</strong>
+        </div>
+        <div class="type-row">
+          <span>Page Display</span>
+          <strong class="type-page-display">THE ARCHIVE</strong>
+        </div>
+        <div class="type-row">
+          <span>Body / UI</span>
+          <p>Where art connects cultures through exhibitions, artists, stories, and local gatherings.</p>
+        </div>
+      </div>
+
+      <div class="button-specimens" data-figma-component="Buttons">
+        <a class="na-btn" href={u('/events')}>Primary Button</a>
+        <a class="na-btn na-btn--ghost" href={u('/contact')}>Ghost Button</a>
+        <a class="link-arrow" href={u('/archive')}>Text Link</a>
+      </div>
+    </section>
+
+    <section class="kit-section kit-section--cream" data-figma-component="HeaderAndMenu">
+      <header class="kit-heading">
+        <p class="kit-label">Navigation</p>
+        <h2>Header and menu overlay.</h2>
+      </header>
+
+      <div class="nav-specimen">
+        <div class="nav-specimen__bar">
+          <img src={u('/logo.png')} alt="New Afro logo" width="48" height="39" loading="lazy" decoding="async" />
+          <span></span>
+          <button class="menu-icon" type="button" aria-label="Menu specimen">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <div class="menu-specimen">
+          <span class="menu-specimen__close" aria-hidden="true"></span>
+          <ul>
+            {navItems.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-hero-specimen" data-figma-component="HomeHero">
+      <div class="home-hero-specimen__media" style={`background-image: url(${heroImage});`}></div>
+      <div class="home-hero-specimen__inner">
+        <h2 class="hero-display">New Afro</h2>
+        <p>Where art connects cultures.</p>
+        <img src={brandMark} alt="New Afro brand mark" width="56" height="45" loading="lazy" decoding="async" />
+      </div>
+    </section>
+
+    <section class="page-hero-specimen" data-figma-component="PageHero">
+      <img src={pageHeroImage} alt="" loading="lazy" decoding="async" />
+      <div class="page-hero-specimen__scrim"></div>
+      <h2>COMMUNITY</h2>
+      <p>The Power to connect and create.</p>
+    </section>
+
+    <section class="kit-section kit-section--events" data-figma-component="EventCard">
+      <header class="kit-heading kit-heading--light">
+        <p class="kit-label">Events</p>
+        <h2>Event card pattern.</h2>
+      </header>
+
+      <div class="events-list">
+        {eventSamples.map(event => {
+          const image = asset(event.data.hero_image);
+          const href = event.data.cta_url || u(`/event-details-registration/${event.slug}`);
+          return (
+            <article class="event-card">
+              <a class="event-card__media" href={href} aria-label={event.data.title}>
+                {image && <img src={image} alt={event.data.hero_alt ?? ''} loading="lazy" decoding="async" />}
+              </a>
+              <div class="event-card__body">
+                <h3>{event.data.title}</h3>
+                <p>{event.data.date_label} <span aria-hidden="true">|</span> {event.data.location}</p>
+                {eventIsClosed(event) ? (
+                  <button class="event-card__btn" disabled>{eventLabel(event)}</button>
+                ) : (
+                  <a class="event-card__btn" href={href}>{eventLabel(event)}</a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="kit-section kit-section--paper" data-figma-component="ArtistGrid">
+      <header class="kit-heading">
+        <p class="kit-label">Community</p>
+        <h2>Artist card pattern.</h2>
+      </header>
+
+      <div class="artist-grid">
+        {artists.map(artist => {
+          const portrait = asset(artist.data.portrait);
+          return (
+            <article class="artist-card">
+              {portrait && (
+                <img
+                  src={portrait}
+                  alt={artist.data.portrait_alt ?? `Portrait of ${artist.data.name}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <div class="artist-card__body">
+                <h3>{artist.data.name}</h3>
+                {artist.data.role && <p class="artist-role">{artist.data.role}</p>}
+                <p>{artist.data.short_bio}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="kit-section kit-section--cream" data-figma-component="BlogCard">
+      <header class="kit-heading">
+        <p class="kit-label">Journal</p>
+        <h2>Journal card specimen.</h2>
+      </header>
+
+      <div class="blog-specimen">
+        <BlogCard
+          href={u('/blog/')}
+          title="Interview, field note, or exhibition story."
+          description="Use this card pattern for slower editorial stories once copy, image credits, and publish status are ready."
+          date={new Date('2026-01-18')}
+          image="/uploads/archive/08-d5693e_f22c351904a840e084fc76aa667716ee-mv2.jpg"
+          imageAlt="New Afro archive image"
+          category="Journal"
+        />
+      </div>
+    </section>
+
+    <section data-figma-component="ArchiveTimeline">
+      <ArchiveTimeline />
+    </section>
+
+    <section class="contact-specimen" data-figma-component="ContactLanding">
+      <div>
+        <p class="kit-label">Contact</p>
+        <h2>Contact</h2>
+      </div>
+      <div>
+        <p>New Afro</p>
+        <p><a href="mailto:hello@newafro.net">hello@newafro.net</a></p>
+        <ul>
+          <li><a href="https://www.instagram.com/newafro" rel="me noopener">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/newafro" rel="me noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .design-kit-page {
+    background: var(--na-paper);
+    color: var(--na-ink);
+  }
+
+  .kit-intro {
+    background: var(--na-ink);
+    color: var(--na-cream-warm);
+    padding: clamp(110px, 13vw, 170px) 0 clamp(72px, 9vw, 120px);
+  }
+
+  .kit-intro__inner,
+  .kit-section,
+  .contact-specimen {
+    box-sizing: border-box;
+    width: min(1180px, calc(100% - 40px));
+    margin-inline: auto;
+  }
+
+  .kit-intro h1 {
+    max-width: 12ch;
+    margin: 0 0 var(--na-s-8);
+    color: inherit;
+    font-size: clamp(54px, 8vw, 106px);
+    line-height: 0.98;
+  }
+
+  .kit-intro p:not(.kit-label) {
+    max-width: 58ch;
+    margin: 0;
+    color: rgba(255, 249, 235, 0.84);
+    font-size: clamp(17px, 1.5vw, 21px);
+  }
+
+  .kit-section {
+    padding-block: clamp(70px, 8vw, 118px);
+  }
+
+  .kit-section--paper {
+    background: var(--na-paper);
+  }
+
+  .kit-section--cream {
+    box-sizing: border-box;
+    width: 100%;
+    padding-inline: max(20px, calc((100vw - 1180px) / 2));
+    background: var(--na-cream);
+  }
+
+  .kit-section--events {
+    box-sizing: border-box;
+    width: 100%;
+    padding-inline: max(20px, calc((100vw - 980px) / 2));
+    background: #4a2b08;
+  }
+
+  .kit-heading {
+    margin: 0 0 clamp(34px, 5vw, 60px);
+  }
+
+  .kit-heading--light {
+    color: var(--na-cream-warm);
+  }
+
+  .kit-heading h2 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(42px, 5.7vw, 76px);
+    line-height: 1.02;
+  }
+
+  .kit-label {
+    margin: 0 0 var(--na-s-5);
+    color: currentColor;
+    font-family: var(--na-font-headline);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.68;
+  }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: clamp(48px, 6vw, 76px);
+  }
+
+  .swatch {
+    min-height: 190px;
+    display: grid;
+    align-content: end;
+    gap: 5px;
+    padding: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background: #fff;
+  }
+
+  .swatch__chip {
+    min-height: 82px;
+    margin: -18px -18px 12px;
+    background: var(--swatch);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .swatch__name {
+    font-family: var(--na-font-headline);
+    font-weight: 700;
+  }
+
+  .swatch__meta {
+    color: var(--na-graphite);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .type-specimens {
+    display: grid;
+    gap: 18px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .type-row {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.22fr) 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding-block: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.14);
+  }
+
+  .type-row span {
+    color: var(--na-graphite);
+    font-family: var(--na-font-ui);
+    font-size: 14px;
+  }
+
+  .type-display {
+    font-family: var(--na-font-display);
+    font-size: clamp(58px, 10vw, 132px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.9;
+  }
+
+  .type-page-display {
+    font-family: var(--na-font-page-display);
+    font-size: clamp(48px, 8vw, 108px);
+    font-weight: 800;
+    line-height: 0.95;
+  }
+
+  .type-row p {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .button-specimens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .nav-specimen {
+    display: grid;
+    gap: 24px;
+  }
+
+  .nav-specimen__bar {
+    min-height: 92px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 0 24px;
+    background: #fff;
+  }
+
+  .nav-specimen__bar img {
+    width: 48px;
+    height: 39px;
+    object-fit: contain;
+  }
+
+  .menu-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    align-content: center;
+    gap: 6px;
+  }
+
+  .menu-icon span {
+    width: 39px;
+    height: 4px;
+    display: block;
+    background: #000;
+  }
+
+  .menu-specimen {
+    position: relative;
+    min-height: 610px;
+    display: flex;
+    align-items: center;
+    padding: clamp(88px, 12vw, 140px) 24px clamp(48px, 7vw, 96px);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 74% 12%, rgba(153, 105, 47, 0.95), transparent 46%),
+      linear-gradient(105deg, #1f1203 0%, #2d1804 28%, #58340f 58%, #8a622e 100%);
+  }
+
+  .menu-specimen__close {
+    position: absolute;
+    top: clamp(28px, 6.8vw, 70px);
+    left: clamp(28px, 19vw, 400px);
+    width: 36px;
+    height: 36px;
+  }
+
+  .menu-specimen__close::before,
+  .menu-specimen__close::after {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 2px;
+    width: 34px;
+    height: 2px;
+    background: rgba(255, 249, 235, 0.92);
+  }
+
+  .menu-specimen__close::before { transform: rotate(45deg); }
+  .menu-specimen__close::after { transform: rotate(-45deg); }
+
+  .menu-specimen ul {
+    display: grid;
+    gap: clamp(20px, 3.8vw, 44px);
+    margin-left: clamp(28px, 19vw, 400px);
+  }
+
+  .menu-specimen li {
+    color: rgba(255, 249, 235, 0.95);
+    font-family: var(--na-font-display);
+    font-size: clamp(38px, 3.8vw, 54px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.9;
+  }
+
+  .home-hero-specimen {
+    position: relative;
+    height: clamp(620px, 56vw, 807px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    color: var(--na-cream-warm);
+    isolation: isolate;
+  }
+
+  .home-hero-specimen__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .home-hero-specimen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 40%, rgba(0, 0, 0, 0.52) 100%);
+  }
+
+  .home-hero-specimen__inner {
+    width: min(1180px, calc(100% - 40px));
+    text-align: center;
+  }
+
+  .home-hero-specimen h2 {
+    color: var(--na-cream-warm);
+    margin: 0 0 var(--na-s-6);
+  }
+
+  .home-hero-specimen p {
+    max-width: none;
+    margin: 0 0 var(--na-s-9);
+    color: var(--na-cream-warm);
+    font-family: var(--na-font-display);
+    font-size: clamp(20px, 5vw, 24px);
+    font-style: italic;
+  }
+
+  .home-hero-specimen img {
+    width: 56px;
+    height: 45px;
+    object-fit: contain;
+    margin: 0 auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .page-hero-specimen {
+    position: relative;
+    min-height: 520px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+    background: #2a1a06;
+  }
+
+  .page-hero-specimen img,
+  .page-hero-specimen__scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .page-hero-specimen img {
+    z-index: -2;
+    object-fit: cover;
+  }
+
+  .page-hero-specimen__scrim {
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.42);
+  }
+
+  .page-hero-specimen h2 {
+    margin: 0 0 18px;
+    color: #fff;
+    font-family: var(--na-font-page-display);
+    font-size: clamp(60px, 9vw, 116px);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .page-hero-specimen p {
+    margin: 0;
+    max-width: none;
+    color: #fff;
+    font-family: var(--na-font-display);
+    font-size: clamp(22px, 3vw, 34px);
+    font-style: italic;
+  }
+
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .event-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 320px;
+    background: #fff9eb;
+  }
+
+  .event-card__media {
+    display: block;
+    overflow: hidden;
+    background: #ded9c7;
+  }
+
+  .event-card__media img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+  }
+
+  .event-card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 48px 56px;
+    text-align: center;
+  }
+
+  .event-card h3 {
+    margin: 0;
+    color: #000;
+    font-family: var(--na-font-headline);
+    font-size: clamp(26px, 2.4vw, 34px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .event-card p {
+    margin: 0;
+    max-width: none;
+    color: #000;
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .event-card__btn {
+    min-width: 160px;
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 28px;
+    border-radius: 999px;
+    background: #6b4708;
+    color: #fff;
+    font-family: var(--na-font-body);
+    font-size: 16px;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  button.event-card__btn {
+    opacity: 1;
+    cursor: default;
+  }
+
+  .event-card__btn:hover {
+    color: #fff;
+    background: #573811;
+  }
+
+  .artist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px 32px;
+  }
+
+  .artist-card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: #ded9c7;
+  }
+
+  .artist-card__body {
+    padding-top: 18px;
+    text-align: center;
+  }
+
+  .artist-card h3 {
+    margin: 0 0 6px;
+    color: #000;
+    font-family: var(--na-font-headline);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .artist-role {
+    margin: 0 0 10px;
+    color: #6b4708;
+    font-size: 14px;
+  }
+
+  .artist-card p {
+    margin: 0 auto;
+    max-width: 30ch;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .blog-specimen {
+    max-width: 390px;
+  }
+
+  .contact-specimen {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 110px);
+    padding-block: clamp(90px, 10vw, 150px);
+    background: var(--na-paper);
+  }
+
+  .contact-specimen h2 {
+    margin: 0;
+    font-size: clamp(64px, 9vw, 120px);
+  }
+
+  .contact-specimen p,
+  .contact-specimen a,
+  .contact-specimen li {
+    color: #000;
+    font-family: var(--na-font-body);
+    font-size: clamp(22px, 3vw, 38px);
+    line-height: 1.35;
+  }
+
+  .contact-specimen p {
+    margin: 0 0 14px;
+  }
+
+  .contact-specimen a {
+    color: var(--na-bronze-deep);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  @media (max-width: 900px) {
+    .swatch-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .type-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .menu-specimen {
+      min-height: 560px;
+      padding: 96px 28px 56px;
+      background:
+        radial-gradient(circle at 92% 8%, rgba(126, 88, 42, 0.82), transparent 50%),
+        linear-gradient(130deg, #211204 0%, #351b05 58%, #6b4617 100%);
+    }
+
+    .menu-specimen__close {
+      top: 26px;
+      left: 22px;
+    }
+
+    .menu-specimen ul {
+      margin-left: 0;
+      gap: 26px;
+    }
+
+    .menu-specimen li {
+      font-size: clamp(36px, 14vw, 52px);
+    }
+
+    .home-hero-specimen {
+      height: calc(100vh - 92px);
+      min-height: 560px;
+    }
+
+    .event-card {
+      grid-template-columns: 1fr;
+    }
+
+    .event-card__media img {
+      min-height: 250px;
+      aspect-ratio: 4 / 3;
+    }
+
+    .event-card__body {
+      min-height: 250px;
+      padding: 36px 28px;
+    }
+
+    .artist-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-specimen {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .kit-intro,
+    .kit-section,
+    .contact-specimen {
+      width: 100%;
+    }
+
+    .kit-intro__inner,
+    .kit-section:not(.kit-section--cream):not(.kit-section--events),
+    .contact-specimen {
+      padding-inline: 20px;
+    }
+
+    .swatch-grid,
+    .artist-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .button-specimens {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .button-specimens > * {
+      width: 100%;
+    }
+
+    .page-hero-specimen {
+      min-height: 360px;
+    }
+
+    .page-hero-specimen h2 {
+      font-size: clamp(46px, 14vw, 58px);
+      letter-spacing: 0.01em;
+    }
+  }
+</style>
