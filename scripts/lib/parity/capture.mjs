@@ -8,6 +8,14 @@
 
 export function extractInPage() {
   const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+  // srcset entries are comma-separated, but Wix transform URLs themselves
+  // contain commas (w_640,h_480,q_85). Split only on commas that begin a NEW
+  // candidate (followed by an http/https/protocol-relative/root URL).
+  const srcsetUrls = (ss) =>
+    (ss || '')
+      .split(/,(?=\s*(?:https?:|\/\/|\/[^/]))/)
+      .map((c) => c.trim().split(/\s+/)[0])
+      .filter(Boolean);
   const seen = new Set();
   const media = [];
   const push = (url, kind, where) => {
@@ -25,13 +33,11 @@ export function extractInPage() {
   for (const img of document.querySelectorAll('img')) {
     push(img.currentSrc || img.src, 'img', sectionOf(img));
     push(img.getAttribute('src'), 'img', sectionOf(img));
-    const ss = img.getAttribute('srcset');
-    if (ss) ss.split(',').forEach((c) => push(c.trim().split(/\s+/)[0], 'img-srcset', sectionOf(img)));
+    srcsetUrls(img.getAttribute('srcset')).forEach((u) => push(u, 'img-srcset', sectionOf(img)));
   }
   // <picture><source srcset>
   for (const s of document.querySelectorAll('picture source')) {
-    const ss = s.getAttribute('srcset');
-    if (ss) ss.split(',').forEach((c) => push(c.trim().split(/\s+/)[0], 'picture', sectionOf(s)));
+    srcsetUrls(s.getAttribute('srcset')).forEach((u) => push(u, 'picture', sectionOf(s)));
   }
   // CSS background-image on every element (Wix loves these for heroes).
   for (const el of document.querySelectorAll('*')) {

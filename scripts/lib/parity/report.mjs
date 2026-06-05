@@ -28,8 +28,10 @@ export function pageStatus(p) {
   const structHigh = (p.structure?.diffs || []).filter((d) => d.severity === 'High').length;
   if (p.error || structHigh >= 2) return 'Structural Mismatch';
   if (highAssets >= 1) return 'Missing Assets';
+  const cov = p.text?.bodyTokenCoverage;
+  const copyGap = cov != null && cov < 0.5; // .com dropped/replaced much of .net's body copy
   const issues = (p.text?.missingHeadingsCtas?.length || 0) + (p.structure?.diffs?.length || 0) + (p.assetRows?.length || 0);
-  if (issues > 0) return 'Needs Review';
+  if (issues > 0 || copyGap) return 'Needs Review';
   return 'Good';
 }
 

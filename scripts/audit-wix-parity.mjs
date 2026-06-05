@@ -13,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { launch, capturePage } from './lib/parity/browser.mjs';
 import { isWixAsset, wixMediaGuid, assetIdentity, wixIntrinsicSize, looksLikeMedia } from './lib/parity/wix-asset.mjs';
-import { probeImage, classify } from './lib/parity/phash.mjs';
+import { probeImage, classify, hamming } from './lib/parity/phash.mjs';
 import { diffText } from './lib/parity/text.mjs';
 import { diffStructure } from './lib/parity/structure.mjs';
 import { writeReport, loadPrevRun, pageStatus } from './lib/parity/report.mjs';
@@ -22,18 +22,22 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NET = (process.env.NET_BASE || 'https://www.newafro.net').replace(/\/$/, '');
 const COM = (process.env.COM_BASE || 'https://newafro.com').replace(/\/$/, '');
 
-// Curated map (validated against real src/pages). net path ↔ com path.
+// Curated map — .net slugs VERIFIED by crawling newafro.net's live nav
+// (Wix uses non-obvious slugs: THE AGENCY=/general-1, PROJECTS=/single-project,
+// Contact=/contact-7, THE ARCHIVE=/behind-the-scenes). net path ↔ com path.
 const PAGE_MAP = {
   home: { net: '/', com: '/' },
-  agency: { net: '/the-agency', com: '/agency/' },
+  agency: { net: '/general-1', com: '/agency/' },
   community: { net: '/community', com: '/community/' },
   archive: { net: '/behind-the-scenes', com: '/archive/' },
   'behind-the-scenes': { net: '/behind-the-scenes', com: '/behind-the-scenes/' },
-  projects: { net: '/projects', com: '/projects/' },
+  projects: { net: '/single-project', com: '/projects/' },
   events: { net: '/events', com: '/events/' },
-  contact: { net: '/contact', com: '/contact/' },
-  about: { net: '/the-agency', com: '/about/' },
-  team: { net: '/the-agency', com: '/team/' },
+  contact: { net: '/contact-7', com: '/contact/' },
+  about: { net: '/about', com: '/about/' },
+  'artist-inquiries': { net: '/general-8', com: '/artist-inquiries/' },
+  // NOTE: .com /team has no distinct .net source (team lives under THE AGENCY);
+  // omitted from the default map rather than graded against a wrong page.
 };
 
 const VIEWPORTS = (process.env.AUDIT_VIEWPORTS || 'desktop,mobile').split(',').map((s) => s.trim()).filter(Boolean);
@@ -50,7 +54,10 @@ async function pool(items, size, fn) {
 
 // Significant visual assets only: drop svgs/icons/tiny transforms, dedupe identity.
 function significantAssets(media) {
-  const VISUAL = new Set(['img', 'bg', 'picture', 'network', 'video-poster', 'video']);
+  // Exclude raw 'video' — videos can't be perceptual-hashed and fetching their
+  // bodies is wasteful; their presence/absence is reported via the structure
+  // diff instead. video-poster (an image) stays.
+  const VISUAL = new Set(['img', 'bg', 'picture', 'network', 'video-poster']);
   const byId = new Map();
   for (const m of media || []) {
     if (!VISUAL.has(m.kind)) continue;
@@ -75,16 +82,17 @@ async function matchAssets(pageKey, netCap, comCap) {
   const rows = [];
   for (let i = 0; i < netAssets.length; i++) {
     const na = netAssets[i], np = netProbes[i];
-    if (!np || !np.ok) continue;
-    // nearest com asset by phash
-    let best = null, bestProbe = null;
+    if (!np || !np.ok || !np.phash) continue;
+    // Nearest .com asset by perceptual distance (NOT by verdict rank — picking
+    // the most-similar image is the whole point; ranking by verdict inverts it).
+    let bestProbe = null, bestDist = Infinity;
     for (let j = 0; j < comAssets.length; j++) {
       const cp = comProbes[j];
-      if (!cp || !cp.ok || !cp.phash || !np.phash) continue;
-      const v = classify(np, cp);
-      if (!best || rank(v.verdict) < rank(best.verdict)) { best = v; bestProbe = { ca: comAssets[j], cp }; }
+      if (!cp || !cp.ok || !cp.phash) continue;
+      const d = hamming(np.phash, cp.phash);
+      if (d < bestDist) { bestDist = d; bestProbe = { ca: comAssets[j], cp }; }
     }
-    const verdict = best ? best : classify(np, null);
+    const verdict = bestProbe ? classify(np, bestProbe.cp) : classify(np, null);
     if (verdict.verdict === 'identical') continue; // no action needed
     // Only name a .com asset when it's a genuine match. For 'different'/'missing'
     // the nearest-by-phash is NOT a real correspondence — naming it misleads.
@@ -108,8 +116,14 @@ async function matchAssets(pageKey, netCap, comCap) {
   return rows;
 }
 
-const rank = (v) => ({ different: 0, missing: 1, 'wrong-crop': 2, 'lower-res': 3, reencoded: 4, identical: 5, unknown: 6 }[v] ?? 9);
 const shortUrl = (u) => { try { return new URL(u).pathname; } catch { return u; } };
+
+// A Wix "page not found" capture must NOT be graded as a real comparison.
+function is404(cap) {
+  if (!cap || !cap.ok) return false;
+  const t = `${cap.title || ''} ${cap.text || ''}`.toLowerCase();
+  return /page not found|page isn.?t available|error 404|\b404\b/.test(t) && (cap.text || '').length < 600;
+}
 function fixClass(verdict, na) {
   if (verdict === 'reencoded' || verdict === 'lower-res') return 'mechanical';
   if (verdict === 'wrong-crop') return na.kind === 'bg' ? 'needs-judgment' : 'mechanical';
@@ -141,6 +155,8 @@ async function auditPage(browser, key, outDir) {
   }
   if (!netCap || !netCap.ok) { result.error = `.net capture failed: ${netCap?.error || 'unknown'}`; return result; }
   if (!comCap || !comCap.ok) { result.error = `.com capture failed: ${comCap?.error || 'unknown'}`; return result; }
+  if (is404(netCap)) { result.error = `.net reference is a Wix 404 (${netUrl}) — wrong/changed slug; no valid comparison`; return result; }
+  if (is404(comCap)) { result.error = `.com page is a 404 (${comUrl})`; return result; }
 
   result.text = diffText(netCap, comCap);
   result.structure = diffStructure(netCap, comCap);

@@ -20,9 +20,14 @@ export async function fetchBytes(url) {
       signal: ctrl.signal,
       headers: { 'user-agent': 'newafro-parity-audit/1 (+read-only)' },
     });
+    if (!res.ok) { clearTimeout(t); return null; }
+    const ct = (res.headers.get('content-type') || '').toLowerCase();
+    if (ct && !ct.startsWith('image/')) { clearTimeout(t); return null; } // don't pull video/other bodies
+    const len = Number(res.headers.get('content-length') || 0);
+    if (len > 12_000_000) { clearTimeout(t); return null; } // skip huge bodies
+    const buf = Buffer.from(await res.arrayBuffer()); // abort timer still armed until here
     clearTimeout(t);
-    if (!res.ok) return null;
-    return Buffer.from(await res.arrayBuffer());
+    return buf;
   } catch {
     return null;
   }
@@ -92,16 +97,16 @@ export function classify(net, com) {
   const arNet = ratio(net), arCom = ratio(com);
   const arDrift = arNet && arCom ? Math.abs(arNet - arCom) / arNet : 0;
 
-  if (dist <= 2) {
-    if (netPx && comPx && comPx < netPx * 0.6) {
-      return { verdict: 'lower-res', problem: `Same image but lower resolution on .com (${com.width}×${com.height} vs ${net.width}×${net.height})`, priority: 'Medium' };
-    }
-    return { verdict: 'identical', problem: 'Match', priority: 'Low' };
-  }
   if (dist <= 10) {
+    // Aspect-ratio drift = wrong crop, even at near-zero hash distance
+    // (low-detail images can hash alike despite a different crop).
     if (arDrift > 0.08) {
       return { verdict: 'wrong-crop', problem: `Same source, different crop/aspect on .com (${arCom} vs ${arNet})`, priority: 'Medium' };
     }
+    if (netPx && comPx && comPx < netPx * 0.6) {
+      return { verdict: 'lower-res', problem: `Same image but lower resolution on .com (${com.width}×${com.height} vs ${net.width}×${net.height})`, priority: 'Medium' };
+    }
+    if (dist <= 2) return { verdict: 'identical', problem: 'Match', priority: 'Low' };
     return { verdict: 'reencoded', problem: 'Likely same image, re-encoded/recompressed on .com', priority: 'Low' };
   }
   return { verdict: 'different', problem: 'No matching .com asset found (missing or replaced vs .net)', priority: 'Medium' };
