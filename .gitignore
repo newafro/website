@@ -19,3 +19,6 @@ pnpm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# parity audit outputs (screenshots + run artifacts)
+reports/wix-parity/
