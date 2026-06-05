@@ -226,4 +226,6 @@ async function main() {
   process.stderr.write(`\nReport: ${path.relative(ROOT, outDir)}/index.html  (also ${path.relative(ROOT, latestDir)}/)\n`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+// Force a clean exit after the report is written: a lingering browser handle or
+// stalled fetch can otherwise keep the event loop alive and hang the process.
+main().then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });
