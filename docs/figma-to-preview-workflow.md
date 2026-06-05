@@ -56,6 +56,16 @@ Editors can create or update:
 Designers create Figma feedback and proposals, then hand them to the
 implementation agent.
 
+For a fast starting point, import the live component kit into Figma:
+
+```text
+https://preview.newafro.com/design-kit/
+```
+
+Use `html.to.design` or a similar website-to-Figma plugin at desktop `1440px`
+and mobile `390px`. Treat the imported layers as a remix canvas, not as the
+source of truth for production.
+
 ## Phase 2: Designer To Preview
 
 Use this once the designer is comfortable reviewing preview.

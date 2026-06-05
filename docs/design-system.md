@@ -39,6 +39,15 @@ Create these pages in the New Afro Figma file:
 `00 Website Components / Astro Mapping` is the important one. It should contain
 the reusable website blocks below, using the same names as this document.
 
+The fastest way to seed that Figma page is to import the live design kit:
+
+```text
+https://preview.newafro.com/design-kit/
+```
+
+Import it once at desktop `1440px` and once at mobile `390px`, then duplicate
+the imported frames before remixing them.
+
 ## Design Tokens
 
 The code tokens live in `src/styles/tokens.css`. Figma should mirror these
