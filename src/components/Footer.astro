@@ -19,6 +19,12 @@ const information = [
   { href: u('/privacy-policy'), label: 'Privacy Policy' },
   { href: u('/terms-and-conditions'), label: 'Terms and Conditions (T&C)' },
 ];
+
+const socials = [
+  { href: 'https://www.instagram.com/newafro', label: 'Instagram', short: 'ig' },
+  { href: 'https://www.facebook.com/newafro', label: 'Facebook', short: 'fb' },
+  { href: 'https://x.com/newafro', label: 'X', short: 'x' },
+];
 ---
 
 <footer class="site-footer">
@@ -56,9 +62,16 @@ const information = [
           autocomplete="email"
         />
         <button class="subscribe-btn" type="submit">Subscribe Now</button>
-        <p class="subscribe-note">Newsletter signup is being reconnected. Email us for now.</p>
         <p class="subscribe-msg" data-newsletter-msg hidden></p>
       </form>
+
+      <nav class="social-links" aria-label="Social links">
+        {socials.map(item => (
+          <a href={item.href} rel="me noopener" aria-label={item.label}>
+            <span aria-hidden="true">{item.short}</span>
+          </a>
+        ))}
+      </nav>
     </div>
   </div>
 
@@ -68,17 +81,27 @@ const information = [
 
   <script is:inline>
     (function () {
-      const msg = "Newsletter coming back online soon — drop us a note via /contact for now.";
       document.querySelectorAll('form[data-newsletter-form]').forEach(function (form) {
         if (form.dataset.bound === '1') return;
         form.dataset.bound = '1';
         form.addEventListener('submit', function (event) {
           event.preventDefault();
+          const input = form.querySelector('input[type="email"]');
           const out = form.querySelector('[data-newsletter-msg]');
+          const email = input && input.value ? String(input.value).trim() : '';
+          if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+            if (out) {
+              out.textContent = 'Please enter a valid email address.';
+              out.hidden = false;
+            }
+            if (input) input.focus();
+            return;
+          }
           if (out) {
-            out.textContent = msg;
+            out.textContent = 'Opening your email app to finish the signup.';
             out.hidden = false;
           }
+          window.location.href = 'mailto:cheria@newafro.net?subject=New%20Afro%20newsletter%20signup&body=Please%20add%20' + encodeURIComponent(email) + '%20to%20the%20New%20Afro%20newsletter.';
         });
       });
     })();
@@ -182,12 +205,33 @@ const information = [
     line-height: 1.5;
   }
 
-  .subscribe-note {
-    margin: 0;
-    color: var(--na-bronze-deep);
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--na-s-3);
+    margin-top: var(--na-s-5);
+  }
+
+  .social-links a {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(50, 28, 1, 0.42);
+    border-radius: 50%;
+    color: var(--na-ink);
     font-family: var(--na-font-ui);
-    font-size: var(--na-fs-small);
-    line-height: 1.5;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .social-links a:hover {
+    border-color: var(--na-bronze);
+    background: var(--na-bronze);
+    color: #fff;
   }
 
   .fineprint {

@@ -3,59 +3,189 @@ import { u } from '../lib/url';
 
 const projects = [
   {
-    kicker: '2025 · Cotonou',
+    kicker: 'December 2025',
     title: 'Exhibition: Héritage... Mémoires en Mouvement?',
     venue: 'at Galerie Zato Benin',
     date: '05 DEC - 18 JAN',
-    poster: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png',
-    image: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg',
-    detail: '/uploads/archive/03-d5693e_da0348303e0e4716af35c2ae6ee69ab5-mv2.jpeg',
+    media: [
+      { src: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png', fit: 'contain', alt: 'Héritage exhibition poster' },
+      { src: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg', alt: 'Héritage exhibition group at Galerie Zato Benin' },
+      { src: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg', alt: 'Visitors viewing a New Afro exhibition image' },
+      { src: '/uploads/archive/03-d5693e_da0348303e0e4716af35c2ae6ee69ab5-mv2.jpeg', alt: 'Projection inside the Héritage exhibition' },
+      { src: '/uploads/archive/05-d5693e_9586547c75354a43b64721b9750a2983-mv2.jpg', alt: 'Audience at Galerie Zato Benin' },
+      { src: '/uploads/archive/06-e7ed0d_d700c5d9ae674e04abcec90a8c0c5212-mv2.jpg', fit: 'contain', alt: 'Héritage exhibition red poster' },
+      { src: '/uploads/archive/07-d5693e_7bdb007d0fa046bebda86a2b69782381-mv2.jpg', alt: 'Héritage exhibition group portrait' },
+      { src: '/uploads/archive/08-d5693e_f22c351904a840e084fc76aa667716ee-mv2.jpg', alt: 'Earth detail from the Héritage exhibition' },
+      { src: '/uploads/archive/09-d5693e_2840031d05904b5da9c8ba61e9347901-mv2.jpg', alt: 'Héritage exhibition conversation' },
+      { src: '/uploads/archive/10-d5693e_ef1d98e5ce464b84bbb5693b55544174-mv2.jpg', alt: 'Visitor conversation wall at a New Afro exhibition' },
+      { src: '/uploads/archive/11-d5693e_be81d225e6c640348cb749e1c2ee7fce-mv2.jpg', alt: 'Night installation view from the archive' },
+      { src: '/uploads/archive/12-d5693e_d15fd572199940caa1745a874b88c4d4-mv2.jpg', alt: 'Dark installation with plants' },
+      { src: '/uploads/archive/13-d5693e_e8b75e8f25da4df5a444fcdd99f8b95a-mv2.jpg', alt: 'Archive installation detail with plants' },
+      { src: '/uploads/archive/14-d5693e_c9d180abb1fe4b6cbbec274597b77b86-mv2.jpg', alt: 'Projected exhibition text in a dark room' },
+      { src: '/uploads/archive/15-d5693e_02e9b395c31244ee85bc3bd645932691-mv2.jpg', alt: 'Visitors inside a gallery at Galerie Zato Benin' },
+      { src: '/uploads/archive/16-d5693e_82a76f49fa8e40d6858fdda12f6a5f42-mv2.jpg', alt: 'Dark exhibition room with projection' },
+      { src: '/uploads/archive/17-d5693e_6f3c4ffa59da45a3bb2bf6f8160bfb78-mv2.jpg', alt: 'Framed image from the Héritage exhibition' },
+      { src: '/uploads/archive/18-d5693e_d7aa5dafed014f76a367fdd18211bcd0-mv2.jpg', alt: 'Visitor viewing a Héritage artwork' },
+      { src: '/uploads/archive/19-d5693e_f72d6c30463e4f56b1f4ccabed7f4097-mv2.jpg', alt: 'Installation view at Galerie Zato Benin' },
+      { src: '/uploads/archive/20-d5693e_29ddbd67f19c4792b391c7ed88bbf075-mv2.jpg', alt: 'Dark gallery installation detail' },
+      { src: '/uploads/archive/21-d5693e_9216fcb1068c41aab19cd490758121d4-mv2.jpg', alt: 'Projection room in a gallery setting' },
+      { src: '/uploads/archive/29-e7ed0d_5c46e784691b49eba63675e04bcecc40-mv2.jpg', alt: 'Night entrance to a New Afro event' },
+    ],
   },
   {
-    kicker: '2025 · Mainz',
-    title: 'NAZO PO TOZALI... on the way to find myself.',
+    kicker: 'September 2025',
+    title: 'Nazo Po Tozali... On The Way To Find Myself.',
     venue: 'at Institut français Mainz',
     date: '05 SEPT - 28 SEPT',
-    poster: '/uploads/events/05-e7ed0d_351931db808f4108a357420140c5cdd2-mv2.jpg',
-    image: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg',
-    detail: '/uploads/archive/05-d5693e_9586547c75354a43b64721b9750a2983-mv2.jpg',
+    media: [
+      { src: '/uploads/events/05-e7ed0d_351931db808f4108a357420140c5cdd2-mv2.jpg', alt: 'Nazo Po Tozali exhibition visual' },
+      { src: '/uploads/archive/22-e7ed0d_5f2cbc99117b4f64a88146f89682cc0f-mv2.png', fit: 'contain', alt: 'The curators view for Nazo Po Tozali' },
+      { src: '/uploads/archive/23-e7ed0d_d43cc58a241244f5a0678d3d159225f4-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali curatorial text' },
+      { src: '/uploads/archive/24-e7ed0d_08c328a473e74f10b556f4f99e762170-mv2.png', fit: 'contain', alt: 'Artist selection text for Nazo Po Tozali' },
+      { src: '/uploads/archive/25-e7ed0d_818ec240df6645c894c751f1ed0c17dc-mv2.png', alt: 'Nazo Po Tozali installation view' },
+      { src: '/uploads/archive/26-e7ed0d_0c1eb68354fd4177b0252f874b95014c-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali reflection panel' },
+      { src: '/uploads/archive/27-e7ed0d_399729601e244a4c97d981daf9b52912-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali visitor prompt' },
+      { src: '/uploads/archive/28-e7ed0d_d64e58b652db4122a387d214ffd3687a-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali interview text' },
+      { src: '/uploads/archive/31-d5693e_a44c27793f2f4f04bcb65b60434dbbc4-mv2.jpg', alt: 'Visitor browsing a New Afro exhibition publication' },
+      { src: '/uploads/archive/32-d5693e_233fe4444d404cf7b9ee3178edef1228-mv2.jpg', alt: 'Opening gathering at Institut français Mainz' },
+      { src: '/uploads/archive/33-e7ed0d_16d63be910d741a2966094aae7055944-mv2.jpg', alt: 'Visitor viewing framed artwork' },
+      { src: '/uploads/archive/34-d5693e_1871cb22f983492ab71f32cacc36982c-mv2.jpg', alt: 'Two visitors looking at work in the exhibition' },
+    ],
   },
   {
-    kicker: '2024 · Mainz',
-    title: 'Private Showroom #AFricancreativestotheworld',
-    venue: 'a New Afro showroom format',
-    date: '13 DEC',
-    poster: '/uploads/events/07-d5693e_ec58158892924021bec94be2da3c8c35-mv2.png',
-    image: '/uploads/archive/06-e7ed0d_d700c5d9ae674e04abcec90a8c0c5212-mv2.jpg',
-    detail: '/uploads/archive/07-d5693e_7bdb007d0fa046bebda86a2b69782381-mv2.jpg',
+    kicker: 'June 2025',
+    title: 'African Voice? Your Way of Urban Care',
+    venue: 'community exhibition and public programme',
+    date: 'JUNE 2025',
+    media: [
+      { src: '/uploads/archive/30-e7ed0d_c8bac1c2a80b430490c7627165e5e242-mv2.jpeg', alt: 'African Voice exhibition visual' },
+      { src: '/uploads/archive/31-d5693e_a44c27793f2f4f04bcb65b60434dbbc4-mv2.jpg', alt: 'Printed exhibition material' },
+      { src: '/uploads/archive/32-d5693e_233fe4444d404cf7b9ee3178edef1228-mv2.jpg', alt: 'Audience inside the exhibition' },
+      { src: '/uploads/archive/35-d5693e_8c31075bc6e342b6965343e88f14c076-mv2.jpg', alt: 'Visitors in a red gallery room' },
+    ],
   },
   {
-    kicker: '2024 · Mainz',
-    title: 'RESTITUTION... et après? Restitution... und dann?',
-    venue: 'panel, exhibition, and community programme',
-    date: '23 MAY',
-    poster: '/uploads/events/11-e7ed0d_cfc4cf679c3643bc890b4967b9eef404-mv2.jpg',
-    image: '/uploads/archive/08-d5693e_f22c351904a840e084fc76aa667716ee-mv2.jpg',
-    detail: '/uploads/archive/09-d5693e_2840031d05904b5da9c8ba61e9347901-mv2.jpg',
+    kicker: 'December 2024',
+    title: 'Open Call: Vaux',
+    venue: 'artist call and creative presentation',
+    date: 'DECEMBER 2024',
+    media: [
+      { src: '/uploads/archive/39-d5693e_699118ccb513469a9c6d584a9e080ec9-mv2.jpg', alt: 'Open Call portrait' },
+      { src: '/uploads/archive/40-d5693e_6f7bfd82d11d4b77a3d4d17d0caeb65e-mv2.jpg', alt: 'Open Call fashion detail' },
+      { src: '/uploads/archive/41-d5693e_2022eac11ac54dc68776ca5e0dcf3d40-mv2.jpg', alt: 'Open Call denim look' },
+      { src: '/uploads/archive/42-d5693e_3766884580884320bb4df4436f8a07b4-mv2.jpg', alt: 'Open Call green look' },
+      { src: '/uploads/archive/43-d5693e_0383b187be294abdb2686a9ff317552d-mv2.jpg', alt: 'Open Call red jacket look' },
+    ],
   },
   {
-    kicker: '2024 · Mainz',
-    title: 'Rencontre / Begegnung',
-    venue: 'live painting, exhibition, and exchange',
-    date: '27 APR',
-    poster: '/uploads/events/19-e7ed0d_8ca1c3a84c3d437abbe6b525fa5b6309-mv2.png',
-    image: '/uploads/archive/10-d5693e_ef1d98e5ce464b84bbb5693b55544174-mv2.jpg',
-    detail: '/uploads/archive/11-d5693e_be81d225e6c640348cb749e1c2ee7fce-mv2.jpg',
+    kicker: 'November 2024',
+    title: 'Kulturelle Vielfalt innen feiern',
+    venue: 'community gathering and screening',
+    date: 'NOVEMBER 2024',
+    media: [
+      { src: '/uploads/archive/44-d5693e_a4e7cbf3382845da8b7e2d3b2a9c3fb4-mv2.jpg', alt: 'Kulturelle Vielfalt poster detail' },
+      { src: '/uploads/archive/45-d5693e_1f32c88326dc48618f6972895ca824ac-mv2.jpg', alt: 'Kulturelle Vielfalt screening' },
+    ],
+  },
+  {
+    kicker: 'October 2024',
+    title: 'New Afro x VAUX',
+    venue: 'creative tasting and artist exchange',
+    date: 'OCTOBER 2024',
+    media: [
+      { src: '/uploads/archive/52-e7ed0d_4a7838a5f8574fe4891334c7aa6dd4ba-mv2.jpg', alt: 'VAUX bottle at a New Afro event' },
+      { src: '/uploads/archive/53-e7ed0d_f7ebd9c181ef4e81af1fb7c2658e966e-mv2.jpg', alt: 'Pouring VAUX at a New Afro event' },
+      { src: '/uploads/archive/54-e7ed0d_a60ad8c71a0d4480a64b1a273fee4fc5-mv2.jpg', alt: 'Guest holding a VAUX bottle' },
+      { src: '/uploads/archive/55-e7ed0d_0818adb6e41841a4a6a8d8bff47cd9ca-mv2.jpg', alt: 'New Afro guest with VAUX bottle' },
+      { src: '/uploads/archive/56-e7ed0d_24f2470f3ebf4c5384b85a7cfac724af-mv2.jpg', alt: 'Two guests at a New Afro x VAUX gathering' },
+      { src: '/uploads/archive/57-e7ed0d_6b25c38db2ad4e2a9b0a439b3bff992c-mv2.jpg', alt: 'VAUX bottle close-up' },
+    ],
+  },
+  {
+    kicker: 'July 2024',
+    title: "I love my solitude, but I'm meant to be a lover.",
+    venue: 'artist project and exhibition',
+    date: 'JULY 2024',
+    media: [
+      { src: '/uploads/archive/58-e7ed0d_a3c5ac89d66d468e843ae9e0d93741b5-mv2.jpg', alt: 'Artist in black on the floor' },
+      { src: '/uploads/archive/59-e7ed0d_aa1e74ed100b4ff6974d027d01504577-mv2.jpg', alt: 'Black and white artist portrait' },
+      { src: '/uploads/archive/60-e7ed0d_5471026f04e14086905c3b712f230c49-mv2.jpg', alt: 'Artist seated in black' },
+    ],
+  },
+  {
+    kicker: 'June 2023',
+    title: 'La Teranga en Couleur',
+    venue: 'exhibition and live programme',
+    date: 'JUNE 2023',
+    media: [
+      { src: '/uploads/archive/66-e7ed0d_7e5cd25d3b794cc8948781c58b33306f-mv2.jpg', alt: 'La Teranga en Couleur artwork' },
+      { src: '/uploads/archive/67-e7ed0d_202a04c21eb6402584cfa8b526215471-mv2.jpg', alt: 'La Teranga exhibition opening' },
+      { src: '/uploads/archive/68-7273cd_0e2fdf0b410a48eebe27679b3ff1d9d0-mv2.jpg', alt: 'La Teranga performance detail' },
+      { src: '/uploads/archive/69-e7ed0d_84557d36356c495f84b8efac4e674a9c-mv2.jpg', alt: 'La Teranga gallery installation' },
+      { src: '/uploads/archive/70-e7ed0d_a6318132af7c4c93a1e8fd5192c6565e-mv2.jpg', alt: 'Audience in a New Afro gallery room' },
+      { src: '/uploads/archive/71-e7ed0d_7d3b58f24b814815b3bb99d607943745-mv2.jpg', alt: 'Visitors at La Teranga en Couleur' },
+      { src: '/uploads/archive/72-e7ed0d_94c0d7a9af794393b617ba50f1911338-mv2.jpg', alt: 'La Teranga installation detail' },
+      { src: '/uploads/archive/73-e7ed0d_bc033bed1e2447bf848f1c1a287b8027-mv2.jpg', alt: 'Gallery visitors in conversation' },
+      { src: '/uploads/archive/74-e7ed0d_b7d82430f7bb499695828caddd1eef9f-mv2.jpg', alt: 'Performance at La Teranga en Couleur' },
+      { src: '/uploads/archive/75-e7ed0d_facf5ddfec604c76818aee8496e25cb1-mv2.jpg', alt: 'Audience gathered in the exhibition' },
+    ],
+  },
+  {
+    kicker: 'November 2022',
+    title: "New Afro showcase in Abidjan, Côte d'Ivoire",
+    venue: 'artist showcase and field visit',
+    date: 'NOVEMBER 2022',
+    media: [
+      { src: '/uploads/archive/77-17cc92_e6104ad99b2141b98ced9fd313ea321d-mv2.jpg', alt: 'Street scene in Abidjan' },
+      { src: '/uploads/archive/78-17cc92_32dd4ce2e3da44d692bcbf300a0601c8-mv2.jpg', alt: 'Pink mask detail in foliage' },
+      { src: '/uploads/archive/79-e7ed0d_d96b6e01d9fa493abc3646c72e4d8d3a-mv2.jpg', alt: 'New Afro clothing detail' },
+    ],
+  },
+  {
+    kicker: 'May 2022',
+    title: 'Benjamin Abana x New Afro',
+    venue: 'exhibition and artist meeting',
+    date: 'MAY 2022',
+    media: [
+      { src: '/uploads/archive/90-e7ed0d_2fa1b629d9d74e89896e19123cdd3e92-mv2.png', fit: 'contain', alt: 'Benjamin Abana x New Afro event poster' },
+      { src: '/uploads/archive/91-e7ed0d_6b8d9e59f01a4490a6f27f6c10bb8482-mv2.jpg', alt: 'Benjamin Abana exhibition room' },
+      { src: '/uploads/archive/92-e7ed0d_3a4b096bfd8e453eab7bd88968d2ae65-mv2.png', alt: 'Visitors arriving at the exhibition' },
+      { src: '/uploads/archive/93-e7ed0d_01932f1bd50b439e941374984b8c8e92-mv2.jpg', alt: 'Benjamin Abana artwork at the window' },
+      { src: '/uploads/archive/94-e7ed0d_62a0825145bb4d518ae8ba9d148c7b7f-mv2.jpg', alt: 'Artist painting near portrait work' },
+      { src: '/uploads/archive/95-e7ed0d_a6252ee0dfcd48418eea4c26139801f4-mv2.jpeg', alt: 'Painted portrait detail' },
+      { src: '/uploads/archive/96-e7ed0d_49d12f7e9ecc49fdb3571e6d6dce1257-mv2.jpg', alt: 'New Afro creative team portrait' },
+    ],
   },
 ];
 ---
 
-<section class="archive-timeline" aria-labelledby="archive-title">
-  <div class="archive-kicker">THE ARCHIVE</div>
-  <h1 id="archive-title">Projects, exhibitions, and field notes.</h1>
+<section class="archive-hero" aria-labelledby="archive-title">
+  <video
+    class="archive-hero__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster={u('/uploads/video/archive-hero-poster.png')}
+    aria-hidden="true"
+  >
+    <source src={u('/uploads/video/archive-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="archive-hero__scrim" aria-hidden="true"></div>
+  <div class="archive-hero__inner">
+    <h1 id="archive-title">THE ARCHIVE</h1>
+    <p class="archive-hero__lead">Step into our creative world!</p>
+    <p>
+      A living timeline of exhibitions, projects, collaborations, and field
+      notes from New Afro.
+    </p>
+  </div>
+</section>
 
+<section class="archive-timeline" aria-label="New Afro archive timeline">
   <ol class="project-list">
-    {projects.map(project => (
+    {projects.map((project, projectIndex) => (
       <li class="archive-project">
         <div class="project-meta">
           <span>{project.kicker}</span>
@@ -66,16 +196,12 @@ const projects = [
             <h2>{project.title}</h2>
             <p>{project.venue}</p>
           </header>
-          <div class="project-strip">
-            <figure class="project-poster">
-              <img src={u(project.poster)} alt={`${project.title} visual`} loading="lazy" decoding="async" />
-            </figure>
-            <figure class="project-image project-image--main">
-              <img src={u(project.image)} alt={`${project.title} archive image`} loading="lazy" decoding="async" />
-            </figure>
-            <figure class="project-image project-image--detail">
-              <img src={u(project.detail)} alt={`${project.title} detail image`} loading="lazy" decoding="async" />
-            </figure>
+          <div class="project-gallery">
+            {project.media.map(item => (
+              <figure class={item.fit === 'contain' ? 'gallery-item gallery-item--contain' : 'gallery-item'}>
+                <img src={u(item.src)} alt={item.alt} loading={projectIndex < 2 ? 'eager' : 'lazy'} decoding="async" />
+              </figure>
+            ))}
           </div>
         </div>
       </li>
@@ -84,35 +210,79 @@ const projects = [
 </section>
 
 <style>
+  .archive-hero {
+    position: relative;
+    min-height: clamp(420px, 54vh, 620px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background: #2a1705;
+    color: var(--na-cream-warm);
+    text-align: center;
+  }
+
+  .archive-hero__video,
+  .archive-hero__scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .archive-hero__video {
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .archive-hero__scrim {
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(23, 11, 2, 0.5), rgba(23, 11, 2, 0.84)),
+      rgba(23, 11, 2, 0.28);
+  }
+
+  .archive-hero__inner {
+    width: min(760px, calc(100% - 48px));
+    padding-top: 34px;
+  }
+
+  .archive-hero h1 {
+    font-family: var(--na-font-page-display);
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(58px, 10vw, 122px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--na-cream-warm);
+    margin: 0 0 clamp(44px, 8vw, 82px);
+  }
+
+  .archive-hero__lead {
+    margin: 0 auto var(--na-s-4);
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 42px);
+    line-height: 1.05;
+    color: var(--na-cream-warm);
+  }
+
+  .archive-hero p:not(.archive-hero__lead) {
+    margin: 0 auto;
+    max-width: 54ch;
+    color: rgba(255, 249, 235, 0.82);
+    font-family: var(--na-font-body);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
   .archive-timeline {
     background:
-      radial-gradient(circle at 78% 6%, rgba(101, 63, 20, 0.34), transparent 34%),
+      radial-gradient(circle at 78% 0%, rgba(101, 63, 20, 0.32), transparent 32%),
       #2a1705;
     color: var(--na-cream-warm);
     min-height: 100vh;
-    padding: clamp(96px, 11vw, 150px) 0 clamp(72px, 9vw, 128px);
-  }
-
-  .archive-kicker {
-    width: min(1120px, calc(100% - 32px));
-    margin: 0 auto var(--na-s-5);
-    font-family: var(--na-font-sans);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: rgba(255, 249, 235, 0.62);
-  }
-
-  .archive-timeline > h1 {
-    width: min(1120px, calc(100% - 32px));
-    margin: 0 auto clamp(72px, 8vw, 118px);
-    font-family: var(--na-font-display);
-    font-size: clamp(38px, 6vw, 86px);
-    font-style: italic;
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: 0;
-    color: var(--na-cream-warm);
+    padding: clamp(72px, 8vw, 118px) 0 clamp(72px, 9vw, 128px);
   }
 
   .project-list {
@@ -120,12 +290,12 @@ const projects = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: clamp(76px, 10vw, 148px);
+    gap: clamp(82px, 10vw, 154px);
   }
 
   .archive-project {
     display: grid;
-    grid-template-columns: minmax(88px, 13vw) minmax(0, 1fr);
+    grid-template-columns: minmax(92px, 13vw) minmax(0, 1fr);
     gap: clamp(20px, 3vw, 48px);
     align-items: start;
   }
@@ -146,7 +316,7 @@ const projects = [
     display: block;
     margin-top: 12px;
     color: var(--na-cream-warm);
-    font-size: clamp(18px, 2.4vw, 34px);
+    font-size: clamp(18px, 2.2vw, 30px);
     font-weight: 400;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -154,18 +324,18 @@ const projects = [
 
   .project-body {
     min-width: 0;
+    padding-right: clamp(16px, 3vw, 48px);
   }
 
   .project-title {
     text-align: center;
-    margin: 0 0 clamp(38px, 5vw, 72px);
-    padding-right: clamp(16px, 3vw, 44px);
+    margin: 0 0 clamp(32px, 4.2vw, 58px);
   }
 
   .project-title h2 {
     margin: 0 0 var(--na-s-5);
     font-family: var(--na-font-display);
-    font-size: clamp(36px, 4.6vw, 66px);
+    font-size: clamp(34px, 4.3vw, 64px);
     font-style: italic;
     font-weight: 300;
     line-height: 0.98;
@@ -176,56 +346,57 @@ const projects = [
 
   .project-title p {
     margin: 0;
+    max-width: none;
     font-family: var(--na-font-sans);
-    font-size: clamp(18px, 1.8vw, 28px);
+    font-size: clamp(17px, 1.65vw, 26px);
     line-height: 1.2;
     color: rgba(255, 249, 235, 0.9);
   }
 
-  .project-strip {
+  .project-gallery {
     display: grid;
-    grid-template-columns: minmax(260px, 30vw) minmax(0, 1fr) minmax(140px, 13vw);
-    height: clamp(430px, 43vw, 650px);
-    overflow: hidden;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    background: #140900;
   }
 
-  .project-strip figure {
+  .gallery-item {
     margin: 0;
     min-width: 0;
-    min-height: 0;
-    background: rgba(255, 249, 235, 0.06);
+    background: #140900;
   }
 
-  .project-strip img {
-    display: block;
+  .gallery-item img {
     width: 100%;
+    aspect-ratio: 4 / 3;
     height: 100%;
     object-fit: cover;
+    background: #140900;
   }
 
-  .project-poster img {
+  .gallery-item--contain img {
     object-fit: contain;
-    background: #1b1004;
+    padding: clamp(8px, 1vw, 18px);
   }
 
-  .project-image--detail img {
-    filter: saturate(0.95) contrast(1.05);
+  @media (min-width: 1180px) {
+    .project-gallery {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 900px) {
+    .archive-hero {
+      min-height: 360px;
+    }
+
+    .archive-hero h1 {
+      font-size: clamp(48px, 15vw, 72px);
+      margin-bottom: 44px;
+    }
+
     .archive-timeline {
-      padding-top: clamp(84px, 18vw, 112px);
-    }
-
-    .archive-timeline > h1 {
-      width: min(680px, calc(100% - 40px));
-      font-size: clamp(40px, 12vw, 58px);
-      line-height: 1.05;
-      margin-bottom: clamp(56px, 16vw, 84px);
-    }
-
-    .archive-kicker {
-      width: min(680px, calc(100% - 40px));
+      padding-top: clamp(64px, 15vw, 92px);
     }
 
     .archive-project {
@@ -235,7 +406,7 @@ const projects = [
     .project-meta {
       position: static;
       width: min(680px, calc(100% - 40px));
-      margin: 0 auto -24px;
+      margin: 0 auto -20px;
       padding-left: 0;
       display: flex;
       justify-content: space-between;
@@ -249,10 +420,13 @@ const projects = [
       white-space: nowrap;
     }
 
+    .project-body {
+      padding-right: 0;
+    }
+
     .project-title {
       width: min(680px, calc(100% - 40px));
       margin-inline: auto;
-      padding-right: 0;
       text-align: left;
     }
 
@@ -261,18 +435,22 @@ const projects = [
       line-height: 1.04;
     }
 
-    .project-strip {
+    .project-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .archive-hero__inner {
+      width: min(100% - 40px, 520px);
+    }
+
+    .archive-hero__lead {
+      font-size: clamp(24px, 8vw, 34px);
+    }
+
+    .project-gallery {
       grid-template-columns: 1fr;
-      height: auto;
-      gap: 0;
-    }
-
-    .project-strip figure {
-      aspect-ratio: 4 / 3;
-    }
-
-    .project-poster {
-      aspect-ratio: 3 / 4;
     }
   }
 </style>

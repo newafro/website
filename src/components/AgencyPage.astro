@@ -172,7 +172,8 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
 
   .page-header h1.display-page {
     margin: 0 auto var(--na-s-7);
-    max-width: 18ch;
+    max-width: none;
+    white-space: nowrap;
   }
 
   .agency-deck {
@@ -391,6 +392,12 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     .role-media,
     .clients-media {
       aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .page-header h1.display-page {
+      white-space: normal;
     }
   }
 
