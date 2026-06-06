@@ -1,6 +1,6 @@
 # Wix parity remaining assets and decisions
 
-Generated after the first local fix pass on 2026-06-06.
+Generated after the local parity fix pass on 2026-06-06.
 
 Reference reports:
 
@@ -16,6 +16,10 @@ Reference reports:
 - Community uses square source portraits for the artists where matching local Wix-derived images already existed.
 - Archive and Behind-the-Scenes now share a denser timeline with the existing local archive image library.
 - Archive and Behind-the-Scenes now include the local archive video-backed hero, so the page no longer misses the video structure entirely.
+- About now uses the Wix-style `About us` structure, warmer editorial copy rhythm, and higher-quality local versions of the storefront images.
+- Contact no longer presents the form as broken. The form validates an email and opens a prefilled message to `hello@newafro.net`.
+- Contact uses the higher-quality storefront image background instead of the small scraped version.
+- Agency keeps `THE AGENCY` on one desktop line, matching the Wix heading structure more closely.
 
 ## Still needed from the team or designer
 
@@ -37,6 +41,13 @@ Reference reports:
 - Confirm archive copy and dates for the newly exposed timeline entries. The current copy is conservative and based on visible Wix/page context, but editorial review is still needed.
 - Confirm whether `/archive` and `/behind-the-scenes` should be identical aliases or whether one route should redirect to the other.
 - Supply any missing HERITAGE video/source material if the current `archive-hero.mp4` is not the intended Wix video.
+
+### About / Agency / Contact
+
+- Confirm the final team emails and roles, especially Ken's email/role spelling.
+- Confirm whether About should keep the current Wix-like small circular team portraits or switch to the newer high-resolution portrait set.
+- Confirm whether Contact should remain a mailto form or connect to a real form provider.
+- Confirm whether the public contact email should be `hello@newafro.net`, `cheria@newafro.net`, or a future `newafro.com` address.
 
 ### Global
 

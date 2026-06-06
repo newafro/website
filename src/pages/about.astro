@@ -4,8 +4,8 @@ import { u } from '../lib/url';
 
 // Keep About close to the public Wix narrative while the team section gives
 // editors a structured place for the current organisation.
-const heroLeft  = u('/uploads/about/01-IMG_6772.jpeg');
-const heroRight = u('/uploads/about/02-2fbda9_32a2c7a9b85a4d4f8cbd647a8fe33219-mv2_png.avif');
+const heroLeft  = u('/uploads/about/about-hero.jpg');
+const heroRight = u('/uploads/about/about-spread-2.jpg');
 
 const team = [
   {
@@ -56,10 +56,10 @@ const team = [
           loading="eager"
           decoding="async"
         />
-        <h1 class="display-page">ABOUT</h1>
+        <h1 class="display about-title">About us</h1>
         <p class="page-deck">
-          New Afro is a cultural platform dedicated to showcasing African
-          contemporary art and making it accessible to wider audiences.
+          New Afro is a cultural platform and creative agency connecting African
+          and European creative ecosystems.
         </p>
       </div>
     </header>
@@ -68,11 +68,15 @@ const team = [
       <div class="container team-intro__grid">
         <div class="team-intro__copy">
           <p>
-            Built on art curation and the Art.store, New Afro creates
-            opportunities for artists with African backgrounds to share their
-            work internationally. We work with artists, cultural institutions,
-            creative entrepreneurs, and brands who want to build meaningful,
-            sustainable connections across continents.
+            We work with artists, cultural institutions, creative entrepreneurs,
+            and brands who want to build meaningful, sustainable connections
+            across continents.
+          </p>
+          <p>
+            We believe contemporary African creativity is essential to today's
+            cultural landscape. Yet access, representation, and market
+            understanding remain unequal. New Afro exists to address these gaps,
+            both culturally and economically.
           </p>
         </div>
         <figure class="team-intro__media">
@@ -82,17 +86,28 @@ const team = [
     </section>
 
     <section class="practice container">
+      <p class="pillar-kicker">Our work is built on two core activities / pillars:</p>
       <h2 class="display practice__title">Cultural &amp; Curatorial Practice</h2>
       <div class="practice__grid">
-        <p>
-          Through curated exhibitions with international cultural institutions,
-          we provide a platform for emerging and established artists to explore
-          identity, heritage, and social change. Our work bridges cultural art
-          scenes, amplifies diverse voices and artistic narratives, and
-          challenges barriers in the art world.
-        </p>
+        <div class="practice__copy">
+          <p>
+            We conceive and curate exhibitions, pop-ups, and institutional
+            collaborations that amplify artists with African backgrounds and
+            foster meaningful intercultural dialogue.
+          </p>
+          <p>
+            Our projects challenge dominant narratives and move beyond tokenism.
+            We bridge diverse art scenes, amplify voices and artistic
+            narratives, and create spaces for reflection, exchange, and
+            visibility.
+          </p>
+          <p>
+            We do not curate for representation alone. We curate to reshape how
+            art, identity, and society are understood.
+          </p>
+        </div>
         <figure class="practice__media">
-          <img src={heroRight} alt="New Afro curatorial work" loading="lazy" decoding="async" />
+          <img src={heroRight} alt="New Afro curatorial work" loading="eager" decoding="async" />
         </figure>
       </div>
     </section>
@@ -100,13 +115,21 @@ const team = [
     <section class="practice practice--alt container">
       <h2 class="display practice__title">Art.Store &amp; Creative Agency</h2>
       <div class="practice__grid practice__grid--reverse">
-        <p>
-          Through the New Afro Art.Store, we offer a selection of prints and
-          original artworks that make African contemporary art easier to access.
-          Our agency work supports artists, creative entrepreneurs, and cultural
-          brands expanding between African and European markets with strategy,
-          positioning, and trusted creative networks.
-        </p>
+        <div class="practice__copy">
+          <p>
+            We support artists, creative entrepreneurs, and cultural brands
+            expanding between African and European markets.
+          </p>
+          <p>
+            Through strategic consulting, positioning, management guidance, and
+            network development, we help our clients navigate new ecosystems
+            with clarity and confidence.
+          </p>
+          <p>
+            We understand markets, but also mentalities. We translate cultural
+            complexity into sustainable opportunity.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -144,13 +167,18 @@ const team = [
   }
 
   .page-header {
-    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-9);
+    padding-block: clamp(var(--na-s-12), 8vw, var(--na-s-16)) var(--na-s-6);
     text-align: center;
   }
 
-  .page-header h1.display-page {
+  .about-title {
     margin: 0 auto var(--na-s-7);
     max-width: 18ch;
+    font-size: clamp(72px, 10vw, 124px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 0.95;
+    color: var(--na-bronze-deep);
   }
 
   .page-deck {
@@ -159,7 +187,7 @@ const team = [
     line-height: 1.5;
     color: var(--na-ink);
     margin: 0 auto;
-    max-width: 60ch;
+    max-width: 54ch;
   }
 
   .team-intro {
@@ -173,12 +201,18 @@ const team = [
     align-items: start;
   }
 
-  .team-intro__copy p {
+  .team-intro__copy {
+    align-self: center;
+    text-align: center;
+  }
+
+  .team-intro__copy p,
+  .practice__copy p {
     font-family: var(--na-font-body);
     font-size: 16px;
     line-height: 1.6;
     color: var(--na-ink);
-    margin: 0 0 var(--na-s-7);
+    margin: 0 auto var(--na-s-5);
     max-width: 60ch;
   }
 
@@ -187,6 +221,8 @@ const team = [
     aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--na-clay);
+    border: 8px solid var(--na-bronze-deep);
+    box-shadow: 0 8px 0 rgba(74, 43, 8, 0.18);
   }
 
   .team-intro__media img {
@@ -200,11 +236,22 @@ const team = [
     padding-block: clamp(var(--na-s-9), 5vw, var(--na-s-12));
   }
 
+  .pillar-kicker {
+    margin: 0 auto var(--na-s-8);
+    max-width: 44ch;
+    text-align: center;
+    font-family: var(--na-font-display);
+    font-size: clamp(18px, 2vw, 22px);
+    font-style: italic;
+    color: var(--na-bronze-deep);
+  }
+
   .practice__title {
     font-style: italic;
     font-weight: 300;
     text-align: center;
-    margin: 0 0 var(--na-s-9);
+    margin: 0 auto var(--na-s-8);
+    max-width: 14ch;
     font-size: clamp(32px, 5vw, 56px);
     color: var(--na-ink);
   }
@@ -216,23 +263,22 @@ const team = [
     align-items: center;
   }
 
-  .practice__grid p {
-    font-family: var(--na-font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--na-ink);
-    margin: 0;
-    max-width: 60ch;
+  .practice__copy {
+    align-self: center;
+    text-align: center;
   }
 
-  .practice__grid--reverse p {
+  .practice__grid--reverse .practice__copy {
     margin-left: auto;
+    margin-right: auto;
   }
 
   .practice__media {
     margin: 0;
     aspect-ratio: 4 / 5;
     overflow: hidden;
+    border: 8px solid var(--na-bronze-deep);
+    box-shadow: 0 8px 0 rgba(74, 43, 8, 0.18);
   }
 
   .practice__media img {
