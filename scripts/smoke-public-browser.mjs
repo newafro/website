@@ -24,7 +24,7 @@ const checks = [
     assert(page) {
       assertIncludes(page.href, previewUrl, 'preview desktop final URL');
       assertIncludes(page.title, 'New Afro', 'preview desktop title');
-      assertIncludes(page.text, 'Where art connects cultures.', 'preview desktop body');
+      assertIncludes(page.text, 'The Cultural and Creative Agency', 'preview desktop body');
     },
   },
   {
@@ -35,7 +35,7 @@ const checks = [
     assert(page) {
       assertIncludes(page.href, previewUrl, 'preview mobile final URL');
       assertIncludes(page.title, 'New Afro', 'preview mobile title');
-      assertIncludes(page.text, 'Where art connects cultures.', 'preview mobile body');
+      assertIncludes(page.text, 'The Cultural and Creative Agency', 'preview mobile body');
     },
   },
   {
