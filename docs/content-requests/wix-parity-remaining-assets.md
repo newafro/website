@@ -20,14 +20,15 @@ Reference reports:
 - Contact no longer presents the form as broken. The form validates an email and opens a prefilled message to `hello@newafro.net`.
 - Contact uses the higher-quality storefront image background instead of the small scraped version.
 - Agency keeps `THE AGENCY` on one desktop line, matching the Wix heading structure more closely.
+- Home now uses the public Wix hero video source `e7ed0d_1969e2b866d64f56878e425bbe127234` and a matching local poster frame.
+- Home hero copy now follows the `.net` structure: large `New Afro` title and `The Cultural and Creative Agency` subtitle.
 
 ## Still needed from the team or designer
 
 ### Home
 
-- Original Wix home hero image/video source for `wix:e7ed0d_1969e2b866d64f56878e425bbe127234f000`.
-- Decision: keep the current darker braid hero on `.com`, or restore the light/cream interior mood from `.net`.
-- If restoring `.net`, supply the matching MP4/background video and any red underline/wordmark treatment that should remain.
+- Confirm the restored `.net` light studio/bookshelf hero is the intended final production direction.
+- Confirm whether the homepage should keep the current `.com` browser title/tagline copy (`Where art connects cultures.`) or fully adopt the `.net` wording everywhere.
 
 ### Community
 
