@@ -38,7 +38,6 @@ const heroSrc = hero_image
           {author && <span class="post-author">By {author}</span>}
         </p>
         <h1>{title}</h1>
-        {description && <p class="lede">{description}</p>}
       </div>
     </header>
 
@@ -109,15 +108,6 @@ const heroSrc = hero_image
     line-height: 1.1;
     color: var(--na-ink);
     margin: 0 0 var(--na-s-9);
-  }
-
-  .lede {
-    font-family: var(--na-font-body);
-    font-size: clamp(var(--na-fs-lead), 1.6vw, 22px);
-    line-height: 1.5;
-    color: var(--na-graphite);
-    max-width: 60ch;
-    margin: 0;
   }
 
   .post-hero {
