@@ -19,7 +19,11 @@
     "status:release": "node scripts/print-release-status.mjs",
     "smoke:public": "node scripts/smoke-public-browser.mjs",
     "astro": "astro",
-    "audit:wix-parity": "node scripts/audit-wix-parity.mjs"
+    "audit:wix-parity": "node scripts/audit-wix-parity.mjs",
+    "capture:wix-reference": "node scripts/capture-wix-reference.mjs",
+    "capture:wix-reference:all": "REFERENCE_SCOPE=all node scripts/capture-wix-reference.mjs",
+    "capture:parity-review": "node scripts/capture-parity-review.mjs",
+    "import:wix-blog-content": "node scripts/import-wix-blog-content.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.2.1",

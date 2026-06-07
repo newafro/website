@@ -1,30 +1,28 @@
 ---
-import { u } from '../../lib/url';
+import { getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-  const { getCollection } = await import('astro:content');
   const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map(post => ({
     params: { slug: post.slug },
+    props: { post },
   }));
 }
 
-const { slug } = Astro.params;
-const target = u(`/blog/${slug}/`);
+const { post } = Astro.props;
+const { Content } = await post.render();
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=${target}`} />
-    <link rel="canonical" href={target} />
-    <meta name="robots" content="noindex" />
-    <title>Redirecting…</title>
-    <script is:inline define:vars={{ target }}>
-      window.location.replace(target);
-    </script>
-  </head>
-  <body>
-    <p>Redirecting to <a href={target}>{target}</a>…</p>
-  </body>
-</html>
+
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  author={post.data.author}
+  category={post.data.category}
+  hero_image={post.data.hero_image}
+  hero_alt={post.data.hero_alt}
+  gallery={post.data.gallery}
+>
+  <Content />
+</BlogPost>

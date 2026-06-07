@@ -21,9 +21,21 @@ const information = [
 ];
 
 const socials = [
-  { href: 'https://www.instagram.com/newafro', label: 'Instagram', short: 'ig' },
-  { href: 'https://www.facebook.com/newafro', label: 'Facebook', short: 'fb' },
-  { href: 'https://x.com/newafro', label: 'X', short: 'x' },
+  {
+    href: 'https://www.youtube.com/watch?v=s64Z1QeYEsc',
+    label: 'YouTube',
+    icon: u('/uploads/social/03-45bce1d726f64f1999c49feae57f6298.png'),
+  },
+  {
+    href: 'https://www.facebook.com/culturally.driven.development/',
+    label: 'Facebook',
+    icon: u('/uploads/social/04-4057345bcf57474b96976284050c00df.png'),
+  },
+  {
+    href: 'https://www.instagram.com/new.afro.na/',
+    label: 'Instagram',
+    icon: u('/uploads/social/05-e1aa082f7c0747168d9cf43e77046142.png'),
+  },
 ];
 ---
 
@@ -68,7 +80,7 @@ const socials = [
       <nav class="social-links" aria-label="Social links">
         {socials.map(item => (
           <a href={item.href} rel="me noopener" aria-label={item.label}>
-            <span aria-hidden="true">{item.short}</span>
+            <img src={item.icon} alt="" width="42" height="42" loading="lazy" decoding="async" aria-hidden="true" />
           </a>
         ))}
       </nav>
@@ -208,30 +220,28 @@ const socials = [
   .social-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--na-s-3);
-    margin-top: var(--na-s-5);
+    gap: 26px;
+    margin-top: var(--na-s-7);
   }
 
   .social-links a {
-    width: 34px;
-    height: 34px;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(50, 28, 1, 0.42);
+    border: 0;
     border-radius: 50%;
-    color: var(--na-ink);
-    font-family: var(--na-font-ui);
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1;
-    text-transform: uppercase;
+  }
+
+  .social-links img {
+    width: 42px;
+    height: 42px;
+    display: block;
   }
 
   .social-links a:hover {
-    border-color: var(--na-bronze);
-    background: var(--na-bronze);
-    color: #fff;
+    opacity: 0.78;
   }
 
   .fineprint {

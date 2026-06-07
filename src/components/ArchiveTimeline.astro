@@ -8,10 +8,10 @@ const projects = [
     venue: 'at Galerie Zato Benin',
     date: '05 DEC - 18 JAN',
     media: [
-      { src: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png', fit: 'contain', alt: 'Héritage exhibition poster' },
-      { src: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg', alt: 'Héritage exhibition group at Galerie Zato Benin' },
       { src: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg', alt: 'Visitors viewing a New Afro exhibition image' },
       { src: '/uploads/archive/03-d5693e_da0348303e0e4716af35c2ae6ee69ab5-mv2.jpeg', alt: 'Projection inside the Héritage exhibition' },
+      { src: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg', alt: 'Héritage exhibition group at Galerie Zato Benin' },
+      { src: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png', fit: 'contain', alt: 'Héritage exhibition poster' },
       { src: '/uploads/archive/05-d5693e_9586547c75354a43b64721b9750a2983-mv2.jpg', alt: 'Audience at Galerie Zato Benin' },
       { src: '/uploads/archive/06-e7ed0d_d700c5d9ae674e04abcec90a8c0c5212-mv2.jpg', fit: 'contain', alt: 'Héritage exhibition red poster' },
       { src: '/uploads/archive/07-d5693e_7bdb007d0fa046bebda86a2b69782381-mv2.jpg', alt: 'Héritage exhibition group portrait' },
@@ -185,7 +185,7 @@ const projects = [
 
 <section class="archive-timeline" aria-label="New Afro archive timeline">
   <ol class="project-list">
-    {projects.map((project, projectIndex) => (
+    {projects.map((project) => (
       <li class="archive-project">
         <div class="project-meta">
           <span>{project.kicker}</span>
@@ -196,12 +196,16 @@ const projects = [
             <h2>{project.title}</h2>
             <p>{project.venue}</p>
           </header>
-          <div class="project-gallery">
-            {project.media.map(item => (
-              <figure class={item.fit === 'contain' ? 'gallery-item gallery-item--contain' : 'gallery-item'}>
-                <img src={u(item.src)} alt={item.alt} loading={projectIndex < 2 ? 'eager' : 'lazy'} decoding="async" />
-              </figure>
-            ))}
+          <div class="project-carousel" data-archive-carousel>
+            <button class="project-carousel__button project-carousel__button--prev" type="button" aria-label={`Previous images for ${project.title}`}></button>
+            <div class="project-gallery" tabindex="0" aria-label={`${project.title} image carousel`}>
+              {project.media.map(item => (
+                <figure class={item.fit === 'contain' ? 'gallery-item gallery-item--contain' : 'gallery-item'}>
+                  <img src={u(item.src)} alt={item.alt} loading="eager" decoding="async" />
+                </figure>
+              ))}
+            </div>
+            <button class="project-carousel__button project-carousel__button--next" type="button" aria-label={`Next images for ${project.title}`}></button>
           </div>
         </div>
       </li>
@@ -209,10 +213,38 @@ const projects = [
   </ol>
 </section>
 
+<script>
+  const setupArchiveCarousels = () => {
+    document.querySelectorAll('[data-archive-carousel]').forEach((carousel) => {
+      const track = carousel.querySelector('.project-gallery');
+      const previous = carousel.querySelector('.project-carousel__button--prev');
+      const next = carousel.querySelector('.project-carousel__button--next');
+      const firstSlide = track?.querySelector('.gallery-item');
+
+      if (!(track instanceof HTMLElement) || !(firstSlide instanceof HTMLElement)) {
+        return;
+      }
+
+      const scrollOneSlide = (direction) => {
+        track.scrollBy({
+          left: direction * firstSlide.getBoundingClientRect().width,
+          behavior: 'smooth',
+        });
+      };
+
+      previous?.addEventListener('click', () => scrollOneSlide(-1));
+      next?.addEventListener('click', () => scrollOneSlide(1));
+    });
+  };
+
+  setupArchiveCarousels();
+  document.addEventListener('astro:page-load', setupArchiveCarousels);
+</script>
+
 <style>
   .archive-hero {
     position: relative;
-    min-height: clamp(420px, 54vh, 620px);
+    min-height: clamp(280px, 34vh, 420px);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -244,18 +276,18 @@ const projects = [
 
   .archive-hero__inner {
     width: min(760px, calc(100% - 48px));
-    padding-top: 34px;
+    padding-top: 22px;
   }
 
   .archive-hero h1 {
     font-family: var(--na-font-page-display);
     font-style: normal;
     font-weight: 700;
-    font-size: clamp(58px, 10vw, 122px);
+    font-size: clamp(52px, 9vw, 118px);
     line-height: 0.9;
     letter-spacing: 0.02em;
     color: var(--na-cream-warm);
-    margin: 0 0 clamp(44px, 8vw, 82px);
+    margin: 0 0 clamp(32px, 5vw, 62px);
   }
 
   .archive-hero__lead {
@@ -277,12 +309,10 @@ const projects = [
   }
 
   .archive-timeline {
-    background:
-      radial-gradient(circle at 78% 0%, rgba(101, 63, 20, 0.32), transparent 32%),
-      #2a1705;
+    background: #1f1000;
     color: var(--na-cream-warm);
     min-height: 100vh;
-    padding: clamp(72px, 8vw, 118px) 0 clamp(72px, 9vw, 128px);
+    padding: 0 0 clamp(54px, 7vw, 92px);
   }
 
   .project-list {
@@ -290,33 +320,32 @@ const projects = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: clamp(82px, 10vw, 154px);
+    gap: 0;
   }
 
   .archive-project {
-    display: grid;
-    grid-template-columns: minmax(92px, 13vw) minmax(0, 1fr);
-    gap: clamp(20px, 3vw, 48px);
-    align-items: start;
+    display: block;
+    border-top: 1px solid rgba(255, 249, 235, 0.08);
   }
 
   .project-meta {
-    position: sticky;
-    top: 112px;
-    padding-left: clamp(18px, 3vw, 48px);
-    color: rgba(255, 249, 235, 0.58);
+    position: static;
+    padding: clamp(18px, 2.2vw, 30px) 20px 0;
+    color: rgba(255, 249, 235, 0.82);
     font-family: var(--na-font-sans);
-    font-size: 12px;
-    line-height: 1.4;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: clamp(13px, 1.2vw, 17px);
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: none;
+    background: #2a1705;
   }
 
   .project-meta strong {
     display: block;
-    margin-top: 12px;
+    margin-top: 4px;
     color: var(--na-cream-warm);
-    font-size: clamp(18px, 2.2vw, 30px);
+    font-size: clamp(13px, 1.2vw, 16px);
     font-weight: 400;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -324,21 +353,23 @@ const projects = [
 
   .project-body {
     min-width: 0;
-    padding-right: clamp(16px, 3vw, 48px);
+    padding-right: 0;
   }
 
   .project-title {
     text-align: center;
-    margin: 0 0 clamp(32px, 4.2vw, 58px);
+    margin: 0;
+    padding: 8px 20px clamp(18px, 2.2vw, 30px);
+    background: #2a1705;
   }
 
   .project-title h2 {
-    margin: 0 0 var(--na-s-5);
+    margin: 0 0 4px;
     font-family: var(--na-font-display);
-    font-size: clamp(34px, 4.3vw, 64px);
+    font-size: clamp(18px, 2.3vw, 34px);
     font-style: italic;
     font-weight: 300;
-    line-height: 0.98;
+    line-height: 1.04;
     letter-spacing: 0;
     color: var(--na-cream-warm);
     overflow-wrap: anywhere;
@@ -348,29 +379,49 @@ const projects = [
     margin: 0;
     max-width: none;
     font-family: var(--na-font-sans);
-    font-size: clamp(17px, 1.65vw, 26px);
+    font-size: clamp(12px, 1vw, 15px);
     line-height: 1.2;
-    color: rgba(255, 249, 235, 0.9);
+    color: rgba(255, 249, 235, 0.82);
+  }
+
+  .project-carousel {
+    position: relative;
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    overflow: hidden;
+    background: #140900;
   }
 
   .project-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
     background: #140900;
   }
 
+  .project-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
   .gallery-item {
+    flex: 0 0 calc(100vw / 3);
     margin: 0;
     min-width: 0;
+    height: clamp(430px, 36vw, 740px);
+    overflow: hidden;
     background: #140900;
+    scroll-snap-align: start;
   }
 
   .gallery-item img {
     width: 100%;
-    aspect-ratio: 4 / 3;
     height: 100%;
     object-fit: cover;
+    display: block;
     background: #140900;
   }
 
@@ -379,15 +430,55 @@ const projects = [
     padding: clamp(8px, 1vw, 18px);
   }
 
-  @media (min-width: 1180px) {
-    .project-gallery {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+  .project-carousel__button {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: clamp(42px, 4.2vw, 70px);
+    height: clamp(58px, 7vw, 96px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: rgba(255, 249, 235, 0.95);
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+
+  .project-carousel__button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(24px, 2.6vw, 42px);
+    height: clamp(24px, 2.6vw, 42px);
+    border-top: 3px solid currentColor;
+    border-left: 3px solid currentColor;
+  }
+
+  .project-carousel__button--prev {
+    left: clamp(8px, 1.8vw, 30px);
+  }
+
+  .project-carousel__button--prev::before {
+    transform: translate(-35%, -50%) rotate(-45deg);
+  }
+
+  .project-carousel__button--next {
+    right: clamp(8px, 1.8vw, 30px);
+  }
+
+  .project-carousel__button--next::before {
+    transform: translate(-65%, -50%) rotate(135deg);
+  }
+
+  .project-carousel__button:focus-visible {
+    outline: 2px solid var(--na-cream-warm);
+    outline-offset: -8px;
   }
 
   @media (max-width: 900px) {
     .archive-hero {
-      min-height: 360px;
+      min-height: 300px;
     }
 
     .archive-hero h1 {
@@ -395,48 +486,31 @@ const projects = [
       margin-bottom: 44px;
     }
 
-    .archive-timeline {
-      padding-top: clamp(64px, 15vw, 92px);
-    }
-
-    .archive-project {
-      grid-template-columns: 1fr;
-    }
-
     .project-meta {
-      position: static;
-      width: min(680px, calc(100% - 40px));
-      margin: 0 auto -20px;
-      padding-left: 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: baseline;
+      width: 100%;
+      margin: 0;
+      padding-inline: 20px;
     }
 
     .project-meta strong {
-      margin-top: 0;
-      font-size: 18px;
+      margin-top: 4px;
       white-space: nowrap;
     }
 
-    .project-body {
-      padding-right: 0;
-    }
-
     .project-title {
-      width: min(680px, calc(100% - 40px));
-      margin-inline: auto;
-      text-align: left;
+      width: 100%;
+      margin-inline: 0;
+      text-align: center;
     }
 
     .project-title h2 {
-      font-size: clamp(34px, 11vw, 54px);
+      font-size: clamp(18px, 7vw, 34px);
       line-height: 1.04;
     }
 
-    .project-gallery {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .gallery-item {
+      flex-basis: 72vw;
+      height: clamp(420px, 76vw, 640px);
     }
   }
 
@@ -449,8 +523,14 @@ const projects = [
       font-size: clamp(24px, 8vw, 34px);
     }
 
-    .project-gallery {
-      grid-template-columns: 1fr;
+    .gallery-item {
+      flex-basis: 88vw;
+      height: clamp(340px, 92vw, 540px);
+    }
+
+    .project-carousel__button {
+      width: 40px;
+      height: 64px;
     }
   }
 </style>

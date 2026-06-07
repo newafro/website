@@ -5,7 +5,6 @@ import { u } from '../lib/url';
 const heroMark      = u('/uploads/agency/01-Asset-2011_2x.png');
 const structuralImg = u('/uploads/agency/02-d5693e_86b37a23b8e54299b3b66a0a83993602-mv2.jpg');
 const roleImg       = u('/uploads/agency/04-e7ed0d_a3c5ac89d66d468e843ae9e0d93741b5-mv2.jpg');
-const roleSpreadImg = u('/uploads/agency/03-e7ed0d_904c847a6e474f2386bc4ad39554086f-mv2.jpg');
 const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5cae-mv2.jpg');
 ---
 
@@ -114,17 +113,6 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
       </div>
     </section>
 
-    <section class="section role-spread-section">
-      <figure class="role-spread">
-        <img
-          src={roleSpreadImg}
-          alt="New Afro at work — cross-continental partnerships"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    </section>
-
     <section class="section clients-section">
       <div class="container clients-grid">
         <figure class="clients-media">
@@ -161,7 +149,7 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
 
 <style>
   .agency-page {
-    background: var(--na-cream);
+    background: #fff;
     color: var(--na-ink);
   }
 
@@ -193,17 +181,18 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     object-fit: contain;
   }
 
-  .section {
-    padding-block: clamp(var(--na-s-12), 6vw, var(--na-s-14));
-  }
+  .section { padding-block: 0; }
 
   .spread-grid,
   .role-grid,
   .clients-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(var(--na-s-9), 4vw, var(--na-s-14));
-    align-items: center;
+    gap: 0;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
   }
 
   .spread-media,
@@ -211,7 +200,7 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
   .clients-media {
     position: relative;
     margin: 0;
-    aspect-ratio: 4 / 5;
+    min-height: clamp(420px, 50vw, 700px);
     overflow: hidden;
     background: var(--na-clay);
   }
@@ -247,24 +236,40 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     transform: translateX(-50%);
     text-align: center;
     color: #fff;
-    font-size: clamp(28px, 3.2vw, 50px);
+    font-family: var(--na-font-headline);
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(28px, 3.8vw, 56px);
     line-height: 1.05;
     letter-spacing: 0.04em;
+  }
+
+  .spread-copy,
+  .role-copy,
+  .clients-copy,
+  .cta-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: clamp(420px, 50vw, 700px);
+    padding: clamp(var(--na-s-9), 5vw, var(--na-s-14));
+    text-align: center;
   }
 
   .spread-copy h2,
   .role-copy h2,
   .clients-copy h2,
   .cta-inner h2 {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(32px, 4vw, 50px);
+    font-family: var(--na-font-headline);
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(18px, 1.5vw, 24px);
     line-height: 1.15;
     color: var(--na-ink);
-    margin: 0 0 var(--na-s-9);
-    text-transform: none;
-    letter-spacing: 0.01em;
+    margin: 0 0 var(--na-s-7);
+    text-transform: uppercase;
+    letter-spacing: 0;
   }
 
   .spread-copy p,
@@ -272,50 +277,31 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
   .clients-copy p,
   .cta-inner p {
     font-family: var(--na-font-body);
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: clamp(14px, 1.1vw, 17px);
+    line-height: 1.45;
     color: var(--na-ink);
-    margin: 0 0 var(--na-s-7);
-    max-width: 60ch;
+    margin: 0 0 var(--na-s-5);
+    max-width: 46ch;
   }
 
   .lede {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(20px, 2vw, 26px) !important;
-    line-height: 1.4 !important;
+    font-family: var(--na-font-body);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(15px, 1.2vw, 18px) !important;
+    line-height: 1.45 !important;
     color: var(--na-ink);
-    margin-bottom: var(--na-s-9) !important;
+    margin-bottom: var(--na-s-7) !important;
   }
 
   .coda {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(18px, 1.6vw, 22px) !important;
-    line-height: 1.4 !important;
-    color: var(--na-bronze-deep, var(--na-bronze));
-    margin-top: var(--na-s-9);
-  }
-
-  .role-spread-section {
-    padding-block: 0;
-  }
-
-  .role-spread {
-    margin: 0;
-    width: 100%;
-    aspect-ratio: 1440 / 627;
-    overflow: hidden;
-    background: var(--na-clay);
-  }
-
-  .role-spread img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    font-family: var(--na-font-body);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(15px, 1.2vw, 18px) !important;
+    line-height: 1.45 !important;
+    color: var(--na-ink);
+    margin-top: var(--na-s-7);
   }
 
   .clients-list {
@@ -329,12 +315,13 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
 
   .clients-list li {
     font-family: var(--na-font-body);
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: clamp(14px, 1.1vw, 17px);
+    line-height: 1.45;
     color: var(--na-ink);
     padding-left: 1.2em;
     position: relative;
-    max-width: 50ch;
+    max-width: 42ch;
+    text-align: center;
   }
 
   .clients-list li::before {
@@ -347,7 +334,7 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
 
   .cta-section {
     text-align: center;
-    padding-block: clamp(var(--na-s-14), 7vw, var(--na-s-16));
+    padding-block: 0;
   }
 
   .cta-inner h2 {
@@ -383,7 +370,7 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     .role-grid,
     .clients-grid {
       grid-template-columns: 1fr;
-      gap: var(--na-s-9);
+      gap: 0;
     }
 
     .role-grid .role-media { order: -1; }
