@@ -1,0 +1,453 @@
+---
+import { u } from '../lib/url';
+
+const restitutionArtists = [
+  {
+    name: 'Chidi Nwaubani (Looty)',
+    location: 'Nigeria, UK',
+    image: '/uploads/projects/01-Chidi.jpeg',
+  },
+  {
+    name: 'Nuits Balnéaires (photography)',
+    location: "Côte d'Ivoire",
+    image: '/uploads/projects/02-Portrait-Nuits-Baln-C3-A9aires--Octobre-2023-_edited.jpg',
+  },
+  {
+    name: 'Chelsea Odufu (Black Lady Goddess)',
+    location: 'Nigeria, Guiana, United States',
+    image: '/uploads/projects/03-DSC00595_edited-20-1-.webp',
+  },
+  {
+    name: 'Ibaaku (Musical performance)',
+    location: 'Senegal',
+    image: '/uploads/projects/04-IBAAKU-9_edited.jpg',
+  },
+];
+
+const heritageArtists = [
+  {
+    name: "Nuits Balnéaires (Côte-D'Ivoire)",
+    role: 'Photographer, visual artist and poet,',
+    work: "presents: l'amour est ce qu'il reste quand on aura tout oublié.",
+    image: '/uploads/projects/05-7273cd_3c5c0dc0b45b4dff988168492474d604-mv2.jpg',
+  },
+  {
+    name: 'Tobi Onabolu (Nigeria, UK)',
+    role: 'Artist-Filmmaker and writer,',
+    work: 'presents: The Constant is Flux.',
+    image: '/uploads/projects/06-Bildschirmfoto-202025-10-16-20um-2000_19_edite.jpg',
+  },
+];
+---
+
+<article class="projects-page">
+  <section class="project-section project-section--first" aria-labelledby="restitution-title">
+    <header class="project-header">
+      <h1 id="restitution-title">Restitution...et après?</h1>
+      <p class="project-subtitle">an itinerary project</p>
+      <div class="project-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="project-grid project-grid--restitution">
+      <div class="project-copy">
+        <p>
+          “African cultural heritage needs to be restituted.” This claim,
+          widely voiced by African cultural and political actors since the
+          independence era, has gained renewed visibility in recent years.
+        </p>
+        <p>
+          Yet, beyond its apparent urgency, restitution remains a complex and
+          multifaceted process that raises critical questions: What should be
+          restituted, and to whom? Under what conditions? Can restitution ever
+          be complete? And more importantly, what happens after return?
+        </p>
+        <p>
+          <em>Restitution… and then what?</em> is an itinerant curatorial and
+          research-based project initiated in 2024 that seeks to move beyond the
+          moment of restitution itself, in order to examine its long-term
+          cultural, social, and artistic implications across African and
+          diasporic contexts.
+        </p>
+        <p>
+          Combining exhibitions, public programs, and editorial formats, the
+          project creates a space for dialogue between artists, researchers, and
+          cultural practitioners, exploring how restitution contributes to the
+          (re)construction of cultural identity, the reactivation of collective
+          memory, and the transmission and reinterpretation of cultural
+          heritage.
+        </p>
+        <p>
+          Informed by ongoing research, including a Master’s thesis focusing on
+          Benin as a case study following the restitution of 26 royal artifacts,
+          the project adopts a transnational and forward-looking perspective,
+          engaging with both material and immaterial dimensions of heritage and
+          restitution.
+        </p>
+        <p>
+          By fostering critical reflection and exchange, it aims to address a
+          key gap in current debates by shifting the focus from restitution as
+          an event to restitution as an ongoing process shaping cultural
+          futures, with particular attention to questions of heritage,
+          sovereignty, transmission, and sustainable cultural development.
+        </p>
+      </div>
+
+      <aside class="project-artists" aria-label="Restitution artists">
+        <p class="artist-intro">
+          Meet the first 4 artists of this project<br />
+          and their respective projects presented 23.05-06.06.2024<br />
+          at Institut français Mainz.
+        </p>
+
+        <div class="artist-grid artist-grid--four">
+          {restitutionArtists.map((artist) => (
+            <figure>
+              <img src={u(artist.image)} alt={artist.name} loading="lazy" decoding="async" />
+              <figcaption>
+                <strong>{artist.name}</strong>
+                <span>{artist.location}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </aside>
+    </div>
+
+    <p class="project-cta">
+      <a class="catalogue-link" href={u('/uploads/catalogues/restitution-et-apres-catalogue.pdf')} download>
+        View Catalogue
+      </a>
+    </p>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <section class="project-section project-section--heritage" aria-labelledby="heritage-title">
+    <header class="project-header project-header--compact">
+      <h2 id="heritage-title">Héritage...<br />Mémoires en mouvement?</h2>
+      <p class="project-date">05.December 2025 - 30.January 2026</p>
+      <div class="project-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="project-grid project-grid--heritage">
+      <div class="project-copy">
+        <p>
+          Everything is movement. Humanity itself is movement- the very core of
+          our existence. As Achille Mbembe reminds us, the history of humanity
+          is a history of circulation.
+        </p>
+        <p>
+          But if everything moves, what remains of us?<br />
+          In Cotonou-the project’s first stop outside Europe, Nuits Balnéaires
+          and Tobi Onabolu engage with themes of identity, heritage, memory, and
+          transformation. Through their works: <em>Love Is What Remains When We
+          Have Forgotten Everything</em> and <em>The Constant Is Flux</em>, they
+          open a dialogue between material and immaterial archives, expanding
+          the limits of collective memory and awakening echoes of the past
+          within us.
+        </p>
+        <p>
+          Who are we when everything is in motion?<br />
+          What endures of the body, of being, of memory?<br />
+          What remains when things relocate, transform, or fade?
+        </p>
+        <p class="small-copy">
+          The exhibition in Benin was curated by Cheria Essieke-Bayer with the
+          New Afro team in collaboration with Gallery Zato (Benin), with the
+          support of Institut français Bénin, Ambassade de France au Bénin,
+          Institut Goethe-Togo, die Deutsche Botschaft in Benin, Mansa,
+          OffResort and Schloss Vaux.
+        </p>
+      </div>
+
+      <aside class="heritage-artists" aria-label="Héritage artists">
+        {heritageArtists.map((artist) => (
+          <figure>
+            <figcaption>
+              <strong>{artist.name} :</strong>
+              <span>{artist.role}</span>
+              <em>{artist.work}</em>
+            </figcaption>
+            <img src={u(artist.image)} alt={artist.name} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </aside>
+    </div>
+
+    <p class="project-cta">
+      <a class="catalogue-link" href={u('/uploads/catalogues/heritage-memoires-en-mouvement-catalogue.pdf')} download>
+        View Catalogue
+      </a>
+    </p>
+  </section>
+</article>
+
+<style>
+  .projects-page {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 12%, rgba(125, 76, 20, 0.9), transparent 38%),
+      linear-gradient(180deg, #4c2b08 0%, #3a1d04 48%, #4c2b08 100%);
+    color: #fff9eb;
+    padding: clamp(36px, 5vw, 72px) 24px clamp(72px, 8vw, 112px);
+  }
+
+  .project-section {
+    width: min(980px, 100%);
+    margin: 0 auto;
+  }
+
+  .project-section--first {
+    padding-top: clamp(10px, 2vw, 26px);
+  }
+
+  .project-header {
+    width: min(1120px, 100%);
+    text-align: center;
+    margin: 0 auto clamp(66px, 8vw, 112px);
+  }
+
+  .project-header h1,
+  .project-header h2 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 0.95;
+    color: #fff9eb;
+    margin: 0;
+  }
+
+  .project-header h1 {
+    font-size: clamp(70px, 8.2vw, 118px);
+  }
+
+  .project-header h2 {
+    font-size: clamp(48px, 7vw, 90px);
+  }
+
+  .project-subtitle {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-size: clamp(28px, 3.8vw, 46px);
+    line-height: 1.1;
+    margin: 14px auto 34px;
+    max-width: none;
+  }
+
+  .project-date {
+    margin: 18px auto 42px;
+    font-family: var(--na-font-body);
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .project-rule {
+    width: 290px;
+    max-width: 60vw;
+    height: 1px;
+    margin: 0 auto;
+    background: rgba(255, 249, 235, 0.6);
+  }
+
+  .project-grid {
+    display: grid;
+    align-items: start;
+  }
+
+  .project-grid--restitution {
+    grid-template-columns: 0.88fr 1.12fr;
+    gap: clamp(42px, 6vw, 76px);
+  }
+
+  .project-grid--heritage {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(48px, 6vw, 78px);
+  }
+
+  .project-copy {
+    font-family: var(--na-font-body);
+    font-size: clamp(14px, 1.15vw, 16px);
+    line-height: 1.5;
+    text-align: justify;
+  }
+
+  .project-copy p {
+    margin: 0 0 22px;
+    max-width: none;
+  }
+
+  .project-copy em {
+    font-style: italic;
+  }
+
+  .small-copy {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .artist-intro {
+    font-family: var(--na-font-body);
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.35;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 auto 24px;
+    max-width: 42ch;
+  }
+
+  .artist-grid {
+    display: grid;
+    gap: 76px 34px;
+  }
+
+  .artist-grid--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .artist-grid figure,
+  .heritage-artists figure {
+    margin: 0;
+  }
+
+  .artist-grid img,
+  .heritage-artists img {
+    width: 100%;
+    object-fit: cover;
+    background: #fff9eb;
+    border: 6px solid #fff9eb;
+    display: block;
+  }
+
+  .artist-grid img {
+    aspect-ratio: 3 / 4;
+  }
+
+  .artist-grid figcaption {
+    padding-top: 12px;
+    font-family: var(--na-font-body);
+    font-size: 13px;
+    line-height: 1.25;
+    color: #fff9eb;
+    text-align: center;
+  }
+
+  .artist-grid strong,
+  .artist-grid span,
+  .heritage-artists strong,
+  .heritage-artists span,
+  .heritage-artists em {
+    display: block;
+  }
+
+  .project-cta {
+    margin: clamp(54px, 7vw, 78px) auto 0;
+    text-align: center;
+  }
+
+  .catalogue-link {
+    min-width: 232px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 44px;
+    border-radius: 999px;
+    background: #fff9eb;
+    color: #4a2b08;
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  .catalogue-link:hover {
+    color: #4a2b08;
+    background: #ded9c7;
+  }
+
+  .section-divider {
+    width: min(680px, calc(100% - 48px));
+    height: 1px;
+    margin: clamp(54px, 7vw, 82px) auto clamp(50px, 7vw, 78px);
+    background: rgba(255, 249, 235, 0.5);
+  }
+
+  .project-header--compact {
+    margin-bottom: clamp(58px, 7vw, 88px);
+  }
+
+  .heritage-artists {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(22px, 3vw, 34px);
+    align-items: start;
+  }
+
+  .heritage-artists figure:first-child {
+    padding-top: clamp(86px, 10vw, 132px);
+  }
+
+  .heritage-artists figcaption {
+    min-height: 120px;
+    margin-bottom: 22px;
+    font-family: var(--na-font-body);
+    font-size: clamp(13px, 1.2vw, 17px);
+    line-height: 1.25;
+    font-weight: 700;
+    color: #fff9eb;
+  }
+
+  .heritage-artists em {
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .heritage-artists img {
+    aspect-ratio: 0.84;
+  }
+
+  @media (max-width: 860px) {
+    .project-grid,
+    .project-grid--restitution,
+    .project-grid--heritage {
+      grid-template-columns: 1fr;
+    }
+
+    .project-header {
+      margin-bottom: 48px;
+    }
+
+    .project-copy {
+      text-align: left;
+    }
+
+    .heritage-artists figure:first-child {
+      padding-top: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .projects-page {
+      padding-inline: 20px;
+    }
+
+    .project-header h1 {
+      font-size: clamp(54px, 18vw, 86px);
+    }
+
+    .project-header h2 {
+      font-size: clamp(42px, 15vw, 72px);
+    }
+
+    .artist-grid--four,
+    .heritage-artists {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .heritage-artists figcaption {
+      min-height: 0;
+    }
+  }
+</style>
