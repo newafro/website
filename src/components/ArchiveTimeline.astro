@@ -8,12 +8,10 @@ const projects = [
     venue: 'at Galerie Zato Benin',
     date: '05 DEC - 18 JAN',
     media: [
-      { src: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg', alt: 'Visitors viewing a New Afro exhibition image' },
       { src: '/uploads/archive/03-d5693e_da0348303e0e4716af35c2ae6ee69ab5-mv2.jpeg', alt: 'Projection inside the Héritage exhibition' },
       { src: '/uploads/archive/04-d5693e_d28e195910c04107b636ed30c67b3bdd-mv2.jpeg', alt: 'Héritage exhibition group at Galerie Zato Benin' },
-      { src: '/uploads/events/03-d5693e_5a2cab3b3f634ce98c03ff7dfa9f834e-mv2.png', fit: 'contain', alt: 'Héritage exhibition poster' },
       { src: '/uploads/archive/05-d5693e_9586547c75354a43b64721b9750a2983-mv2.jpg', alt: 'Audience at Galerie Zato Benin' },
-      { src: '/uploads/archive/06-e7ed0d_d700c5d9ae674e04abcec90a8c0c5212-mv2.jpg', fit: 'contain', alt: 'Héritage exhibition red poster' },
+      { src: '/uploads/archive/02-d5693e_8839c260eaca4ff08bb5e521248241fd-mv2.jpg', alt: 'Visitors viewing a New Afro exhibition image' },
       { src: '/uploads/archive/07-d5693e_7bdb007d0fa046bebda86a2b69782381-mv2.jpg', alt: 'Héritage exhibition group portrait' },
       { src: '/uploads/archive/08-d5693e_f22c351904a840e084fc76aa667716ee-mv2.jpg', alt: 'Earth detail from the Héritage exhibition' },
       { src: '/uploads/archive/09-d5693e_2840031d05904b5da9c8ba61e9347901-mv2.jpg', alt: 'Héritage exhibition conversation' },
@@ -38,14 +36,13 @@ const projects = [
     venue: 'at Institut français Mainz',
     date: '05 SEPT - 28 SEPT',
     media: [
-      { src: '/uploads/events/05-e7ed0d_351931db808f4108a357420140c5cdd2-mv2.jpg', alt: 'Nazo Po Tozali exhibition visual' },
       { src: '/uploads/archive/22-e7ed0d_5f2cbc99117b4f64a88146f89682cc0f-mv2.png', fit: 'contain', alt: 'The curators view for Nazo Po Tozali' },
       { src: '/uploads/archive/23-e7ed0d_d43cc58a241244f5a0678d3d159225f4-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali curatorial text' },
       { src: '/uploads/archive/24-e7ed0d_08c328a473e74f10b556f4f99e762170-mv2.png', fit: 'contain', alt: 'Artist selection text for Nazo Po Tozali' },
-      { src: '/uploads/archive/25-e7ed0d_818ec240df6645c894c751f1ed0c17dc-mv2.png', alt: 'Nazo Po Tozali installation view' },
       { src: '/uploads/archive/26-e7ed0d_0c1eb68354fd4177b0252f874b95014c-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali reflection panel' },
       { src: '/uploads/archive/27-e7ed0d_399729601e244a4c97d981daf9b52912-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali visitor prompt' },
       { src: '/uploads/archive/28-e7ed0d_d64e58b652db4122a387d214ffd3687a-mv2.png', fit: 'contain', alt: 'Nazo Po Tozali interview text' },
+      { src: '/uploads/archive/25-e7ed0d_818ec240df6645c894c751f1ed0c17dc-mv2.png', alt: 'Nazo Po Tozali installation view' },
       { src: '/uploads/archive/31-d5693e_a44c27793f2f4f04bcb65b60434dbbc4-mv2.jpg', alt: 'Visitor browsing a New Afro exhibition publication' },
       { src: '/uploads/archive/32-d5693e_233fe4444d404cf7b9ee3178edef1228-mv2.jpg', alt: 'Opening gathering at Institut français Mainz' },
       { src: '/uploads/archive/33-e7ed0d_16d63be910d741a2966094aae7055944-mv2.jpg', alt: 'Visitor viewing framed artwork' },
@@ -175,12 +172,18 @@ const projects = [
   <div class="archive-hero__scrim" aria-hidden="true"></div>
   <div class="archive-hero__inner">
     <h1 id="archive-title">THE ARCHIVE</h1>
-    <p class="archive-hero__lead">Step into our creative world!</p>
-    <p>
-      A living timeline of exhibitions, projects, collaborations, and field
-      notes from New Afro.
-    </p>
   </div>
+</section>
+
+<section class="archive-intro" aria-label="Archive introduction">
+  <h2>Step into our creative world!</h2>
+  <p>
+    Here, we invite you to explore our latest updates, cultural projects, and exciting
+    collaborations. Behind every masterpiece, there’s a journey. From the spark of an idea
+    to its full realization. Often, the magic behind the scenes goes unseen, but we believe
+    the process is just as inspiring as the outcome. By sharing this journey with you, we
+    aim to connect and inspire.
+  </p>
 </section>
 
 <section class="archive-timeline" aria-label="New Afro archive timeline">
@@ -244,7 +247,7 @@ const projects = [
 <style>
   .archive-hero {
     position: relative;
-    min-height: clamp(280px, 34vh, 420px);
+    min-height: clamp(260px, 28vw, 390px);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -275,7 +278,7 @@ const projects = [
   }
 
   .archive-hero__inner {
-    width: min(760px, calc(100% - 48px));
+    width: min(1320px, calc(100% - 48px));
     padding-top: 22px;
   }
 
@@ -283,29 +286,39 @@ const projects = [
     font-family: var(--na-font-page-display);
     font-style: normal;
     font-weight: 700;
-    font-size: clamp(52px, 9vw, 118px);
+    font-size: clamp(62px, 8vw, 132px);
     line-height: 0.9;
     letter-spacing: 0.02em;
     color: var(--na-cream-warm);
-    margin: 0 0 clamp(32px, 5vw, 62px);
+    margin: 0;
+    white-space: nowrap;
   }
 
-  .archive-hero__lead {
-    margin: 0 auto var(--na-s-4);
+  .archive-intro {
+    background: #140900;
+    color: var(--na-cream-warm);
+    text-align: center;
+    padding: clamp(74px, 8vw, 132px) 24px clamp(68px, 7vw, 116px);
+    border-bottom: 1px solid rgba(255, 249, 235, 0.08);
+  }
+
+  .archive-intro h2 {
+    margin: 0 auto clamp(36px, 4vw, 56px);
     font-family: var(--na-font-display);
     font-style: italic;
-    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 300;
+    font-size: clamp(42px, 5.2vw, 78px);
     line-height: 1.05;
     color: var(--na-cream-warm);
   }
 
-  .archive-hero p:not(.archive-hero__lead) {
+  .archive-intro p {
     margin: 0 auto;
-    max-width: 54ch;
-    color: rgba(255, 249, 235, 0.82);
+    max-width: 88ch;
+    color: rgba(255, 249, 235, 0.88);
     font-family: var(--na-font-body);
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: clamp(14px, 1.15vw, 18px);
+    line-height: 1.9;
   }
 
   .archive-timeline {
@@ -478,12 +491,11 @@ const projects = [
 
   @media (max-width: 900px) {
     .archive-hero {
-      min-height: 300px;
+      min-height: 260px;
     }
 
     .archive-hero h1 {
-      font-size: clamp(48px, 15vw, 72px);
-      margin-bottom: 44px;
+      font-size: clamp(44px, 13vw, 72px);
     }
 
     .project-meta {
@@ -519,8 +531,12 @@ const projects = [
       width: min(100% - 40px, 520px);
     }
 
-    .archive-hero__lead {
-      font-size: clamp(24px, 8vw, 34px);
+    .archive-intro {
+      padding: 58px 22px 62px;
+    }
+
+    .archive-intro h2 {
+      font-size: clamp(34px, 11vw, 48px);
     }
 
     .gallery-item {
