@@ -14,7 +14,7 @@ const nav = [
 <header class="site-header">
   <div class="header-inner">
     <a class="brand-link" href={u('/')} aria-label="New Afro home">
-      <img src={u('/logo.png')} alt="" width="48" height="39" loading="eager" decoding="async" />
+      <img src={u('/logo.png')} alt="" width="3337" height="2363" loading="eager" decoding="async" />
     </a>
   </div>
 
@@ -74,18 +74,29 @@ const nav = [
 
   .header-inner {
     width: 100%;
-    max-width: 1040px;
     height: 92px;
-    margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 clamp(20px, 3vw, 40px);
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .brand-link {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    min-height: 52px;
+    color: #000;
+    line-height: 0;
+  }
+
+  .brand-link img {
+    width: 58px;
+    height: auto;
+    display: block;
+    filter: brightness(0);
   }
 
   .nav-toggle {
@@ -102,17 +113,10 @@ const nav = [
     cursor: pointer;
     position: fixed;
     top: 23px;
-    left: 24px;
+    right: 24px;
     flex: 0 0 48px;
     z-index: 90;
     transition: color 180ms ease;
-  }
-
-  @media (min-width: 1200px) {
-    .nav-toggle {
-      left: auto;
-      right: 24px;
-    }
   }
 
   .bar {
@@ -210,13 +214,13 @@ const nav = [
 
   @media (max-width: 760px) {
     .nav-toggle {
-      left: 22px;
-      right: auto;
+      right: 22px;
     }
 
     .nav-toggle[aria-expanded="true"] {
       top: 26px;
       left: 22px;
+      right: auto;
     }
 
     .nav-panel {
