@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { u } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const artists = await getCollection('artists', ({ data }) => !data.draft);
+  return artists.map((artist) => ({
+    params: { slug: artist.slug },
+    props: { artist },
+  }));
+}
+
+const { artist } = Astro.props;
+const { Content } = await artist.render();
+const hasBody = artist.body.trim().length > 0;
+const portrait = artist.data.portrait
+  ? (artist.data.portrait.startsWith('/') ? u(artist.data.portrait) : artist.data.portrait)
+  : undefined;
+const description = artist.data.short_bio;
+const location = [artist.data.city, artist.data.country].filter(Boolean).join(', ');
+---
+
+<BaseLayout
+  title={`${artist.data.name} — New Afro`}
+  description={description}
+  image={portrait}
+>
+  <article class="artist-page">
+    <div class="artist-shell">
+      <a class="back-link" href={u('/community')}>Back</a>
+
+      <header class="artist-header">
+        <h1>{artist.data.name}</h1>
+      </header>
+
+      <div class="artist-profile">
+        {portrait && (
+          <figure class="artist-portrait">
+            <img
+              src={portrait}
+              alt={artist.data.portrait_alt ?? `Portrait of ${artist.data.name}`}
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        )}
+
+        <section class="artist-copy" aria-label={`${artist.data.name} biography`}>
+          <div class="artist-meta">
+            {artist.data.role && <span>{artist.data.role}</span>}
+            {location && <span>{location}</span>}
+            {artist.data.disciplines.length > 0 && (
+              <span>{artist.data.disciplines.join(' / ')}</span>
+            )}
+          </div>
+
+          {hasBody ? (
+            <div class="artist-body">
+              <Content />
+            </div>
+          ) : (
+            <div class="artist-body">
+              <p>{artist.data.short_bio}</p>
+            </div>
+          )}
+
+          {(artist.data.website || artist.data.instagram) && (
+            <nav class="artist-links" aria-label={`${artist.data.name} external links`}>
+              {artist.data.website && <a href={artist.data.website} target="_blank" rel="noopener">Website</a>}
+              {artist.data.instagram && <a href={artist.data.instagram} target="_blank" rel="noopener">Instagram</a>}
+            </nav>
+          )}
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .artist-page {
+    background: #fff;
+    color: #2b1703;
+    padding: clamp(42px, 5vw, 72px) 24px clamp(92px, 9vw, 150px);
+  }
+
+  .artist-shell {
+    position: relative;
+    width: min(1180px, 100%);
+    margin: 0 auto;
+  }
+
+  .back-link {
+    position: absolute;
+    top: clamp(34px, 4vw, 62px);
+    left: 0;
+    min-width: 106px;
+    min-height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 999px;
+    color: #000;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 15px;
+    text-decoration: none;
+    transition:
+      background var(--na-dur-fast) var(--na-ease),
+      color var(--na-dur-fast) var(--na-ease);
+  }
+
+  .back-link:hover,
+  .back-link:focus-visible {
+    background: #000;
+    color: #fff;
+  }
+
+  .artist-header {
+    text-align: center;
+    padding-top: clamp(50px, 6vw, 86px);
+    margin-bottom: clamp(56px, 7vw, 92px);
+  }
+
+  .artist-header h1 {
+    margin: 0;
+    color: #5b330f;
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(64px, 10vw, 134px);
+    line-height: 0.92;
+    letter-spacing: 0;
+  }
+
+  .artist-profile {
+    display: grid;
+    grid-template-columns: minmax(280px, 460px) minmax(320px, 520px);
+    gap: clamp(54px, 7vw, 86px);
+    align-items: start;
+    justify-content: center;
+  }
+
+  .artist-portrait {
+    margin: 0;
+  }
+
+  .artist-portrait img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .artist-copy {
+    padding-top: clamp(4px, 1vw, 18px);
+    text-align: center;
+  }
+
+  .artist-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 12px;
+    margin-bottom: 24px;
+    color: rgba(43, 23, 3, 0.64);
+    font-family: var(--na-font-ui);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .artist-meta span:not(:last-child)::after {
+    content: "/";
+    margin-left: 12px;
+    color: rgba(43, 23, 3, 0.32);
+  }
+
+  .artist-body {
+    color: #211203;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: clamp(15px, 1.35vw, 18px);
+    line-height: 1.62;
+    text-align: center;
+  }
+
+  .artist-body :global(p) {
+    margin: 0 auto 28px;
+    max-width: 46ch;
+  }
+
+  .artist-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .artist-body :global(em) {
+    font-style: italic;
+  }
+
+  .artist-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .artist-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 22px;
+    border: 1px solid #2b1703;
+    border-radius: 999px;
+    color: #2b1703;
+    font-family: var(--na-font-ui);
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .artist-links a:hover,
+  .artist-links a:focus-visible {
+    background: #2b1703;
+    color: #fff;
+  }
+
+  @media (max-width: 820px) {
+    .back-link {
+      position: static;
+      margin-bottom: 28px;
+    }
+
+    .artist-header {
+      padding-top: 0;
+      margin-bottom: 44px;
+    }
+
+    .artist-profile {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .artist-portrait {
+      width: min(520px, 100%);
+      margin-inline: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .artist-page {
+      padding-inline: 20px;
+    }
+
+    .artist-header h1 {
+      font-size: clamp(52px, 16vw, 82px);
+    }
+
+    .artist-body {
+      font-size: 14px;
+      line-height: 1.58;
+    }
+  }
+</style>

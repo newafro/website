@@ -64,7 +64,7 @@ const partners = [
     <section class="community-section">
       <div class="container">
         <header class="section-heading">
-          <h2>Artists &amp; Creatives</h2>
+          <h2>Artists and Creatives</h2>
         </header>
 
         <div class="artist-grid">
@@ -74,7 +74,7 @@ const partners = [
               ? (rawPortrait.startsWith('/') ? u(rawPortrait) : rawPortrait)
               : undefined;
             return (
-              <article class="artist-card">
+              <a class="artist-card" href={u(`/artists/${artist.slug}`)} aria-label={`View ${artist.data.name}`}>
                 {portrait && (
                   <img
                     src={portrait}
@@ -88,7 +88,7 @@ const partners = [
                   {artist.data.role && <p class="artist-role">{artist.data.role}</p>}
                   <p>{artist.data.short_bio}</p>
                 </div>
-              </article>
+              </a>
             );
           })}
         </div>
@@ -178,11 +178,12 @@ const partners = [
   }
 
   .section-heading h2 {
-    font-family: var(--na-font-display);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(42px, 6vw, 72px);
-    line-height: 1.05;
+    font-family: var(--na-font-page-display);
+    font-style: normal;
+    font-weight: 600;
+    font-size: clamp(48px, 7vw, 108px);
+    line-height: 0.95;
+    color: #6f4321;
     margin: 0;
   }
 
@@ -197,6 +198,27 @@ const partners = [
     aspect-ratio: 1 / 1;
     object-fit: cover;
     background: #ded9c7;
+    filter: grayscale(1);
+    transition:
+      filter var(--na-dur-base) var(--na-ease),
+      transform var(--na-dur-base) var(--na-ease);
+  }
+
+  .artist-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .artist-card:hover img,
+  .artist-card:focus-visible img {
+    filter: grayscale(0) saturate(1.08);
+    transform: scale(1.012);
+  }
+
+  .artist-card:focus-visible {
+    outline: 2px solid var(--na-bronze);
+    outline-offset: 8px;
   }
 
   .artist-card__body {
