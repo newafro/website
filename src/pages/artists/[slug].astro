@@ -17,6 +17,9 @@ const hasBody = artist.body.trim().length > 0;
 const portrait = artist.data.portrait
   ? (artist.data.portrait.startsWith('/') ? u(artist.data.portrait) : artist.data.portrait)
   : undefined;
+const galleryImages = artist.data.gallery
+  .map((image) => image.startsWith('/') ? u(image) : image)
+  .filter(Boolean);
 const description = artist.data.short_bio;
 const location = [artist.data.city, artist.data.country].filter(Boolean).join(', ');
 ---
@@ -73,6 +76,35 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
           )}
         </section>
       </div>
+
+      {galleryImages.length > 0 && (
+        <section
+          class="artist-gallery"
+          aria-label={`${artist.data.name} image gallery`}
+          data-artist-gallery
+        >
+          <button class="gallery-button gallery-button--prev" type="button" aria-label="Previous image">
+            <span aria-hidden="true">‹</span>
+          </button>
+          <div class="gallery-frame">
+            <div class="gallery-track">
+              {galleryImages.map((image, index) => (
+                <figure class="gallery-slide">
+                  <img
+                    src={image}
+                    alt={`${artist.data.name} gallery image ${index + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+          <button class="gallery-button gallery-button--next" type="button" aria-label="Next image">
+            <span aria-hidden="true">›</span>
+          </button>
+        </section>
+      )}
     </div>
   </article>
 </BaseLayout>
@@ -135,7 +167,7 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
 
   .artist-profile {
     display: grid;
-    grid-template-columns: minmax(280px, 460px) minmax(320px, 520px);
+    grid-template-columns: minmax(280px, 486px) minmax(320px, 520px);
     gap: clamp(54px, 7vw, 86px);
     align-items: start;
     justify-content: center;
@@ -148,6 +180,7 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
   .artist-portrait img {
     width: 100%;
     display: block;
+    aspect-ratio: 486 / 737;
     object-fit: cover;
   }
 
@@ -180,6 +213,64 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
     font-size: clamp(15px, 1.35vw, 18px);
     line-height: 1.62;
     text-align: center;
+  }
+
+  .artist-gallery {
+    position: relative;
+    width: min(720px, 100%);
+    margin: clamp(78px, 9vw, 134px) auto 0;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: clamp(18px, 4vw, 44px);
+  }
+
+  .gallery-frame {
+    overflow: hidden;
+  }
+
+  .gallery-track {
+    display: flex;
+    transition: transform 420ms var(--na-ease);
+    will-change: transform;
+  }
+
+  .gallery-slide {
+    flex: 0 0 100%;
+    display: grid;
+    place-items: center;
+    margin: 0;
+  }
+
+  .gallery-slide img {
+    width: min(581px, 100%);
+    max-height: 562px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .gallery-button {
+    width: 44px;
+    height: 64px;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #5b330f;
+    cursor: pointer;
+    font-family: var(--na-font-display);
+    font-size: 58px;
+    line-height: 1;
+  }
+
+  .gallery-button:disabled {
+    opacity: 0;
+    cursor: default;
+  }
+
+  .gallery-button:focus-visible {
+    outline: 2px solid #5b330f;
+    outline-offset: 4px;
   }
 
   .artist-body :global(p) {
@@ -243,6 +334,17 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
       width: min(520px, 100%);
       margin-inline: auto;
     }
+
+    .artist-gallery {
+      grid-template-columns: 32px minmax(0, 1fr) 32px;
+      gap: 8px;
+      margin-top: 58px;
+    }
+
+    .gallery-button {
+      width: 32px;
+      font-size: 44px;
+    }
   }
 
   @media (max-width: 560px) {
@@ -260,3 +362,32 @@ const location = [artist.data.city, artist.data.country].filter(Boolean).join(',
     }
   }
 </style>
+
+<script>
+  for (const gallery of document.querySelectorAll('[data-artist-gallery]')) {
+    const track = gallery.querySelector('.gallery-track');
+    const slides = [...gallery.querySelectorAll('.gallery-slide')];
+    const previous = gallery.querySelector('.gallery-button--prev');
+    const next = gallery.querySelector('.gallery-button--next');
+    let index = 0;
+
+    const update = () => {
+      if (!(track instanceof HTMLElement)) return;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      if (previous instanceof HTMLButtonElement) previous.disabled = index === 0;
+      if (next instanceof HTMLButtonElement) next.disabled = index === slides.length - 1;
+    };
+
+    previous?.addEventListener('click', () => {
+      index = Math.max(0, index - 1);
+      update();
+    });
+
+    next?.addEventListener('click', () => {
+      index = Math.min(slides.length - 1, index + 1);
+      update();
+    });
+
+    update();
+  }
+</script>

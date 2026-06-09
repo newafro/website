@@ -121,6 +121,9 @@ collections:
       - { label: "Portrait", name: "portrait", widget: "image", required: false,
           media_folder: "public/uploads/artists", public_folder: "/uploads/artists" }
       - { label: "Portrait Alt Text", name: "portrait_alt", widget: "string", required: false }
+      - { label: "Gallery", name: "gallery", widget: "list", required: false,
+          field: { label: "Image", name: "image", widget: "image",
+            media_folder: "public/uploads/artists/pages", public_folder: "/uploads/artists/pages" } }
       - { label: "Short Bio", name: "short_bio", widget: "text" }
       - { label: "Website", name: "website", widget: "string", required: false }
       - { label: "Instagram", name: "instagram", widget: "string", required: false }

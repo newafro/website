@@ -85,7 +85,6 @@ const partners = [
                 )}
                 <div class="artist-card__body">
                   <h3>{artist.data.name}</h3>
-                  {artist.data.role && <p class="artist-role">{artist.data.role}</p>}
                   <p>{artist.data.short_bio}</p>
                 </div>
               </a>
@@ -189,8 +188,8 @@ const partners = [
 
   .artist-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 64px 32px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px 26px;
   }
 
   .artist-card img {
@@ -222,7 +221,9 @@ const partners = [
   }
 
   .artist-card__body {
-    padding-top: 18px;
+    min-height: 160px;
+    padding: 14px 18px 20px;
+    background: #fff;
     text-align: center;
   }
 
@@ -230,22 +231,23 @@ const partners = [
     font-family: var(--na-font-headline);
     font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    font-size: clamp(17px, 1.45vw, 24px);
     line-height: 1.2;
-    margin: 0 0 6px;
-  }
-
-  .artist-role {
-    color: #6b4708;
-    font-size: 14px;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
   }
 
   .artist-card p {
-    font-size: 15px;
-    line-height: 1.5;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: clamp(10px, 0.85vw, 14px);
+    line-height: 1.35;
     margin: 0 auto;
-    max-width: 30ch;
+    max-width: 25ch;
+  }
+
+  @media (max-width: 1120px) {
+    .artist-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   .community-section--partners {

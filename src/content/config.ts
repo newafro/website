@@ -47,6 +47,7 @@ const artists = defineCollection({
     disciplines: z.array(z.string()).default([]),
     portrait: z.string().optional(),
     portrait_alt: z.string().optional(),
+    gallery: z.array(z.string()).default([]),
     short_bio: z.string(),
     website: z.string().optional(),
     instagram: z.string().optional(),
