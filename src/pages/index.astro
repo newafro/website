@@ -30,21 +30,11 @@ const heroFallbackImg = heroPoster;
     </div>
     <div class="home-hero__inner">
       <h1 id="home-headline" class="hero-display home-hero__headline">New Afro</h1>
+      <p class="home-hero__sub">African creativity, curated between continents.</p>
       <div class="home-hero__actions" aria-label="Primary actions">
         <a class="home-hero__btn home-hero__btn--primary" href={u('/agency#agency-contact')}>Work with New Afro</a>
         <a class="home-hero__btn home-hero__btn--secondary" href={u('/artist-inquiries')}>Artist Inquiries</a>
       </div>
-      <p class="home-hero__sub">The Cultural and Creative Agency</p>
-      <img
-        class="home-hero__mark"
-        src={u('/logo-white.png')}
-        alt=""
-        width="800"
-        height="512"
-        loading="eager"
-        decoding="async"
-        aria-hidden="true"
-      />
     </div>
   </section>
 </BaseLayout>
@@ -131,8 +121,8 @@ const heroFallbackImg = heroPoster;
     font-size: clamp(14px, 1.45vw, 21px);
     line-height: 1.4;
     color: var(--na-cream-warm);
-    margin: clamp(14px, 1.5vw, 20px) 0 clamp(8px, 1.2vw, 14px);
-    max-width: none;
+    margin: clamp(8px, 1vw, 14px) 0 0;
+    max-width: min(620px, 88vw);
     text-shadow: 0 1px 12px rgba(0, 0, 0, 0.22);
   }
 
@@ -190,13 +180,6 @@ const heroFallbackImg = heroPoster;
     color: var(--na-ink);
   }
 
-  .home-hero__mark {
-    width: clamp(62px, 5.1vw, 82px);
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.26));
-  }
-
   @media (max-width: 900px) {
     .home-hero {
       height: calc(100vh - 92px);
@@ -225,10 +208,6 @@ const heroFallbackImg = heroPoster;
     .home-hero__btn {
       width: 100%;
       min-width: 0;
-    }
-
-    .home-hero__mark {
-      width: clamp(58px, 17vw, 76px);
     }
   }
 
