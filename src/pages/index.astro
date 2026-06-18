@@ -32,8 +32,8 @@ const heroFallbackImg = heroPoster;
       <h1 id="home-headline" class="hero-display home-hero__headline">New Afro</h1>
       <p class="home-hero__sub">The Cultural and Creative Agency</p>
       <div class="home-hero__actions" aria-label="Primary actions">
-        <a class="home-hero__btn home-hero__btn--primary" href={u('/agency#agency-contact')}>Work with New Afro</a>
-        <a class="home-hero__btn home-hero__btn--secondary" href={u('/artist-inquiries')}>Artist Inquiries</a>
+        <a class="home-hero__btn home-hero__btn--primary" href={u('/agency')}>The Agency</a>
+        <a class="home-hero__btn home-hero__btn--secondary" href={u('/projects')}>Curatorial Work</a>
       </div>
     </div>
   </section>
@@ -101,13 +101,13 @@ const heroFallbackImg = heroPoster;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0 var(--na-s-8) clamp(38px, 5.5vw, 66px);
+    padding: clamp(58px, 8vw, 92px) var(--na-s-8) clamp(38px, 5.5vw, 66px);
     width: 100%;
   }
 
   .home-hero__headline {
     color: var(--na-cream-warm);
-    font-size: clamp(112px, 16.7vw, 245px);
+    font-size: clamp(58px, 8.4vw, 124px);
     line-height: 0.96;
     margin: 0;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
@@ -127,12 +127,12 @@ const heroFallbackImg = heroPoster;
   }
 
   .home-hero__actions {
-    margin-top: auto;
+    margin-top: clamp(78px, 14vh, 132px);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
-    padding-top: var(--na-s-8);
+    padding-top: 0;
   }
 
   .home-hero__btn {
@@ -197,7 +197,7 @@ const heroFallbackImg = heroPoster;
     }
 
     .home-hero__headline {
-      font-size: clamp(78px, 27vw, 104px);
+      font-size: clamp(48px, 14vw, 62px);
     }
 
     .home-hero__sub {
@@ -208,6 +208,7 @@ const heroFallbackImg = heroPoster;
     .home-hero__actions {
       width: min(100%, 360px);
       gap: 10px;
+      margin-top: clamp(72px, 14vh, 118px);
     }
 
     .home-hero__btn {
