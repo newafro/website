@@ -228,13 +228,19 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     text-align: center;
   }
 
+  .page-header .container-narrow {
+    max-width: min(100%, 1320px);
+  }
+
   .page-header h1.display-page {
     margin: 0 auto var(--na-s-7);
-    max-width: none;
+    width: min(100%, 1280px);
+    max-width: calc(100vw - 48px);
+    text-align: center;
     white-space: nowrap;
     font-weight: 500;
     letter-spacing: 0;
-    font-size: clamp(72px, 10.5vw, 148px);
+    font-size: clamp(72px, 9vw, 148px);
   }
 
   .agency-deck {
@@ -519,11 +525,14 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     .role-media,
     .clients-media {
       aspect-ratio: 4 / 3;
+      width: 100%;
+      min-height: 0;
     }
   }
 
   @media (max-width: 760px) {
     .page-header h1.display-page {
+      font-size: clamp(52px, 16vw, 68px);
       white-space: normal;
     }
 
