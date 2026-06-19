@@ -6,6 +6,71 @@ const heroMark      = u('/uploads/agency/agency-mark@4x.png');
 const structuralImg = u('/uploads/agency/02-d5693e_86b37a23b8e54299b3b66a0a83993602-mv2.jpg');
 const roleImg       = u('/uploads/agency/04-e7ed0d_a3c5ac89d66d468e843ae9e0d93741b5-mv2.jpg');
 const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5cae-mv2.jpg');
+
+const servicePillars = [
+  {
+    title: 'Curatorial strategy',
+    body: 'We turn a cultural ambition into a theme, artist selection, exhibition format and visitor journey.',
+  },
+  {
+    title: 'Artist and partner access',
+    body: 'We connect artists, institutions, brands and local hosts through relationships built across Africa and Europe.',
+  },
+  {
+    title: 'Public programming',
+    body: 'We shape openings, talks, showrooms and encounters so the work can be understood, discussed and remembered.',
+  },
+  {
+    title: 'Market-facing storytelling',
+    body: 'We make the project legible for audiences, partners and funders without flattening the cultural context.',
+  },
+];
+
+const clientSegments = [
+  {
+    title: 'Institutions and galleries',
+    body: 'For cultural teams that need a credible bridge to African and diasporic artistic perspectives: concept, artist selection, programming and partnership architecture.',
+  },
+  {
+    title: 'Artists and cultural entrepreneurs',
+    body: 'For artists who need positioning, presentation formats and the right context to be seen by audiences, collaborators and collectors.',
+  },
+  {
+    title: 'Brands and creative businesses',
+    body: 'For brands expanding between Africa and Europe that need cultural fluency, community access and a story people can trust.',
+  },
+];
+
+const selectedWork = [
+  {
+    tag: 'Institutional exhibition / Mainz',
+    title: 'Naza Po Tozali... On The Way To Find Myself.',
+    meta: 'Institut français Mainz',
+    body: 'A photographic exhibition with Jean-Baptiste Joire, Benga Mavinga and Eveline Soum, shaped around identity, belonging and the question of self.',
+    href: u('/event-details-registration/nazo-po-tozali-on-the-way-to-find-myself'),
+  },
+  {
+    tag: 'Gallery exhibition / Cotonou',
+    title: 'Héritage... Mémoires en Mouvement?',
+    meta: 'Galerie Zato Benin',
+    body: 'The first stop outside Europe for the itinerant heritage project, bringing Nuits Balnéaires and Tobi Onabolu into dialogue around memory and movement.',
+    href: u('/event-details-registration/heritage-memoires-en-mouvements'),
+  },
+  {
+    tag: 'Institutional collaboration / Mainz',
+    title: 'La Teranga en Couleur',
+    meta: 'Institut Français Mainz and Part Mainz',
+    body: 'A Senegal-focused exhibition for la Francophonie, curated across photography, film, fashion and visual culture.',
+    href: u('/event-details-registration/la-teranga-en-couleur'),
+  },
+  {
+    tag: 'Artist presentation / Mainz',
+    title: 'Rencontre',
+    meta: 'Benjamin Abana and Francel Aris Dagbeto',
+    body: 'A three-day exhibition format with vernissage, artist exchange, audience participation and live painting.',
+    href: u('/event-details-registration/rencontre-begegnung'),
+  },
+];
 ---
 
 <BaseLayout
@@ -26,12 +91,24 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
         />
         <h1 class="display-page">THE AGENCY</h1>
         <p class="agency-deck">
-          We operate as a strategic creative agency positioning cultural
-          entrepreneurs, and creative brands seeking to expand between African
-          and European markets.
+          We build cultural projects between Africa and Europe: curatorial
+          concepts, artist selection, public programming and market-facing
+          storytelling for institutions, galleries, brands and creative
+          entrepreneurs.
         </p>
       </div>
     </header>
+
+    <section class="agency-pillar-strip" aria-label="Agency services">
+      <div class="container agency-pillar-grid">
+        {servicePillars.map((pillar) => (
+          <article>
+            <h2>{pillar.title}</h2>
+            <p>{pillar.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
 
     <section class="section spread spread--left">
       <div class="container spread-grid">
@@ -47,8 +124,8 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
         <div class="spread-copy">
           <h2>THE STRUCTURAL GAP</h2>
           <p class="lede">
-            Across Africa and Europe, creative ambition exists on both sides.<br />
-            Access does not.
+            A strong cultural project needs more than visibility. It needs
+            context, trust, and a format people can enter.
           </p>
           <p>
             Creative entrepreneurs from the African continent and its diaspora
@@ -62,6 +139,12 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
             seeking to engage African markets frequently struggle with
             contextual understanding, cultural fluency, and the ability to
             build partnerships that are credible, respectful, and sustainable.
+          </p>
+          <p>
+            New Afro works in that space. We translate ambition into curatorial
+            structure, shape the public story around the work, and connect the
+            right artists, partners and audiences around a shared cultural
+            context.
           </p>
           <p class="coda">
             The issue is not talent.<br />
@@ -126,11 +209,42 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
         </figure>
         <div class="clients-copy">
           <h2>OUR CLIENTS</h2>
-          <ul class="clients-list">
-            <li>Creative entrepreneurs shaping cultural and economic narratives</li>
-            <li>Companies of all sizes (small, medium and large), expanding across Africa and Europe.</li>
-            <li>International institutions seeking credible cross-market engagement</li>
-          </ul>
+          <p class="lede">
+            We work with people and organisations who need cultural credibility,
+            artist access and a project structure that can move in public.
+          </p>
+          <div class="client-cards" aria-label="Client groups">
+            {clientSegments.map((segment) => (
+              <article class="client-card">
+                <h3>{segment.title}</h3>
+                <p>{segment.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section proof-section" id="selected-work">
+      <div class="container proof-inner">
+        <header class="proof-heading">
+          <h2>SELECTED WORK</h2>
+          <p>
+            The clearest proof of the agency is the work already in motion:
+            exhibitions, public programs and partnerships that gave artists a
+            frame and gave audiences a way in.
+          </p>
+        </header>
+        <div class="proof-grid">
+          {selectedWork.map((item) => (
+            <article class="proof-card">
+              <p class="proof-card__tag">{item.tag}</p>
+              <h3>{item.title}</h3>
+              <p class="proof-card__meta">{item.meta}</p>
+              <p>{item.body}</p>
+              <a href={item.href}>View work</a>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -138,8 +252,8 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     <section class="section cta-section" id="agency-contact">
       <div class="container-narrow cta-inner">
         <h2>LET’S WORK TOGETHER</h2>
-        <p class="cta-line">Reach out!</p>
-        <p>We’re excited to connect with you and explore meaningful collaborations.</p>
+        <p class="cta-line">Bring us in when the project needs cultural clarity, not just promotion.</p>
+        <p>Tell us what you are trying to build, who it should reach, and where the bridge feels missing.</p>
         <form class="agency-contact-form" data-agency-contact-form novalidate>
           <div class="field-row">
             <label>
@@ -258,6 +372,48 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     width: clamp(42px, 4vw, 56px);
     height: auto;
     object-fit: contain;
+  }
+
+  .agency-pillar-strip {
+    border-top: 1px solid rgba(50, 28, 1, 0.1);
+    border-bottom: 1px solid rgba(50, 28, 1, 0.1);
+    background: var(--na-sand);
+  }
+
+  .agency-pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: none;
+    padding: 0;
+  }
+
+  .agency-pillar-grid article {
+    min-height: 220px;
+    padding: clamp(28px, 4vw, 54px) clamp(22px, 3vw, 42px);
+    border-right: 1px solid rgba(50, 28, 1, 0.12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .agency-pillar-grid article:last-child {
+    border-right: 0;
+  }
+
+  .agency-pillar-grid h2 {
+    font-family: var(--na-font-headline);
+    font-size: clamp(17px, 1.5vw, 24px);
+    line-height: 1.12;
+    margin: 0 0 var(--na-s-4);
+    text-transform: uppercase;
+  }
+
+  .agency-pillar-grid p {
+    font-family: var(--na-font-body);
+    font-size: clamp(13px, 1vw, 16px);
+    line-height: 1.45;
+    margin: 0;
+    max-width: 34ch;
   }
 
   .section { padding-block: 0; }
@@ -383,32 +539,124 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
     margin-top: var(--na-s-7);
   }
 
-  .clients-list {
-    list-style: none;
-    padding: 0;
+  .client-cards {
+    width: min(100%, 560px);
+    display: grid;
+    gap: var(--na-s-4);
+    margin-top: var(--na-s-3);
+  }
+
+  .client-card {
+    border: 1px solid rgba(50, 28, 1, 0.22);
+    background: rgba(255, 249, 235, 0.6);
+    padding: clamp(18px, 2vw, 24px);
+    text-align: left;
+  }
+
+  .client-card h3 {
+    font-family: var(--na-font-headline);
+    font-size: clamp(18px, 1.45vw, 24px);
+    line-height: 1.12;
+    margin: 0 0 var(--na-s-3);
+    color: var(--na-ink);
+  }
+
+  .client-card p {
+    font-size: clamp(13px, 1vw, 16px);
+    line-height: 1.45;
     margin: 0;
+    max-width: none;
+    text-align: left;
+  }
+
+  .proof-section {
+    background: #2d1804;
+    color: var(--na-cream-warm);
+    padding-block: clamp(var(--na-s-11), 8vw, var(--na-s-15));
+  }
+
+  .proof-inner {
+    width: min(1180px, calc(100% - 48px));
+    margin-inline: auto;
+  }
+
+  .proof-heading {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(var(--na-s-7), 5vw, var(--na-s-12));
+    align-items: end;
+    margin-bottom: clamp(var(--na-s-8), 6vw, var(--na-s-12));
+  }
+
+  .proof-heading h2 {
+    font-family: var(--na-font-headline);
+    font-size: clamp(30px, 5vw, 72px);
+    line-height: 0.95;
+    margin: 0;
+    color: var(--na-cream-warm);
+  }
+
+  .proof-heading p {
+    font-family: var(--na-font-body);
+    font-size: clamp(15px, 1.35vw, 20px);
+    line-height: 1.45;
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255, 249, 235, 0.2);
+    border: 1px solid rgba(255, 249, 235, 0.2);
+  }
+
+  .proof-card {
+    min-height: 360px;
+    padding: clamp(24px, 3vw, 36px);
+    background: #2d1804;
     display: flex;
     flex-direction: column;
-    gap: var(--na-s-7);
   }
 
-  .clients-list li {
+  .proof-card__tag,
+  .proof-card__meta {
+    font-family: var(--na-font-ui);
+    font-size: 12px;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 249, 235, 0.68);
+    margin: 0 0 var(--na-s-4);
+  }
+
+  .proof-card h3 {
+    font-family: var(--na-font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 2.8vw, 42px);
+    line-height: 0.98;
+    color: var(--na-cream-warm);
+    margin: 0 0 var(--na-s-4);
+  }
+
+  .proof-card p {
     font-family: var(--na-font-body);
-    font-size: clamp(14px, 1.1vw, 17px);
-    line-height: 1.45;
-    color: var(--na-ink);
-    padding-left: 1.2em;
-    position: relative;
-    max-width: 42ch;
-    text-align: center;
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.5;
+    margin: 0 0 var(--na-s-5);
+    color: rgba(255, 249, 235, 0.88);
   }
 
-  .clients-list li::before {
-    content: '·';
-    position: absolute;
-    left: 0;
-    top: 0;
+  .proof-card a {
+    margin-top: auto;
+    color: var(--na-cream-warm);
+    font-family: var(--na-font-ui);
+    font-size: 14px;
     font-weight: 700;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
   }
 
   .cta-section {
@@ -512,6 +760,22 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
   }
 
   @media (max-width: 1000px) {
+    .agency-pillar-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .agency-pillar-grid article {
+      border-bottom: 1px solid rgba(50, 28, 1, 0.12);
+    }
+
+    .agency-pillar-grid article:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .agency-pillar-grid article:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+
     .spread-grid,
     .role-grid,
     .clients-grid {
@@ -528,6 +792,15 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
       width: 100%;
       min-height: 0;
     }
+
+    .proof-heading {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .proof-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 760px) {
@@ -538,6 +811,26 @@ const clientsImg    = u('/uploads/agency/06-d5693e_0489f0c3dff341d99a33b531ac7b5
 
     .agency-contact-form .field-row {
       grid-template-columns: 1fr;
+    }
+
+    .agency-pillar-grid,
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .agency-pillar-grid article,
+    .agency-pillar-grid article:nth-child(2n),
+    .agency-pillar-grid article:nth-last-child(-n + 2) {
+      border-right: 0;
+      border-bottom: 1px solid rgba(50, 28, 1, 0.12);
+    }
+
+    .agency-pillar-grid article:last-child {
+      border-bottom: 0;
+    }
+
+    .proof-card {
+      min-height: 0;
     }
   }
 
