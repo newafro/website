@@ -804,17 +804,213 @@ const selectedWork = [
   }
 
   @media (max-width: 760px) {
+    .page-header {
+      padding-block: var(--na-s-9) var(--na-s-8);
+    }
+
+    .agency-hero-mark {
+      width: 38px;
+      margin-bottom: var(--na-s-5);
+    }
+
     .page-header h1.display-page {
-      font-size: clamp(52px, 16vw, 68px);
+      font-size: clamp(40px, 13vw, 52px);
+      line-height: 0.94;
+      margin-bottom: var(--na-s-6);
       white-space: normal;
+    }
+
+    .agency-deck {
+      max-width: 34ch;
+      font-size: 14.5px;
+      line-height: 1.45;
+    }
+
+    .agency-pillar-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .agency-pillar-grid article,
+    .agency-pillar-grid article:nth-child(2n),
+    .agency-pillar-grid article:nth-last-child(-n + 2) {
+      min-height: 0;
+      padding: 24px 18px;
+      border-right: 1px solid rgba(50, 28, 1, 0.12);
+      border-bottom: 1px solid rgba(50, 28, 1, 0.12);
+      justify-content: start;
+    }
+
+    .agency-pillar-grid article:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .agency-pillar-grid article:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+
+    .agency-pillar-grid h2 {
+      font-size: 15px;
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    .agency-pillar-grid p {
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+
+    .spread-copy,
+    .role-copy,
+    .clients-copy,
+    .cta-inner {
+      min-height: 0;
+      padding: 48px 32px;
+    }
+
+    .spread-copy h2,
+    .role-copy h2,
+    .clients-copy h2,
+    .cta-inner h2 {
+      margin-bottom: var(--na-s-5);
+    }
+
+    .spread-copy p,
+    .role-copy p,
+    .clients-copy p,
+    .cta-inner p {
+      font-size: 14px;
+      line-height: 1.42;
+      margin-bottom: var(--na-s-4);
+    }
+
+    .lede,
+    .coda {
+      font-size: 15px !important;
+      line-height: 1.4 !important;
+      margin-bottom: var(--na-s-5) !important;
+    }
+
+    .coda {
+      margin-top: var(--na-s-5);
+    }
+
+    .client-cards {
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .client-card {
+      padding: 18px;
+    }
+
+    .client-card h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .client-card p {
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .proof-section {
+      padding-block: 40px;
+    }
+
+    .proof-inner {
+      width: min(100% - 44px, 1180px);
+    }
+
+    .proof-heading {
+      gap: var(--na-s-5);
+      margin-bottom: var(--na-s-6);
+    }
+
+    .proof-heading h2 {
+      font-size: 30px;
+    }
+
+    .proof-heading p {
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .proof-card {
+      padding: 20px 22px;
+      min-height: 0;
+    }
+
+    .proof-card__tag,
+    .proof-card__meta {
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      margin-bottom: 10px;
+    }
+
+    .proof-card h3 {
+      font-size: 24px;
+      line-height: 1.02;
+      margin-bottom: 10px;
+    }
+
+    .proof-card p {
+      font-size: 13px;
+      line-height: 1.42;
+      margin-bottom: 14px;
+    }
+
+    .proof-card a {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      min-height: 44px;
+      width: fit-content;
+      padding-block: 8px;
+    }
+
+    .cta-inner {
+      padding: 40px 28px;
+    }
+
+    .cta-line {
+      font-size: 21px !important;
+      line-height: 1.25 !important;
+      margin-bottom: var(--na-s-5) !important;
     }
 
     .agency-contact-form .field-row {
       grid-template-columns: 1fr;
     }
 
-    .agency-pillar-grid,
+    .agency-contact-form {
+      gap: 13px;
+      margin-top: var(--na-s-4);
+    }
+
+    .agency-contact-form input,
+    .agency-contact-form select {
+      min-height: 48px;
+    }
+
+    .agency-contact-form textarea {
+      min-height: 116px;
+    }
+
     .proof-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .spread-caption {
+      font-size: 26px;
+      right: var(--na-s-7);
+      bottom: var(--na-s-7);
+    }
+  }
+
+  @media (max-width: 360px) {
+    .agency-pillar-grid {
       grid-template-columns: 1fr;
     }
 
@@ -827,18 +1023,6 @@ const selectedWork = [
 
     .agency-pillar-grid article:last-child {
       border-bottom: 0;
-    }
-
-    .proof-card {
-      min-height: 0;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .spread-caption {
-      font-size: 26px;
-      right: var(--na-s-7);
-      bottom: var(--na-s-7);
     }
   }
 </style>
