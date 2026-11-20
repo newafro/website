@@ -1,0 +1,131 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="ART RESIDENCY"
+  description="Ndako Home is a seaside residency for creation, reflection, restoration, and intercultural dialogue."
+  tone="paper"
+>
+  <section class="residency-page">
+    <h2>NDAKO HOME (LINGALA)</h2>
+    <p>
+      Installed in a seaside villa, this residency is conceived as a space for
+      creation, reflection, and restoration. We invite artists to temporarily
+      step away from the pressures of production in order to reconnect with
+      their practice, restore mental and physical balance, and develop new
+      projects in dialogue with nature.
+    </p>
+    <p>
+      Ndako, in Lingala, means house or home. The choice of naming this
+      residency Ndako comes from the desire to make this place somewhere
+      creatives and artists truly feel at home, welcomed and embraced.The choice
+      of Lingala is deeply connected to the roots of one of the hosts and
+      curator Cheria Essieke-Bayer, and stems from a need to create a place
+      where memories are shared, good times are lived and new connections are
+      made.
+    </p>
+    <p>
+      Located in the village of Gustav Friis, this house has been their
+      summerhouse for years, a place full of memories shared with family and
+      friends, now opening its doors to creatives and artists. A place where
+      peace meets creativity, and where art becomes a medium for reflection,
+      connection, renewal and the healing of silent wounds.
+    </p>
+    <p>
+      The residency is both locally rooted and internationally connected. It
+      aims to bring together artists from African cultural contexts, artists
+      from Denmark, and international artists from diverse backgrounds. The goal
+      is to foster meaningful cultural exchange by creating a space for dialogue
+      between different artistic practices, life experiences, and worldviews.
+    </p>
+    <p>
+      Artists in residence will be invited to engage with the cultural ecosystem
+      of Kolding and its surrounding region, particularly with local artists,
+      workshops, and cultural institutions. This includes access to the regional
+      contemporary art scene, as well as opportunities for collaboration,
+      project presentations, or the initiation of public activities at the local
+      and regional levels.
+    </p>
+    <p>
+      As part of the Ubuntu Festival, a cultural festival supported by the
+      Municipality of Kolding, artists will also have the opportunity to present
+      their work, contribute to a lasting artistic presence, or develop projects
+      that directly involve the local community.
+    </p>
+    <p>
+      At the heart of this residency in Bjert is the desire to build lasting
+      cultural connections. It is intended as a space conducive to reflection,
+      experimentation, and the exploration of themes such as identity,
+      environment, movement, and belonging, while strengthening ties between
+      local and international creative communities.
+    </p>
+    <p>
+      The residency reflects New Afro's commitment not only to creating
+      visibility, but also to building lasting structures that support artistic
+      development and intercultural dialogue.
+    </p>
+
+    <div class="residency-lists">
+      <section>
+        <h2>Residents 2026</h2>
+        <ul>
+          <li>Eveline Soum</li>
+          <li>Benjamin Abana</li>
+          <li>Benga Mavinga</li>
+          <li>Jean Baptiste Joire</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>MENTORS</h2>
+        <ul>
+          <li>Chéria Essieke</li>
+          <li>Alicia Moon Winding</li>
+          <li>Elsy Tobin</li>
+          <li>Nuits Balnéaires</li>
+          <li>Tobi Onabolu</li>
+          <li>Steven Coffi Adjai</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .residency-page {
+    font-size: clamp(16px, 1.2vw, 18px);
+    line-height: 1.7;
+  }
+
+  .residency-page h2 {
+    font-family: var(--na-font-headline);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-size: clamp(20px, 2.2vw, 28px);
+    line-height: 1.2;
+  }
+
+  .residency-lists {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--na-s-12);
+    margin-top: var(--na-s-14);
+  }
+
+  .residency-lists ul {
+    margin-left: 0;
+  }
+
+  .residency-lists li {
+    padding-block: 4px;
+  }
+
+  @media (max-width: 680px) {
+    .residency-lists {
+      grid-template-columns: 1fr;
+      gap: var(--na-s-8);
+    }
+  }
+</style>
