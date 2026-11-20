@@ -1,0 +1,36 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('pages', 'art-residencies');
+if (!entry) throw new Error('Missing src/content/pages/art-residencies.md');
+const { Content } = await entry.render();
+---
+
+<PageLayout title={entry.data.title} description={entry.data.description} eyebrow="Art residency" tone="paper">
+  <section class="residency-page">
+    <span id="apply"></span>
+    <span id="friends"></span>
+    <Content />
+  </section>
+</PageLayout>
+
+<style>
+  .residency-page {
+    font-size: clamp(16px, 1.2vw, 18px);
+    line-height: 1.7;
+  }
+
+  .residency-page :global(h2) {
+    font-family: var(--na-font-headline);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    font-size: clamp(20px, 2.2vw, 28px);
+    line-height: 1.2;
+    margin-top: var(--na-s-12);
+  }
+
+  .residency-page :global(a) {
+    text-decoration: underline;
+  }
+</style>
